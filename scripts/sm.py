@@ -7,13 +7,13 @@ Session id is cached in /tmp/sm_session (30 min idle expiry; auto re-login).
 An HTTP session coexists with an MCP session for the same player.
 
 Usage:
-  sm.py call <tool> <action> ['{json}']   raw call, prints result text
+  sm.py call <tool> <action> ['{json}']   raw call, prints result text (truncated ~1500 chars)
   sm.py status                            one-line status
   sm.py mine [max_cycles] [min_avg]       mine until cargo full / error / pirates / low yield
-  sm.py scout                             1-line POI report: sec, crowd, ores (paste to resources.md)
+  sm.py scout                             1-line POI report: sec, crowd, ores
   sm.py loop <belt_sys> <belt_poi> <home_sys> <station> [trips]
-                                          full mine->bank loop; run in background:
-                                          setsid nohup python3 -u sm.py loop ... > /tmp/loop.log 2>&1 < /dev/null &
+                                          full mine->bank loop (belt and station may share a system); background:
+                                          setsid nohup sh -c 'python3 -u sm.py loop ...; safe_dock.sh' > /dev/null 2>&1 < /dev/null &
                                           graceful stop after current trip: touch /tmp/sm_stop
                                           abort now + emergency dock:       touch /tmp/sm_emergency
   sm.py preflight                         checklist: battle/transit/hull/fuel/cargo/crew; auto-fix if docked
@@ -28,6 +28,7 @@ Usage:
   sm.py route <system_or_poi>             jump path + fuel
   sm.py missions | active                 board missions | my active missions (compact)
   sm.py storage [station_id]              storage here or remote
+See also: boot.py (session start), res.py (knowledge queries), stackmine.py (rare-ore stacking), explore.py.
 Tools: spacemolt, spacemolt_storage, spacemolt_market, spacemolt_social, spacemolt_battle,
        spacemolt_salvage, spacemolt_facility, spacemolt_catalog(action=catalog)
 """
@@ -97,7 +98,7 @@ def status_line():
 
 
 def scout():
-    """One line per POI: sec, crowd, each ore richness/remaining/supported_power. Paste into resources.md."""
+    """One line per POI: sec, crowd, each ore richness/remaining/supported_power."""
     s = sc(call("spacemolt", "get_status"))
     lo = s.get("location", {})
     n = sc(call("spacemolt", "get_nearby"))
@@ -119,7 +120,7 @@ def mine(max_cycles=100, min_avg=0.0):
         if "error" in r:
             e = r["error"]
             print("STOP cycle=%d err=%s: %s" % (i, e.get("code"), e.get("message")))
-            why = "error"
+            why = "full" if e.get("code") == "cargo_full" else "error"
             break
         s = sc(r)
         d, sh = s.get("details", {}), s.get("ship", {})
@@ -178,7 +179,11 @@ SAFE_STATIONS = ["central_nexus", "node_beta_industrial_station", "node_alpha_pr
                  "the_levy_customs_station",
                  # Outer Rim
                  "frontier_station", "first_step_memorial_station", "deep_range_outpost", "unknown_edge_waystation",
-                 "ramens_rest", "void_gate_outpost", "starfall_salvage_station"]
+                 "ramens_rest", "void_gate_outpost", "starfall_salvage_station", "mobile_capital",
+                 # Crimson
+                 "war_citadel", "the_anvil_arsenal", "ironhearth_station", "blood_forge_smelting_works",
+                 "iron_reach_mining_colony", "the_crucible_garrison", "the_rampart_checkpoint",
+                 "the_experiment_research_station"]
 EMERGENCY = "/tmp/sm_emergency"   # touch -> loops abort now and run safe()
 STOPFILE = "/tmp/sm_stop"         # touch -> loops stop after current trip (docked)
 MIN_FUEL_PCT = 0.5                # preflight: refuel when docked below this; refuse to undock below 0.3
@@ -205,7 +210,7 @@ def step(action, target=None, tries=4):
         code = (r.get("error") or {}).get("code", "")
         if not code:
             return True
-        if code in ("action_pending", "in_transit", "rate_limited"):
+        if code in ("action_pending", "action_in_progress", "in_transit", "rate_limited"):
             wait_idle(120)
             continue
         print("STOP %s %s: %s" % (action, target, short(r)))
@@ -371,6 +376,8 @@ def loop(belt_sys, belt_poi, home_sys, station, trips):
         if why in ("danger", "error"):
             return safe()
         for a, tgt in (("jump", home_sys), ("travel", station), ("dock", None)):
+            if a == "jump" and sc(call("spacemolt", "get_status")).get("location", {}).get("system_id") == home_sys:
+                continue  # belt and station share a system (e.g. unknown_edge)
             if not step(a, tgt):
                 return safe()
         dump()
