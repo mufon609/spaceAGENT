@@ -1,7 +1,8 @@
 # Goals
 
 ## Now (priority order)
-1. Five Capitals circuit leg 1: Sol -> Haven (Grand Exchange), scouting every belt (explore.py ... dock). In Haven: market scan; look for silicon + trade_crystal belts in Nebula space.
+1. Nebula loop (14 jumps from haven): traders_rest,factory_belt,treasure_cache,pollux,nusakan,azmidi [mine trade_crystal], khambalia,gliese_436,the_levy,wealth_lane,gold_run,cargo_lanes,market_prime,haven. Completes federation prospectus (20k). Scout for silicon.
+1b. Then capitals: krynn (War Citadel, cobalt belt), frontier (mobile_capital), nexus_prime; back to haven (grand tour 12k) and sol (five capitals 15k).
 2. Crafting target = full self-made fit (see DECISIONS D2). Blockers: silicon_ore, titanium_ore, focused_crystal source. Mine them into storage when found; craft at a workshop while docked.
 3. Piloting 8 -> 10 (Resonance Miner gate). Jumps +3, mining +1/cycle.
 4. Train Crafting/Refining with lead ingots at central_nexus when docked there (D4).
@@ -16,4 +17,4 @@
 
 ## Open Questions for User
 - Q4: Ore/refined DELIVERY missions (e.g. Sol faction board: 2,000 Lead Ore -> 20,000cr; 5 circuit boards -> 3,500cr). Allowed as "mission payout", or forbidden as "selling ore"? Default: forbidden.
-- Q5: Stealth 1 unlock: buy a few cloaking_dust (4cr each @ Central Nexus) if it proves to train Stealth? Default: try crafting/other path first.
+- Q5: Stealth 1 unlock: buy a few cloaking_dust (3-4cr each @ Central Nexus / Grand Exchange) if it proves to train Stealth? Default: try crafting/other path first.
