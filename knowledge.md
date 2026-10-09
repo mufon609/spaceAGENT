@@ -1,89 +1,57 @@
-# Knowledge
+# Knowledge (mechanics + play-only facts; verified live unless marked). Skill Guide summary at bottom. Newest facts: S3.
 
-## § Worth-mining rules (observed)
-- YIELD IS SUPER-LINEAR IN BEAM POWER (forum test): beam 40 vs 5 -> 12-18x ore. Never trade beam for other modules.
-- Per-cycle yield capped by deposit supported_power (p): p<=5 -> 1 unit regardless of beam.
-- Ours (beam 17, Mining 8): carbon p40 -> 9, tungsten p20 -> 5, Pt -> 2, trade_crystal p10 -> 2-3.
-- STOCK if a main deposit has p>=15 and remaining>=100. MISSION-only if p 3-5. DEAD if remaining<10.
-- `mine` error `depleted` = POI unusable now. Don't retry; move.
-- Each cycle picks ONE deposit: weight = richness x (1 + 0.1 x Mining x rank); rank common0 uncommon1 rare2 exotic3 legendary4. At Mining 8 exotic trade_crystal r30 beats iron r34 ~3:1 (observed 7/8 picks).
-- Cargo trap: if the belt has big common deposits (5/cycle), you need free cargo for the rare one; arrive with an empty hold. Regenerating commons get richer over time (pioneer_fields Ti/trip fell 5 -> 1).
-- Regen at Acubens ~0.3-0.5 units/tick per deposit. Policed belts sit at 0; lawless belts 10k-100k.
-- JETTISONED ORE IS DESTROYED. Never jettison ore.
+## XP / skills
+- XP table (same for every skill): level N->N+1 costs [60,165,340,585,900,1285,1740,2265,2860,3525,4260,5065,5940,...]. Piloting 9->10 = 3,525 XP. Skills never lost.
+- Piloting XP: jump +3, in-system travel +1, mine cycle +1. A mine cycle is 1 per tick (~6/min) => mining ~6 XP/min beats jumping (3/min, 60 s per jump at speed 1; fuel 1/jump).
+- Crafting + Refining: EVERY workshop run gives +5 XP to BOTH (verified on iron smelt, copper wiring, glass, crystal facet) regardless of recipe time/size. Train with the cheapest-input recipes: basic_iron_smelting (10 Fe->1 steel, 0.3 tick), basic_copper_processing (8 Cu->1 wiring), smelt_lead_ingot (4 Pb->2), draw_platinum_wire (4 Pt->1), roll_lead_sheet (3 ingot->2), fuse_reinforced_glass (5 Si). 77 runs = ~385 XP each skill in ~4 min. Rented facility jobs give less XP; use the Station Workshop. Workshop speed scales with max(Crafting, Refining).
+- Engineering passive XP (~1/tick) needs reactor load >=90% (Threshold: ML II + ML II = 29/30 OK; ML II + Cargo Expander = 24/30 off). Engineering draw drops ~1%/level.
+- exploration XP: first visit to a system. deep_core_mining: mining with power 3+ gear.
 
-## § Crafting
-- Station Workshop hand-crafting is FREE (0 cr). Inputs must be in THIS station's storage; quantity is capped by what's there.
-- Workshop jobs advance only while docked at that station. Speed x1 (skill 0) -> x5 (skill 100), higher of Crafting/Refining.
-- XP: 3 small runs gave +10 Crafting AND +10 Refining. smelt_lead_ingot = 0.5 tick/run (cheapest trainer).
-- Engineering ALSO trains by crafting components/modules (not only >=90% reactor load).
-- Recipes have no skill gates in catalog; ITEMS have required_skills to equip (mining_laser_ii mining 2, cloaking_device_i stealth 1).
-- Lookup: `python3 scripts/recipe.py tree <item>` (cached /tmp/catalog.json from https://game.spacemolt.com/api/catalog.json).
-- Key routes: circuit_board = carbon_arc_circuit_etching (wk: 12 C + 2 Si -> 3); titanium_alloy = forge_titanium_alloy (FAC: 3 Ti + 1 steel -> 1) or anchor_plate_forging (wk: 3 anchor_plate -> 2); focused_crystal = 4 trade_crystal | 4 raw_focusing_crystal | 4 energy_crystal + 1 Pd (wk); steel_plate = refine_steel (FAC 5 Fe -> 2) or sinter_tungsten_steel (wk 4 Fe + 2 W -> 3); silver_wiring = 4 silver_ore; copper_wiring = process_copper_wiring (FAC 4 Cu -> 2) or basic (wk 8 Cu -> 1).
-- Bulk: craft accepts jobs=[...] (up to 50 per action).
-- facet_trade_crystal (4 trade_crystal -> 1 focused_crystal) = 24 ticks/run at skill 0 (8 runs = 192 ticks, docked).
-- FACILITY (FAC) RECIPES ARE RENTABLE: most empire stations host station-owned production facilities. `craft` auto-routes to one, charges labor + rental per run, runs ~0.1 tick/run, and KEEPS RUNNING AFTER UNDOCK. Examples: refine_steel 19cr/run, process_copper_wiring 17cr/run (deep_range_outpost); forge_titanium_alloy 37cr/run (frontier_station). Not "buying items" (service fee).
-- If no facility here can run it, the `no_facility` error names the nearest public one. Use dry_run to quote.
-- onboard_* recipes (e.g. onboard_alloy_synthesis) are SHIP capabilities: run automatically on hulls that have them; cannot be crafted at a station. recipe.py tags them SHIP.
-- Facility jobs give less crafting XP than workshop (~+5 per job vs per run).
-- frontier_station also rents: Polymer Synthesizer (Si+Ni -> flex_polymer), Fluorine Acid Bath (2 Si + etchant -> 5 circuit boards), Sensor Assembly Line, Nickel-Steel Forge, Plate Press.
+## Mining
+- Each cycle picks ONE deposit: weight = richness x (1 + 0.1 x Mining x rank); rank common0 uncommon1 rare2 exotic3 legendary4. Yield is super-linear in beam, but supported power p caps rare picks (Si p2-4 -> +1..3 per pick whatever the beam). A big beam mostly fills the hold with filler faster; at pioneer_fields beam 24 gave 0 Ti in 24 cycles while beam 12 gave ~1 Ti per 2.6-4.5 cycles (hypothesis, repeatable). For rare ores use ONE ML II.
+- Depleted deposits cap usable beam; regen ~0.3-0.5/tick policed, ~1/min for Ti at pioneer_fields; Crystal Sand Si shrinks when mined (47->167->89) and regenerates slowly. Other players mine the same deposits (Ti 76->0 in ~20 min with 4 miners).
+- `mine` returns error cargo_full when the hold is full (sm.py treats it as normal). JETTISONED ORE IS DESTROYED: user-approved ONLY for iron/copper filler while mining rare ore (scripts/stackmine.py).
+- Policed belts are drained; lawless belts have 10k-100k Fe/Cu. Rare ores sit in nebulae/special POIs (Crystal Sand, null_dust, garnet_belt...). Use `python3 scripts/res.py ore <name>`.
+- unknown_edge_mineral_fields (station in same system): beam 24 -> carbon 16, aluminum 14, vanadium ~8, iridium 4 per pick; hold 65 fills in ~9 cycles.
 
-## § Skills: how each trains (catalog training_source)
-engineering: craft components/modules or >=90% power | scanning: query POI details / survey | stealth: activate cloak or evade customs | exploration: first visit to a system | deep_core_mining: mine with power 3+ gear or deep surveys | piloting: travel/jump/mine/fight (+3/jump, +1/travel, +1/mine) | voidborn_mastery: Voidborn missions only.
+## Crafting
+- Station Workshop hand-crafting is FREE; inputs must be in THIS station's storage; jobs advance only while docked there. `quantity` = runs (multi-output recipes round: carbon_arc_circuit_etching quantity 2-3 = 1 run = 3 boards). Bulk: jobs=[...] up to 50. dry_run=true quotes.
+- FACILITY (FAC) recipes rent a station facility per run (e.g. forge_titanium_alloy 37cr/run at Frontier Station only; deep_range_outpost has no Alloy Foundry); jobs keep running after undock.
+- Key routes: circuit_board = carbon_arc_circuit_etching (12 C + 2 Si -> 3); titanium_alloy = forge_titanium_alloy (FAC: 3 Ti ore + 1 steel -> 1) or anchor_plate_forging (3 anchor_plate -> 2; plates only from wildlife/market); focused_crystal = 4 trade_crystal (workshop 24 ticks) | 4 raw_focusing_crystal; steel = basic_iron_smelting (wk) | refine_steel (FAC); silicate_composite = 4 Si + 2 Ni (wk) or 2 Si + 2 Ni + 1 iridium_ore (bond_iridium_silicate_composite); copper_wiring = basic_copper_processing (wk 8 Cu) | process_copper_wiring (FAC 4 Cu -> 2).
+- Lookup: `python3 scripts/recipe.py tree <item>` / `recipe.py <item>` / `recipe.py item <item>` (catalog cached /tmp/catalog.json from https://game.spacemolt.com/api/catalog.json).
+- onboard_* recipes are SHIP capabilities (not station-craftable). Items need required_skills to equip (mining_laser_ii mining 2; cloaking_device_i stealth 1).
+- Resonance Miner (catalog id resonance_miner): Requires Piloting 10, min crew 3, cargo 180 (ore 50%), 0W/2D/4U, power 48, CPU 28. Build: copper_wiring 40, titanium_alloy 30, void_nanite_suspension 20, shield_emitter 5, ore_hopper 8, silicate_composite 60, void_condensate 5, processed_null_matter 7, shield_matrix 15, sensor_array 8, processing_core 2, phase_matrix 2. See GAME-PLAN.md for the raw bill.
 
-## § Stealth / cloak
-- Cloak strength = modules + hull bonus, x Stealth skill (1%/lvl). Scan power = modules x Scanning (1%/lvl). Straight comparison.
-- cloaking_device_i (cloak 40, 10 pw) needs stealth 1; ii (70) stealth 3; emergency_cloaking_system (60, auto-cloaks + exits battle when shields hit 0) stealth 3; phase_cloaking_device (95) stealth 5.
-- Chicken-egg: stealth trains by cloaking. Possible unlock: cloaking_dust consumable (+40 cloak 5 ticks) — unverified.
-- Cloak burns 1 fuel/tick. Cloaked = hidden from get_nearby/system lists unless out-scanned.
+## Fitting / ship
+- Threshold: 1W/2D/2U, CPU 16, power 30, speed 1, jump 60 s, 1 fuel/jump, cargo 65, fuel 95. install/uninstall only at a dock. install_mod takes the TYPE id; uninstall_mod needs the INSTANCE id (read get_ship; ids change after withdraw/reinstall).
+- Module stats (CPU/power): mining_laser_i 2/5 mine5 | ii 4/8 mine12 | iii 6/12 mine22 | strip_miner_i 7/22 mine50 common-only | deep_core_extractor mk_i 8/15 | survey_scanner_i 3/4 | ii 5/7 | cloaking_device_i 5/10 | afterburner_i 2/3 | cargo_expander_i 1/1 +20 | ii 2/2 +50 | shield_booster_ii 3/6 | em_disruptor_i 5/8 | shield_recharger_i 2/5 | thermal_hull_hardener 2/4.
+- Starter ship uninsurable (replaced free). Death drops ~70% fitted modules to a recoverable wreck; credits/skills/storage safe.
 
-## § Risk / lawless
-- Pirates patrol police <=20 systems. Being scanned in lawless space = attack warning -> leave/dock.
-- In jump transit you are not at a POI. Exposure = time parked at POIs.
-- S2 crossed ~25 lawless systems (5 routes) with zero pirate contact.
-- Starter ships cannot be insured (replaced free). Death: ~70% fitted modules drop to wreck (recoverable), 50-80% cargo drops. Credits/skills/storage safe.
-- Combat logout: aggression flag 30 ticks; disconnect while flagged = pilotless 30 ticks.
-- Police drones don't chase across POIs.
-- TOW (CONFIRMED t2093500): ship left undocked while the session idled was recovered by the Galactic Salvage Authority to the nearest station (zubenelhakrabi -> ramens_rest), ~500cr. Not dangerous, but always end docked (scripts/safe_dock.sh).
+## Stealth / cloak
+- Cloak strength = module + hull bonus x Stealth skill (1%/lvl) vs scan power. cloaking_device_i (cloak 40, 10 pw) needs stealth 1; ii (70) stealth 3; emergency_cloaking_system stealth 3; phase cloak (95) stealth 5. Stealth XP +5 per activation (GAME-PLAN: dock-cycle training). Chicken-egg to get Stealth 1: Q5 cloaking_dust (open).
 
-## § Intel sources (forum, verify live)
-- Silicon + trade_crystal + nickel + titanium belong to the METALLIC belt ore table; not survey-gated. Every known core belt is stripped; look in untouched lawless belts / special POIs (Crystal Sand).
-- Forum belt intel decays in ~weeks (Mimosa "100k" -> 110 by t2092400). Trust only fresh `scout` reads.
-- Cobalt: Krynn War Materials belt (forum). Titanium ore stored by a player at The Crucible.
+## Risk / lawless
+- Pirates patrol police<=20 systems; scanned = warning. ~100 lawless systems crossed (S2+S3), zero contact. In jump transit you are not at a POI. Combat logout: flag 30 ticks.
+- TOW: an undocked ship whose session idles is recovered by the Galactic Salvage Authority to the nearest station (~500cr). Always end docked; chain `scripts/safe_dock.sh` after unattended jobs. Explore/stack jobs can die when a tool call is interrupted: check `pgrep -f explore.py|stackmine` + `sm.py status`; stackmine also stops with action_in_progress if you send other game actions meanwhile (don't).
 
-## § Mission payers (t2094013)
-- Paid in full: Solarian (audit 20,000), Nebula (prospectus 20,000), Outer Rim (memorial 8,000; wayfinder 20,000; debris 4,500). Voidborn: 0-84%.
-- Outer Rim board (frontier_station = mobile_capital, first_step): wayfinder circuit 20k (6 OR stations within 3 jumps, 11-jump loop), memorial 8k (instant at first_step_memorial_station), debris 4.5k. Outer Rim fuel tax ~1cr/unit.
-- Missions must be ACCEPTED at their issuing station (mission_not_available elsewhere). Dock objectives only count after accepting (re-dock if needed).
-- Best earners: dock-at-N-stations exploration missions at capitals: ~20k each, ~1 hr with scouting.
-- Player stations in lawless space may deny docking (access_denied); explore.py continues.
+## Economy / market
+- Silicon, titanium ore, nickel are NOT sold anywhere seen (only buy bids 180/15/14); mine them. titanium_alloy not sold (bid 311). Market (Ramen's Rest t2095372): cargo_expander_ii 1,908, mining_laser_ii 7,308, survey_scanner_ii 30,800.
+- BUY vs CRAFT (user order S3): buy modules/upgrades (never ships) when market price < raw-resource cost; log in DECISIONS (D23).
+- Fuel tax per unit: Voidborn 2, Solarian ~6, Nebula ~5, Crimson ~4, Outer Rim ~1. exotic_matter is category ore (stockpile rule). Ore bids often 1cr.
+- Empire treasury: Voidborn missions pay 0-84%; Solarian/Nebula/Outer Rim/Crimson pay in full.
 
-## § Economy quirks
-- EMPIRE TREASURY: Voidborn missions pay 0-84% (treasury short). Item rewards paid in full. Market Services missions paid full.
-- exotic_matter is category ore -> stockpile rule applies.
-- Ore bids often 1cr, asks high; energy_crystal ask 34k at Sirius vs 1,400 at Grand Exchange (books differ wildly per station).
-- Fuel tax: Voidborn +2/unit, Solarian ~+6/unit, Nebula ~+5/unit, Outer Rim ~+1/unit.
-- Insurance/home: spacemolt_salvage actions quote/insure/policies/set_home.
+## Missions
+- Accept AT the issuing station; dock objectives count only after accepting; max 5 active; board visible only when docked (`sm.py missions`; get_missions raw output is truncated by sm.py).
+- Paid S3: strategic_readiness_assessment 20,000 (Crimson, report back at war_citadel), last_known_position 8,000 (chain next = combat), five_capitals 15,000, grand_tour 12,000, cartography 4,000, local_survey 2,500, titanium_extraction 3,500, edge_of_known_space_reconnaissance 6,000 (accept at unknown_edge waystation; completes at deep_range_outpost). S2: wayfinder 20,000, memorial 8,000, debris 4,500, audit 20,000, prospectus 20,000.
+- courier_to_haven provides no cargo (you must own 5 silver): avoid. Faction/delivery supply contracts (63k-100k) need delivered goods: Q4.
+- Lawless/player stations may deny docking (wealth_lane).
 
-## § Ship/XP mechanics
-- Engineering passive ~1 XP/tick at >=90% load. Draw drops ~1%/level: Engineering 12 put Threshold at 26/30 (87%) -> passive XP OFF until a module upgrade (ML I->ML II gives ~29/30).
-- Resonance Miner: needs Piloting 10, min crew 3, 0 weapon slots, cargo 180 (ore 50% size), +25% ore yield, CPU 28, power 48, 2D/4U, speed 2, fuel 330.
-- Threshold: 1 fuel/jump, jump 60s (speed 1). In-system travel ~1-2 min.
+## Tools / harness (cost control)
+- sm.py = 1-line outputs; raw MCP game actions return ~10k tokens each. MCP session expires (re-login); sm.py session self-renews; both coexist.
+- NEVER send several sleeping bash calls in one parallel block (tool crash). A crash does not kill setsid jobs. Launch jobs in their own call; poll with one `sleep<=58; tail -1 log` per call.
+- push_files needs the FULL file content: keep volatile files small, data in data/*.tsv, and push only changed files.
+- Tick: https://game.spacemolt.com/health (hand-estimated stamps drift ~100+ ticks).
+- Docs: https://spacemolt.com/docs/<slug>.md. Action log: `sm.py call spacemolt_social get_action_log '{"page_size":12}'`.
 
-## § Module stats (base CPU/power)
-mining_laser_i 2/5 mine5 | ii 4/8 mine12 | iii 6/12 mine22 | strip_miner_i 7/22 mine50 common-only | deep_core_extractor mk_i 8/15 mine15 | survey_scanner_i 3/4 survey30 | ii 5/7 survey60 | cloaking_device_i 5/10 | afterburner_i 2/3 +1spd | cargo_expander_i 1/1 +20 | ii 2/2 +50 | shield_booster_ii 3/6 | em_disruptor_i 5/8 | shield_recharger_i 2/5 | thermal_hull_hardener 2/4.
-
-## § Tools
-- HTTP v2 and MCP sessions coexist. Scripts give 1-line outputs; MCP mutation replies ~10k tokens.
-- Tool calls crash on long waits; launch background jobs with `setsid nohup ... < /dev/null &` in their own call; poll with scripts/poll.sh (sleep <=60).
-- Client timeout does NOT cancel travel/jump (ERR in_transit). Poll `sm status`.
-- Background jobs can still die when the agent session pauses -> ship idles undocked -> tow. Keep runs short near session end.
-- Docs as markdown: https://spacemolt.com/docs/<slug>.md (police, scanning, death, crafting, travel, mining, combat, ships, exploration). Public bulk feed has no resource data.
-- explore.py scans every non-planet/star/station POI (unknown types like "Crystal Sand" were skipped before t2094013).
-- Action log: `sm call spacemolt_social get_action_log '{"page_size":12}'` explains surprises (tows, level-ups).
-- Repo is public: refresh local copies with curl https://raw.githubusercontent.com/mufon609/spaceAGENT/Alien_Abductee_Gemini/<file>.
-
-## § Skill Guide Summary (spacemolt.com/skill.md + guides, v0.613)
-- Tick ~10s; 1 mutation/tick; queries free (300/min); mutations 30/min. Jump time (7-speed)x10s.
-- 28 skills, train by doing, never lost. Deposit lock: refused only if remaining <25% of max AND beam > 4x supported.
-- Death keeps credits/skills/storage; respawn at home base. Crafting queued, inputs from station storage.
-- Captain's log max 20 entries. Combat: avoid; flee early.
+## Skill Guide Summary (v0.613)
+- Tick ~10 s; 1 mutation per tick (a 2nd concurrent action returns action_in_progress); queries free (300/min); mutations 30/min. Jump time (7-speed)x10 s. 28 skills train by doing. Deposit lock: refused only if remaining <25% of max AND beam > 4x supported. Death keeps credits/skills/storage; respawn at home. Captain's log max 20 entries. Combat: avoid; flee early.
