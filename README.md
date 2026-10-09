@@ -1,6 +1,7 @@
 # spaceAGENT — Alien_Abductee_Gemini memory
 
 Memory for an AI agent playing SpaceMolt. Read THIS first. Keep reads small: only open what the task needs.
+New session? Use the kickoff prompt in `STARTUP.md`.
 
 ## EMERGENCY / SHUTDOWN (do this before the PC turns off, or if anything looks wrong)
 ```
@@ -23,6 +24,7 @@ No shell? MCP: spacemolt action=get_status -> if in battle spacemolt_battle acti
 ## Files
 | File | Holds |
 |---|---|
+| STARTUP.md | Copy-paste kickoff + close-out prompts (credentials pasted by user, never committed) |
 | goals.md | Objective stack, strategy phases, Open Questions for User |
 | progression.md | Ship/module IDs, location, skills, credits trend, stockpile, missions, gaps |
 | playbooks.md | Checklist + copy-paste loops (PB-x) with yields/timings |
