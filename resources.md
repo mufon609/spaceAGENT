@@ -2,7 +2,7 @@
 
 Verdict: STOCK = worth stockpile mining | MISSION = mission units only | DEAD = skip | FUTURE = needs gear we lack.
 Ore cell: ore r<richness>/<remaining>/p<supported_power>. Generate rows with `python3 scripts/explore.py md`.
-PATTERN (t2091600): policed belts are drained to ~0; LAWLESS belts are near-untouched (10k-70k units).
+PATTERN (t2091600): policed belts are drained to ~0; LAWLESS belts are near-untouched (10k-100k units).
 
 ## Systems (police: 0 = lawless)
 | System | Empire | Police | Station | Links |
@@ -38,8 +38,18 @@ PATTERN (t2091600): policed belts are drained to ~0; LAWLESS belts are near-unto
 | market_prime | nebula | 80 | market_prime_exchange | cargo_lanes, gold_run, haven |
 | haven | nebula | 100 | grand_exchange (base grand_exchange_station) | market_prime, traders_rest |
 | traders_rest | nebula | 80 | traders_rest_resort_station | factory_belt, khambalia, haven, gliese_436, ogma |
+| factory_belt | nebula | 55 | factory_belt_manufacturing_hub | traders_rest, khambalia, pollux, treasure_cache |
+| treasure_cache | nebula | 30 | treasure_cache_trading_post | ross_128, pollux, ashford, factory_belt |
+| pollux | nebula | 30 | none | sadalmelik, factory_belt, nusakan, khambalia, treasure_cache |
+| nusakan | none | 0 LAWLESS | none | azmidi, sadalmelik, pollux, naos |
+| azmidi | nebula | 30 | none | nusakan, alioth, khambalia, almach |
+| khambalia | nebula | 55 | none | factory_belt, traders_rest, azmidi, pollux, gliese_436 |
+| gliese_436 | nebula | 55 | none | ogma, caph, the_levy, khambalia, traders_rest |
+| the_levy | nebula | 30 | the_levy_customs_station | ogma, wealth_lane, gliese_436, stonecrest |
+| wealth_lane | none | 0 LAWLESS | player station 22c5a816... (access denied) | copernicus, the_levy, gold_run |
+| cargo_lanes | nebula | 55 | cargo_lanes_freight_depot | gold_run, market_prime, bunda, alrakis, alula |
 | the_experiment, gsc_0027, hamal, schedar | voidborn/none | ? | ? | visited S1, belts unrecorded (check for Silicon) |
-Verified safe-to-transit (no contact S2): gsc_0041, antares, homam, miaplacidus, maplevale, dubhe, alfirk, revati, zibal, keelbreak. Sol->Haven = 14 jumps (~45 min with scouting). Solarian stations docked OK: sirius, alpha_centauri, nova_terra, procyon, sol. Route node_beta->sirius = 9 jumps, ~25 min with belt scouting.
+Verified safe-to-transit (no contact S2): gsc_0041, antares, homam, miaplacidus, maplevale, dubhe, alfirk, revati, zibal, keelbreak, nusakan, wealth_lane. Sol->Haven = 14 jumps (~45 min with scouting). Solarian stations docked OK: sirius, alpha_centauri, nova_terra, procyon, sol. Route node_beta->sirius = 9 jumps, ~25 min with belt scouting.
 Unvisited frontier near home: achernar, gj_3470, gsc_0050, ironhollow, megrez, okab, ruchbah, shaula, thornhaven, wolf_1061.
 
 ## Deposits / belt health
@@ -47,7 +57,15 @@ Unvisited frontier near home: achernar, gj_3470, gsc_0050, ironhollow, megrez, o
 |---|---|---|---|---|---|---|
 | acubens | acubens_belt | low | laser | 0-5 | 2091440: carbon r55/789/p39 tungsten r34/347/p17 platinum r14/664/p33 palladium r28/4/p1 uranium r13/72/p3 lead r15/923/p46 (max 5000) | STOCK (PB-1) |
 | acubens | acubens_shadow_pocket | low | ? | 6 | S1: camped dry | DEAD |
-| keelbreak | uncut_gems_keelbreak | 0 | laser | 5 | 2092400: iron r45/97938/p4896 copper r24/99611/p4980 trade_crystal r18/63/p3 | STOCK Fe/Cu + TRADE CRYSTAL (focused_crystal input) |
+| azmidi | unclaimed_facets_azmidi | 30 | laser | 2 | 2092300: iron r34/100000/p5000 copper r34/100000/p5000 trade_crystal r30/206/p10 | BEST TRADE CRYSTAL: picked 7/8 cycles, 2-3/cycle (Mining 8). Nearest dock: treasure_cache (2j) / the_levy (3j) |
+| nusakan | nusakan_belt | 0 | laser | 1 | 2092300: iron r42/99988 copper r41/99982 silver r32/18/p1 | SILVER (18). Come with empty hold: Fe/Cu picks are 5/cycle |
+| gliese_436 | gliese_436_belt | 55 | laser | 4 | 2092500: carbon r42/1839/p91 platinum r19/205/p10 iridium r18/1047/p52 gold r29/73/p3 osmium r12/230/p11 thorium 0 | STOCK mixed (iridium/osmium) |
+| wealth_lane | trappist_prime_belt | 0 | laser | 0 | 2092500: iron r53/100000 copper r41/100000 | STOCK Fe/Cu |
+| khambalia | khambalia_crystal_market | 55 | laser | 0 | 2092500: iron r36/225 copper r35/251 trade_crystal r30/3/p1 | thin |
+| azmidi | azmidi_belt | 30 | laser | 1 | 2092300: carbon r64/46 platinum r12/12 palladium r29/1 thorium r11/17 aluminum r49/47 rhodium r12/0 | thin |
+| treasure_cache / khambalia / pollux | belts | 30-55 | laser | 1-3 | 2092300: carbon/iridium/gold/nickel/vanadium/lead ~0 | DEAD |
+| nebula gas/ice (factory_belt, treasure_cache, azmidi, khambalia, the_levy, cargo_lanes, gliese_436, wealth_lane) | various | 0-55 | harvesters | 0-1 | 2092300-500: H2 31-50k, argon/neon ~50k, xenon 10k, krypton 5k (azmidi), deuterium 4.3k (the_levy), ammonia 9k (azmidi) | FUTURE |
+| keelbreak | uncut_gems_keelbreak | 0 | laser | 5 | 2092400: iron r45/97938/p4896 copper r24/99611/p4980 trade_crystal r18/63/p3 | STOCK Fe/Cu + some trade crystal |
 | miaplacidus | miaplacidus_alloy_remnants | 0 | laser | 1 | 2092400: iron r39/100000/p5000 copper r29/100000/p5000 sol_alloy r5/898/p44 | STOCK Fe/Cu (lawless) |
 | haven | commerce_fields | 100 | laser | 1 | 2092400: iron r75/10 copper r65/10 nickel r55/2 silicon r70/2 trade_crystal r20/14 (p1) | DEAD; proves metallic table has Si + trade_crystal |
 | gold_run | gold_run_mineral_fields | 55 | laser | 4 | 2092400: carbon r48/332/p16 vanadium r46/1 palladium r30/1 gold r25/0 | thin carbon |
@@ -82,8 +100,8 @@ Unvisited frontier near home: achernar, gj_3470, gsc_0050, ironhollow, megrez, o
 | node_alpha | alpha_extraction_zone | high | laser | 3 | 2090780: all 0 | DEAD |
 
 ## Still unfound (crafting blockers)
-titanium_ore, silicon_ore (metallic-belt table; all known core belts stripped), energy_crystal (rare), silver_ore, nickel_ore, cobalt_ore (Krynn War Materials belt per forum).
-Trade crystal: keelbreak (63, p3) + azmidi Unclaimed Facets (forum: regenerating ~1.3k r30).
+titanium_ore, silicon_ore (metallic-belt table; all known core belts stripped), energy_crystal (rare), nickel_ore, cobalt_ore (Krynn War Materials belt per forum).
+Trade crystal: azmidi unclaimed_facets_azmidi (206, p10, verified) > keelbreak (63, p3). Silver: nusakan (18).
 Wildlife sources: raw_focusing_crystal (ranched "druse"), anchor_plate (magnet-barnacle shell -> titanium_alloy), irradiated_marrow (geiger-hound -> power_cell).
 
 ## Market reference (asks unless noted; thin books, not valuations)
