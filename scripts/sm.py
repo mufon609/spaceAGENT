@@ -13,7 +13,7 @@ Usage:
   sm.py scout                             1-line POI report: sec, crowd, ores (paste to resources.md)
   sm.py loop <belt_sys> <belt_poi> <home_sys> <station> [trips]
                                           full mine->bank loop; run in background:
-                                          nohup python3 -u sm.py loop ... > /tmp/loop.log 2>&1 &
+                                          setsid nohup python3 -u sm.py loop ... > /tmp/loop.log 2>&1 < /dev/null &
                                           graceful stop after current trip: touch /tmp/sm_stop
                                           abort now + emergency dock:       touch /tmp/sm_emergency
   sm.py preflight                         checklist: battle/transit/hull/fuel/cargo/crew; auto-fix if docked
@@ -112,7 +112,7 @@ def scout():
 
 
 def mine(max_cycles=100, min_avg=0.0):
-    """min_avg>0: stop when avg yield of last 5 cycles < min_avg. Returns stop reason."""
+    """min_avg>0: stop when avg yield of last 10 cycles < min_avg. Returns stop reason."""
     tot, recent, why = {}, [], "max_cycles"
     for i in range(1, max_cycles + 1):
         r = call("spacemolt", "mine")
@@ -125,7 +125,7 @@ def mine(max_cycles=100, min_avg=0.0):
         d, sh = s.get("details", {}), s.get("ship", {})
         rid, q = d.get("resource_id"), d.get("quantity", 0)
         tot[rid] = tot.get(rid, 0) + q
-        recent = (recent + [q])[-5:]
+        recent = (recent + [q])[-10:]
         used, cap = sh.get("cargo_used", 0), sh.get("cargo_capacity", 0)
         print("c%d +%s %s (left %s) cargo %s/%s" % (i, q, rid, d.get("remaining"), used, cap))
         if s.get("location", {}).get("nearby_pirate_count", 0):
@@ -140,8 +140,8 @@ def mine(max_cycles=100, min_avg=0.0):
             print("STOP cargo full")
             why = "full"
             break
-        if min_avg and len(recent) == 5 and sum(recent) / 5.0 < min_avg:
-            print("STOP low yield avg=%.1f < %s" % (sum(recent) / 5.0, min_avg))
+        if min_avg and len(recent) == 10 and sum(recent) / 10.0 < min_avg:
+            print("STOP low yield avg=%.1f < %s (last 10)" % (sum(recent) / 10.0, min_avg))
             why = "low_yield"
             break
         if os.path.exists(EMERGENCY):
@@ -323,6 +323,23 @@ def _clear_flags():
             os.remove(f)
 
 
+def guarded_loop(*args):
+    """loop() with crash protection: exception -> traceback + emergency dock; SIGTERM -> logged exit."""
+    import signal, traceback
+
+    def on_term(signum, frame):
+        print("EXIT signal %s (killed externally) %s" % (signum, time.strftime("%H:%M:%S")), flush=True)
+        sys.exit(1)
+    signal.signal(signal.SIGTERM, on_term)
+    try:
+        return loop(*args)
+    except SystemExit:
+        raise
+    except Exception:
+        print("EXIT exception:\n" + traceback.format_exc(), flush=True)
+        return safe()
+
+
 def loop(belt_sys, belt_poi, home_sys, station, trips):
     """Repeat: preflight -> belt -> mine till full -> home station -> dock -> dump.
     Any danger/error -> safe() (emergency dock). touch STOPFILE = stop after trip; EMERGENCY = abort now."""
@@ -340,7 +357,7 @@ def loop(belt_sys, belt_poi, home_sys, station, trips):
                 return safe()
         print("trip%d %s" % (t, time.strftime("%H:%M:%S")), end=" ")
         scout()
-        why = mine(40, 2)
+        why = mine(40, 1.5)
         if why in ("danger", "error"):
             return safe()
         for a, tgt in (("jump", home_sys), ("travel", station), ("dock", None)):
@@ -394,7 +411,7 @@ def main(a):
     elif c == "mine":
         mine(int(a[1]) if len(a) > 1 else 100, float(a[2]) if len(a) > 2 else 0.0)
     elif c == "loop":
-        loop(a[1], a[2], a[3], a[4], int(a[5]) if len(a) > 5 else 1)
+        guarded_loop(a[1], a[2], a[3], a[4], int(a[5]) if len(a) > 5 else 1)
     elif c == "scout":
         scout()
     elif c == "preflight":

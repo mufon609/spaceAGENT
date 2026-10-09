@@ -1,7 +1,7 @@
 # Playbooks
 
 Shell setup (once): `export SM_USER='Alien_Abductee_Gemini' SM_PASS='<from user>'`; `S="python3 scripts/sm.py"`.
-Bash tool calls crash near 2-5 min: keep each call <=110s; run loops with nohup and poll the log.
+Tool-call limits: a call that LAUNCHES a background job must not also sleep/wait (crashes). Launch in one call; poll in later calls with `sleep <=60`. Always launch with `setsid nohup ... < /dev/null &` (survives tool crashes).
 No shell? Use MCP spacemolt actions with the same names.
 
 ## PB-0 Checklist (run before EVERY trip / loop; `$S preflight` does all of it)
@@ -15,24 +15,25 @@ No shell? Use MCP spacemolt actions with the same names.
 | 6 | Crew | fit_crew >= minimum_crew | recruit_personnel (docked) |
 | 7 | Destination security known & allowed | in resources.md | ask user |
 | 8 | Shutdown coming? | no | `scripts/safe_dock.sh` |
-`$S loop` runs 1-5 automatically each trip; any failure, pirates, hull damage, or nav error -> automatic emergency dock.
+`$S loop` runs 1-6 automatically each trip. Pirates, hull damage, nav error, exception -> automatic emergency dock.
+Log lines to watch: `PREFLIGHT FAIL`, `STOP`, `SAFE FAILED`, `EXIT` (killed/crashed) -> run PB-0b.
 
 ## PB-0b Start / after any crash
 ```
 $S status ; $S active ; $S preflight
 ```
-On tool crash mid-travel: movement still completes server-side. Never blind-resend.
+Undocked and no loop running? -> `scripts/safe_dock.sh` first. Never blind-resend movement.
 
 ## PB-1 Acubens stockpile loop (C/W/Pb/Pt/Pd) — best Piloting XP (~30/trip)
-Start anywhere in node_beta/acubens area (loop resumes from any state).
+Starts from any state near node_beta/acubens.
 ```
-nohup python3 -u scripts/sm.py loop acubens acubens_belt node_beta node_beta_industrial_station 10 > /tmp/loop.log 2>&1 &
-sleep 100; grep -E "^(PREFLIGHT|trip|TOTAL|STOP|SAFE|LOOP|cr=)" /tmp/loop.log | tail -4
+setsid nohup python3 -u scripts/sm.py loop acubens acubens_belt node_beta node_beta_industrial_station 10 > /tmp/loop.log 2>&1 < /dev/null &
+# next call(s):
+sleep 60; grep -E "^(PREFLIGHT|trip|TOTAL|STOP|SAFE|EXIT|LOOP|cr=)" /tmp/loop.log | tail -4
 touch /tmp/sm_stop        # graceful: stop after current trip, docked
 touch /tmp/sm_emergency   # abort now -> emergency dock
 ```
-Measured S2: ~5.2 min/trip, ~3 fuel/trip, per trip ~W19 C19 Pt3 Pd2 Pb1.
-If log shows STOP/SAFE FAILED: run PB-0b, read the line, fix, restart.
+Measured S2: ~5.2 min/trip, ~3 fuel/trip, per trip ~W19 C19 Pt3 Pd2 Pb1. Low-yield stop = avg <1.5 over last 10 cycles.
 
 ## PB-2 Pherkad Cu/Fe (mission units only)
 node_beta -> node_alpha -> synchrony -> pherkad (3 jumps), `$S go pherkad_null_rift`, `$S mine 40`. 1 unit/cycle. Return same path.
