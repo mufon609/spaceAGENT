@@ -1,21 +1,60 @@
 #!/usr/bin/env python3
 """explore.py - scout a path of adjacent systems; record security, stations, every resource POI.
-Usage (background):  setsid nohup python3 -u explore.py sysA,sysB,sysC [nobelts] [dock] > /tmp/explore.log 2>&1 < /dev/null &
+Usage (background):  setsid nohup sh -c "python3 -u scripts/explore.py 'sysA,!sysB,sysC' [nobelts] [dock] > /tmp/explore.log 2>&1; scripts/safe_dock.sh" < /dev/null > /dev/null 2>&1 &
   dock = after scouting, dock at the first station of each system (inspection missions, refuel <70%).
-  !sys = jump through/dock but skip belt scan for that system (already recorded).
-Output: /tmp/explore.log (readable lines) + /tmp/explore.jsonl (one JSON per system; convert with
-        `python3 explore.py md` -> markdown rows for resources.md).
-Safety: leaves a POI with pirates; safe() on hull damage/battle; fuel guard turns home when fuel < return+8.
-Needs SM_USER/SM_PASS. Imports sm.py from the same folder. Keep runs short near session end (a dead job leaves the ship undocked -> tow).
+  !sys = jump through but skip belt scan for that system. Without `dock` the ship ends in space: chain safe_dock.sh.
+Output: /tmp/explore.log + /tmp/explore.jsonl (raw) AND data/systems.tsv + data/belts.tsv are UPSERTED live (keeps manual verdicts);
+        commit those two files at checkpoints. Query with scripts/res.py.
+Safety: leaves a POI with pirates; safe() on hull damage/battle; fuel guard turns home when fuel < return+8 (home default node_beta).
+Needs SM_USER/SM_PASS. Imports sm.py from the same folder. Dies silently if the agent tool call is interrupted: check pgrep -f explore.py.
 """
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sm import call, sc, wait_idle, in_battle, safe, step, status_line
 
+DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
+
+
+def _tick():
+    try:
+        import urllib.request
+        return json.loads(urllib.request.urlopen("https://game.spacemolt.com/health", timeout=8).read().decode()).get("tick")
+    except Exception:
+        return "?"
+
+
+def _load(name):
+    p = os.path.join(DATA, name); d = {}
+    if os.path.exists(p):
+        for l in open(p):
+            if l.startswith("#") or not l.strip():
+                continue
+            c = l.rstrip("\n").split("\t"); d[tuple(c[:2]) if name == "belts.tsv" else c[0]] = c
+    return d
+
+
+def _save(name, hdr, d):
+    os.makedirs(DATA, exist_ok=True)
+    open(os.path.join(DATA, name), "w").write(hdr + "\n".join("\t".join(v) for _, v in sorted(d.items())) + "\n")
+
+
+def upsert(rec, tick):
+    """Merge one explored system into data/systems.tsv and data/belts.tsv (keeps manual verdicts)."""
+    S = _load("systems.tsv"); B = _load("belts.tsv")
+    lk = ",".join(c.get("system_id", c) if isinstance(c, dict) else c for c in (rec.get("links") or []))
+    S[rec["system"]] = [rec["system"], rec.get("empire") or "none", str(rec.get("police") or 0), ";".join(rec.get("stations") or []) or "none", lk]
+    for b in rec.get("belts", []):
+        ores = " ".join("%s r%s/%s/p%s" % (k.replace("_ore", ""), *v) for k, v in b["ores"].items())
+        old = B.get((rec["system"], b["poi"]))
+        B[(rec["system"], b["poi"])] = [rec["system"], b["poi"], str(rec.get("police") or 0), b.get("type", ""), str(b.get("players")), "t%s: %s" % (tick, ores), old[6] if old and len(old) > 6 else ""]
+    _save("systems.tsv", "# id\tempire\tpolice(0=lawless)\tstations(;)\tlinks(,)\n", S)
+    _save("belts.tsv", "# system\tpoi\tpolice\tequip/type\tplayers\tlast_seen(ore r<richness>/<remaining>/p<supported_power>)\tverdict\n", B)
+
+
 def explore(route, belts=True, home="node_beta_industrial_station", dock=False):
     """Scout a path of adjacent systems. Per system: security, stations, POIs; per resource POI: ores + crowd.
     Pirates at a POI -> leave it at once. Hull damage / battle -> safe(). Fuel guard: turns back when
-    fuel < route-home estimate + 8. Appends JSON lines to /tmp/explore.jsonl."""
+    fuel < route-home estimate + 8. Appends JSON lines to /tmp/explore.jsonl and upserts data/*.tsv."""
     out = open("/tmp/explore.jsonl", "a")
     for sysid in route:
         scan = belts and not sysid.startswith("!")
@@ -65,6 +104,7 @@ def explore(route, belts=True, home="node_beta_industrial_station", dock=False):
                     break
         out.write(json.dumps(rec) + "\n")
         out.flush()
+        upsert(rec, _tick())
         if dock and rec["stations"]:
             ok = step("travel", rec["stations"][0]) and step("dock")
             print("  DOCK %s %s" % (rec["stations"][0], "ok" if ok else "FAILED"))
@@ -76,25 +116,8 @@ def explore(route, belts=True, home="node_beta_industrial_station", dock=False):
     return True
 
 
-def to_md():
-    for l in open("/tmp/explore.jsonl"):
-        r = json.loads(l)
-        sec = "LAWLESS" if not r["police"] else "police %s" % r["police"]
-        links = ",".join(c.get("system_id", c) if isinstance(c, dict) else c for c in (r["links"] or []))
-        print("| %s | %s | %s | %s | %s |" % (r["system"], r["empire"] or "none", sec, ",".join(r["stations"]) or "none", links))
-    eqm = {"asteroid_belt": "laser", "ice_field": "ice harvester", "gas_cloud": "gas harvester", "nebula": "laser"}  # other types -> "?"
-    for l in open("/tmp/explore.jsonl"):
-        r = json.loads(l)
-        for b in r["belts"]:
-            ores = " ".join("%s r%s/%s/p%s" % (k.replace("_ore", ""), *v) for k, v in b["ores"].items())
-            print("| %s | %s | %s | %s | %s | %s |" % (r["system"], b["poi"], "LAWLESS" if not r["police"] else "p%s" % r["police"],
-                  eqm.get(b["type"], "?"), b["players"], ores))
-
-
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "md":
-        to_md()
-    elif len(sys.argv) > 1:
+    if len(sys.argv) > 1:
         opts = sys.argv[2:]
         explore(sys.argv[1].split(","), belts="nobelts" not in opts, dock="dock" in opts)
     else:
