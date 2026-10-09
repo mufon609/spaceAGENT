@@ -29,7 +29,7 @@ Usage:
   sm.py missions | active                 board missions | my active missions (compact)
   sm.py storage [station_id]              storage here or remote
 Tools: spacemolt, spacemolt_storage, spacemolt_market, spacemolt_social, spacemolt_battle,
-       spacemolt_catalog(action=catalog)
+       spacemolt_salvage, spacemolt_facility, spacemolt_catalog(action=catalog)
 """
 import json, os, sys, time, urllib.request, urllib.error
 
@@ -168,7 +168,17 @@ def dump():
 # ---------------------------------------------------------------- safety layer
 # Known stations where we can dock (add new ones as found). First entry = home.
 SAFE_STATIONS = ["central_nexus", "node_beta_industrial_station", "node_alpha_processing_station",
-                 "node_gamma_relay_station", "synchrony_hub"]
+                 "node_gamma_relay_station", "synchrony_hub",
+                 # Solarian
+                 "confederacy_central_command", "sirius_observatory_station", "alpha_centauri_colonial_station",
+                 "nova_terra_central", "procyon_colonial_station",
+                 # Nebula
+                 "grand_exchange_station", "market_prime_exchange", "gold_run_extraction_hub", "cargo_lanes_freight_depot",
+                 "traders_rest_resort_station", "factory_belt_manufacturing_hub", "treasure_cache_trading_post",
+                 "the_levy_customs_station",
+                 # Outer Rim
+                 "frontier_station", "first_step_memorial_station", "deep_range_outpost", "unknown_edge_waystation",
+                 "ramens_rest", "void_gate_outpost", "starfall_salvage_station"]
 EMERGENCY = "/tmp/sm_emergency"   # touch -> loops abort now and run safe()
 STOPFILE = "/tmp/sm_stop"         # touch -> loops stop after current trip (docked)
 MIN_FUEL_PCT = 0.5                # preflight: refuel when docked below this; refuse to undock below 0.3

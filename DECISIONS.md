@@ -28,8 +28,9 @@ Time = game tick (`curl -s https://game.spacemolt.com/health` -> tick; ~10s/tick
 ## D5 t2091490 — Lawless/frontier exploration risk
 - Need: find titanium, silicon, energy_crystal, silver, nickel, cobalt.
 - Thinking: Starter ship cannot be insured but is replaced free; death loses ~70% of fitted modules to a recoverable wreck + cargo; credits/skills/storage safe. Pirates patrol police<=20; being scanned = attack warning; at speed 1 flee is weak. In hyperspace (jump) you are not at a POI.
-- Decision: go now with current fit (lasers needed to mine finds). Keep EM disruptor fitted (holds 90% reactor load = Engineering XP). Script leaves any POI with pirates; safe() on damage; fuel guard to return home.
+- Decision: go now with current fit (lasers needed to mine finds). Keep EM disruptor fitted (holds reactor load = Engineering XP). Script leaves any POI with pirates; safe() on damage; fuel guard to return home.
 - Why: user approved risk; expected loss small (~10k modules worst case, partly recoverable) vs. unlocking all crafting.
+- RESULT S2: ~25 lawless systems crossed, zero pirate contact.
 
 ## D6 t2091490 — First exploration target: Solarian space via Pherkad
 - Decision: node_gamma>synchrony>pherkad>gsc_0041>antares>homam>furud>nova_terra>sirius, scouting every belt.
@@ -90,4 +91,9 @@ Time = game tick (`curl -s https://game.spacemolt.com/health` -> tick; ~10s/tick
 ## D18 t2093100 — Use rented station facilities for facility-only steps
 - Thinking: titanium_alloy has no ore-based workshop recipe (onboard_ = ship-only). Station production facilities rent per run. Facility fees are a service; outputs come from our own ore.
 - Decision: refine_steel x3 (6 steel, 57cr) + process_copper_wiring x20 (40 wiring, 340cr) at deep_range_outpost; forge_titanium_alloy x4 (148cr) at Frontier Station.
-- RESULT t2093125: 4 titanium_alloy in cargo. Remaining ML II input: 3 circuit_board (needs 2 silicon).
+- RESULT t2093125: 4 titanium_alloy made. Remaining ML II input: 3 circuit_board (needs 2 silicon).
+
+## D19 t2094013 — Close-out (user request)
+- Event: explore.py died right after jumping into zubenelhakrabi (session pause). Ship sat undocked; session idled -> Galactic Salvage Authority towed it to Ramen's Rest (last_light), ~500cr. Confirms forum tow mechanic. Crystal Sand POI not scanned (explore.py skipped unknown POI types; fixed).
+- Decision: end docked at ramens_rest; deposit titanium_alloy 4, steel 2, Ti 1 there; add all discovered stations to SAFE_STATIONS so safe() finds the nearest one anywhere.
+- Next session: zubenelhakrabi Crystal Sand is 5 jumps (fang>errai>alsciaukat>sheliak>zubenelhakrabi): scan + mine silicon, then craft ML II (restores >=90% power for Engineering XP; Engineering 12 dropped load to 26/30).
