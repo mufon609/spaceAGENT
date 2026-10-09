@@ -13,28 +13,36 @@ No shell? MCP: spacemolt action=get_status -> if in battle spacemolt_battle acti
 
 ## Session boot (in order)
 1. `goals.md` — what to do now + Open Questions. Clear any question the user's message answers.
-2. `progression.md` — ship, modules, skills, credits, stockpile, active missions.
+2. `progression.md` — ship, location, modules, skills, credits, stockpile, active missions.
 3. `playbooks.md` — pick a loop, run it. Every loop starts with the Checklist (PB-0).
 4. `resources.md` — only when choosing where to go (belt health, crowding, security).
 5. `knowledge.md` — only when a mechanic is unclear. Never refetch spacemolt.com/skill.md.
-6. Login (MCP `spacemolt_auth login`), `sm status`, fix stale lines in progression.md.
+6. `DECISIONS.md` — skim the last 3 entries for context.
+7. Login (MCP `spacemolt_auth login`), `sm status`, fix stale lines in progression.md.
 
 ## Files
 | File | Holds |
 |---|---|
 | goals.md | Objective stack, strategy phases, Open Questions for User |
-| progression.md | Ship/module IDs, skills, credits trend, stockpile, missions, gaps |
+| progression.md | Ship/module IDs, location, skills, credits trend, stockpile, missions, gaps |
 | playbooks.md | Checklist + copy-paste loops (PB-x) with yields/timings |
 | resources.md | Systems table + deposit/belt-health table (crowd, depletion, verdict) + market prices |
 | knowledge.md | Mechanics, quirks, worth-mining rules, Skill Guide Summary |
-| scripts/sm.py | Tiny HTTP client, 1-line outputs, preflight, loop, safe (emergency dock) |
+| DECISIONS.md | Every real decision: tick, thinking, choice, why, result |
+| scripts/sm.py | Tiny HTTP client, 1-line outputs, preflight, loop, safe (emergency dock; SAFE_STATIONS = known stations in 4 empires) |
 | scripts/safe_dock.sh | One-command emergency dock |
+| scripts/explore.py | Scout a route of systems; records security/stations/every resource POI; auto-safe |
+| scripts/recipe.py | Offline recipe trees from the game catalog (wk/FAC/SHIP tags) |
+| scripts/poll.sh | Print only new lines of a background job's log |
 
 ## Hard rules (user)
 - NEVER sell mined ore or anything made from ore. Stockpile in station storage. Never jettison ore (destroyed).
-- Ask user BEFORE: selling valuable non-ore items, scrap/self-destruct, jettison, purchases >~5,000cr, entering lawless/unknown-security space not listed as verified in resources.md.
+- CRAFT, DON'T BUY: build modules/upgrades from our own ore (workshop or rented facility). Buy raw materials only if impossible to obtain otherwise. Facility rental fees are fine.
+- Lawless space is allowed without asking (user, S2) — know the mechanics first (knowledge.md § Risk).
+- Ask user BEFORE: selling valuable non-ore items, scrap/self-destruct, jettison, major purchases.
 - Credits < 2,000 with no payout queued: stop, ask user.
-- End sessions docked (run safe_dock.sh). Never write the password into the repo.
+- End sessions docked (run safe_dock.sh; PB-8). An undocked idle ship gets towed (~500cr). Never write the password into the repo.
+- Log every real choice in DECISIONS.md with the game tick.
 - Repo: only mufon609/spaceAGENT branch `Alien_Abductee_Gemini`. No force-push, no file deletes.
 - Account is isolated (other fleet accounts exist; user handles them). Do not contact them unless told.
 

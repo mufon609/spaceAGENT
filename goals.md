@@ -1,20 +1,19 @@
 # Goals
 
-## Now (priority order)
-1. NOW: titanium loop frontier pioneer_fields <-> deep_range_outpost until 20 Ti (OR contract 3.5k), then turn in at frontier_station (first_step).
-1b. Then capitals: first_step>...>nexus_prime (21j via the_experiment/synchrony/node_alpha)>krynn (war_citadel, via the_crucible)>sol>haven. Finishes five_capitals 15k + grand_tour 12k + cartography 4k + survey 2.5k.
-1c. At haven: focused_crystal job resumes (7 runs left).
-2. Crafting target = full self-made fit (see DECISIONS D2). focused_crystal SOLVED (trade crystals). Blockers left: silicon_ore (none found yet), titanium_ore (being mined), silver (nusakan). Craft at a workshop while docked; all inputs must be in ONE station's storage.
-3. Piloting 8 -> 10 (Resonance Miner gate). Jumps +3, mining +1/cycle.
-4. Train Crafting/Refining with lead ingots at central_nexus when docked there (D4).
-5. Await new ship (user building). On arrival: switch_ship, recruit 2+ crew (min 3), fit per Phase 3.
+## Now (priority order) — start: docked ramens_rest (last_light)
+1. SILICON: explore.py 'fang,errai,alsciaukat,sheliak,zubenelhakrabi' (5 jumps, lawless, all verified quiet) -> scan Crystal Sand -> `sm mine` silicon (keep hold empty first). Optional: silver at errai_belt on the way back.
+2. CRAFT ML II: needs 3 circuit_board (carbon_arc 12 C + 2 Si -> 3, workshop) + 3 titanium_alloy (have 4 @ ramens_rest) + 1 focused_crystal (@ grand_exchange). Carbon: central_nexus 2043 (or mine carbon). Bring everything to ONE station. Installing ML II in place of ML I restores >=90% power (Engineering XP).
+3. Capitals loop: nexus_prime (central_nexus pouch + grand_tour) > krynn (war_citadel; via the_crucible for cartography) > sol (five_capitals turn-in 15k) > haven (grand_tour 12k + focused crystals). Sirius/node_alpha on the way finish local_sector_survey (turn in at frontier_station).
+4. Titanium contract 13/20 (frontier pioneer_fields) — finish with a bigger hold.
+5. Piloting 8 (1869/2860) -> 10 for the Resonance Miner (user building; needs min crew 3: recruit_personnel).
+6. Train Crafting/Refining (both 0): lead ingots at central_nexus workshop.
 
 ## Income rules
-- Solarian, Nebula, Outer Rim missions pay in full (8k-20k). Voidborn underpaid (D1). Best: dock-at-N-stations circuits at capital boards.
-- No ore/refined delivery missions without user OK (D7). Mine-only contracts are fine (ore stays ours).
+- Solarian, Nebula, Outer Rim missions pay in full (8k-20k). Voidborn underpaid (D1). Best: dock-at-N-stations circuits at capital boards (PB-7; S2 earned ~95k).
+- No ore/refined DELIVERY missions without user OK (D7). Mine-only contracts are fine (ore stays ours).
 
 ## Strategy phases (user GAME-PLAN.md)
-- P1 Wealth+XP <- HERE. P2 Resonance Miner (user building). P3 fit: beam first (2-3 lasers) + survey_scanner + cloak; keep >=90% reactor load. P4 frontier Silicon runs (Zubenelhakrabi Crystal Sand r40, 11 jumps).
+- P1 Wealth+XP <- HERE. P2 Resonance Miner (user building). P3 fit: beam first (2-3 lasers) + survey_scanner + cloak; keep >=90% reactor load. P4 frontier Silicon runs (Zubenelhakrabi Crystal Sand r40; 5 jumps from ramens_rest).
 
 ## Open Questions for User
 - Q4: Ore/refined DELIVERY missions (e.g. Sol faction board: 2,000 Lead Ore -> 20,000cr; 5 circuit boards -> 3,500cr). Allowed as "mission payout", or forbidden as "selling ore"? Default: forbidden.
