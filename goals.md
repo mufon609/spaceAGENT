@@ -1,15 +1,15 @@
 # Goals
 
 ## Now (priority order)
-1. Nebula loop (14 jumps from haven): traders_rest,factory_belt,treasure_cache,pollux,nusakan,azmidi [mine trade_crystal], khambalia,gliese_436,the_levy,wealth_lane,gold_run,cargo_lanes,market_prime,haven. Completes federation prospectus (20k). Scout for silicon.
-1b. Then capitals: krynn (War Citadel, cobalt belt), frontier (mobile_capital), nexus_prime; back to haven (grand tour 12k) and sol (five capitals 15k).
-2. Crafting target = full self-made fit (see DECISIONS D2). Blockers: silicon_ore, titanium_ore, focused_crystal source. Mine them into storage when found; craft at a workshop while docked.
+1. Capitals loop (D12, 84 jumps): haven>first_step (mobile_capital)>frontier>nexus_prime>krynn (war_citadel)>sol>haven. Finishes five_capitals 15k + grand_tour 12k. Scout belts (silicon/titanium/cobalt).
+1b. Before leaving haven: wait for focused_crystal x8 job (done ~t2092649).
+2. Crafting target = full self-made fit (see DECISIONS D2). focused_crystal SOLVED (azmidi trade crystals). Blockers left: silicon_ore, titanium_ore (+ silver for cloak: nusakan). Mine them into storage when found; craft at a workshop while docked.
 3. Piloting 8 -> 10 (Resonance Miner gate). Jumps +3, mining +1/cycle.
 4. Train Crafting/Refining with lead ingots at central_nexus when docked there (D4).
 5. Await new ship (user building). On arrival: switch_ship, recruit 2+ crew (min 3), fit per Phase 3.
 
 ## Income rules
-- Solarian missions pay in full (audit 20,000). Voidborn missions underpaid (D1). Prefer dock/visit exploration missions.
+- Solarian + Nebula missions pay in full (20,000 each). Voidborn underpaid (D1). Prefer dock/visit exploration missions at capitals.
 - No ore/refined delivery missions without user OK (D7).
 
 ## Strategy phases (user GAME-PLAN.md)
