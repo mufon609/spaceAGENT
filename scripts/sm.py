@@ -9,7 +9,8 @@ An HTTP session coexists with an MCP session for the same player.
 Usage:
   sm.py call <tool> <action> ['{json}']   raw call, prints result text
   sm.py status                            one-line status
-  sm.py mine [max_cycles]                 mine until cargo full / depleted / max
+  sm.py mine [max_cycles] [min_avg]       mine until cargo full / error / pirates / low yield
+  sm.py scout                             1-line POI report: sec, crowd, ores (paste to resources.md)
   sm.py go <poi_id>                       travel within system
   sm.py jump <system_id>                  jump to adjacent system
   sm.py dock | undock
@@ -86,8 +87,24 @@ def status_line():
         sh.get("cargo_used"), sh.get("cargo_capacity"), sh.get("hull"), sh.get("max_hull")))
 
 
-def mine(max_cycles=100):
-    tot = {}
+def scout():
+    """One line per POI: sec, crowd, each ore richness/remaining/supported_power. Paste into resources.md."""
+    s = sc(call("spacemolt", "get_status"))
+    lo = s.get("location", {})
+    n = sc(call("spacemolt", "get_nearby"))
+    players = n.get("count", len(n.get("nearby") or []))
+    pirates = n.get("pirate_count", 0)
+    creatures = n.get("creature_count", 0)
+    ores = " ".join("%s:r%s/%s/p%s" % (x.get("item_id", "?").replace("_ore", ""), x.get("richness"),
+                    x.get("remaining"), x.get("supported_power", 0)) for x in lo.get("resources", []))
+    print("SCOUT %s/%s sec=%s players=%s pirates=%s creatures=%s | %s" % (
+        lo.get("system_id"), lo.get("poi_id"), (lo.get("security_status") or "?").split(" (")[0],
+        players, pirates, creatures, ores or "no resources"))
+
+
+def mine(max_cycles=100, min_avg=0.0):
+    """min_avg>0: stop when avg yield of last 5 cycles < min_avg (belt not worth it)."""
+    tot, recent = {}, []
     for i in range(1, max_cycles + 1):
         r = call("spacemolt", "mine")
         if "error" in r:
@@ -98,6 +115,7 @@ def mine(max_cycles=100):
         d, sh = s.get("details", {}), s.get("ship", {})
         rid, q = d.get("resource_id"), d.get("quantity", 0)
         tot[rid] = tot.get(rid, 0) + q
+        recent = (recent + [q])[-5:]
         used, cap = sh.get("cargo_used", 0), sh.get("cargo_capacity", 0)
         print("c%d +%s %s (left %s) cargo %s/%s" % (i, q, rid, d.get("remaining"), used, cap))
         nearby = s.get("location", {}).get("nearby_pirate_count", 0)
@@ -106,6 +124,9 @@ def mine(max_cycles=100):
             break
         if cap and used >= cap - 1:
             print("STOP cargo full")
+            break
+        if min_avg and len(recent) == 5 and sum(recent) / 5.0 < min_avg:
+            print("STOP low yield avg=%.1f < %s" % (sum(recent) / 5.0, min_avg))
             break
     print("TOTAL " + " ".join("%s=%s" % kv for kv in tot.items()))
 
@@ -158,7 +179,9 @@ def main(a):
     elif c == "status":
         print(status_line())
     elif c == "mine":
-        mine(int(a[1]) if len(a) > 1 else 100)
+        mine(int(a[1]) if len(a) > 1 else 100, float(a[2]) if len(a) > 2 else 0.0)
+    elif c == "scout":
+        scout()
     elif c == "go":
         print(short(call("spacemolt", "travel", {"id": a[1]})))
     elif c == "jump":

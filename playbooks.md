@@ -1,45 +1,39 @@
 # Playbooks
 
-All commands use scripts/sm.py (see README). Setup once per shell:
-```
-export SM_USER='Alien_Abductee_Gemini' SM_PASS='<password from user>'
-alias sm='python3 /path/to/scripts/sm.py'
-```
-If no shell: use MCP equivalents (spacemolt action=jump/travel/dock/mine; spacemolt_storage action=deposit).
+Shell setup (once): `export SM_USER='Alien_Abductee_Gemini' SM_PASS='<from user>'`; `S="python3 scripts/sm.py"`.
+Wrap long loops: `timeout 280 $S mine 20` (bash calls cap ~5 min). No shell? Use MCP spacemolt actions with the same names.
 
-## PB-0 Session start check
+## PB-0 Start / after any crash
 ```
-sm status        # credits, location, fuel, cargo, hull
-sm active        # mission progress
-sm storage       # storage at docked station
+$S status    # where am I, fuel, cargo, hull
+$S active    # missions
 ```
 
-## PB-1 Acubens stockpile loop (Carbon/Tungsten/Lead/Platinum/Palladium)
-Start: docked node_beta_industrial_station or node_gamma_relay_station.
+## PB-1 Acubens stockpile loop (C/W/Pb/Pt/Pd) — also best Piloting XP
+Start docked node_beta_industrial_station or node_gamma_relay_station.
 ```
-sm jump acubens            # 60s, lands at acubens_belt, 1 fuel
-sm mine 20                 # stops when cargo full (~9 cycles at 65 cargo)
-sm jump node_gamma         # or node_beta
-sm go node_gamma_relay_station   # or node_beta_industrial_station
-sm dock
-sm dump                    # deposit all cargo
+$S jump acubens          # 60s, lands acubens_belt
+$S scout                 # log to resources.md if changed
+$S mine 20 2             # stops: cargo full / error / pirates / avg<2
+$S jump node_beta        # or node_gamma
+$S go node_beta_industrial_station
+$S dock
+$S dump
 ```
-Yield per trip (65 cargo): ~W20 C21 Pd2, Pt 0-2. Acubens = Low security: if `mine` prints STOP pirates, leave.
-Trip time ~6 min. Refuel when < 30: MCP spacemolt action=refuel (docked).
+Per trip: ~W20 C21 Pd2, Pt 0-2; ~6 min; 2 fuel. Refuel <30 fuel (MCP spacemolt action=refuel, docked).
 
-## PB-2 Cheap buy-mission (Central Nexus)
-```
-sm call spacemolt accept_mission '{"id":"market_participation_buying"}'
-sm call spacemolt buy '{"id":"copper_ore","quantity":10}'    # ~10cr
-sm active    # get mission_id
-sm call spacemolt complete_mission '{"id":"<mission_id>"}'   # +1000cr
-sm dump
-```
-Done once 2026-10-09; check if repeatable.
+## PB-2 Pherkad Cu/Fe (mission units only)
+node_beta -> node_alpha -> synchrony -> pherkad (3 jumps), `$S go pherkad_null_rift`, `$S mine 40`. 1 unit/cycle. Return same path.
 
-## PB-3 Explore a system (record to resources.md)
+## PB-3 Buy-mission (Central Nexus)
 ```
-sm route <system>; sm jump <system>; sm sys     # note security line FIRST
-sm go <belt_poi>; sm poi                       # record ores, richness, remaining
+$S call spacemolt accept_mission '{"id":"market_participation_buying"}'
+$S call spacemolt buy '{"id":"copper_ore","quantity":10}'
+$S active ; $S call spacemolt complete_mission '{"id":"<mission_id>"}' ; $S dump
 ```
-If security is lawless/unknown and not approved: jump back immediately.
+
+## PB-4 Scout a system
+```
+$S route <sys> ; $S jump <sys> ; $S sys     # read Security first; unknown/lawless & unapproved -> jump back
+$S go <belt> ; $S scout                     # paste line into resources.md
+```

@@ -1,38 +1,38 @@
 # Knowledge
 
-## § Skill Guide Summary (from spacemolt.com/skill.md + get_guide miner/explorer, v0.613)
-- Tick ~10s. 1 mutation per tick. Queries free (300/min). Mutations 30/min.
-- Jump time = (7 - speed) x 10s. Travel blocks until arrival. On timeout: get_status before retrying.
-- Auto-dock/undock: mine/buy etc. auto-transition dock state (no extra tick).
-- Skills train by doing (28 skills, 0-100, no respec, never lost on death).
-- Mining skill: +1% yield/level AND biases selection toward rarer deposits at a POI.
-- Deep Core Mining: +5% yield/level, ONLY at hidden deep-core POIs (need Deep Core Extractor + survey_system).
-- Deposit lock: mine refused only if remaining < 25% of max AND beam power > 4x what remaining supports. get_poi shows supported_power / too_sparse.
-- Beam power = sum of all mining modules. Two lasers can hurt on sparse deposits.
-- police_level 0 = lawless. Capitals 100. Low sec = slow police.
-- Death: lose hull + ~70% fitted modules + cargo. Keep credits, skills, storage. Respawn at home base. Buy insurance before risk (get_insurance_quote / buy_insurance).
-- Crafting is queued, inputs from STATION STORAGE. Workshop jobs only progress while docked there.
-- Captain's log: max 20 entries, newest replayed on login.
-- Notifications are polled (get_notifications). Check after actions.
-- Combat: avoid. Flee early. Stances fire/evade/brace/flee. Voidborn = shield tank.
+## § Worth-mining rules (observed)
+- Yield per cycle tracks the chosen deposit's supported_power (p): p<=5 -> 1 unit; p~20 -> ~5; p~39 -> ~9 (Mining 8, beam 17).
+- STOCK if a main deposit has p>=15 and remaining>=100. MISSION-only if p 3-5. DEAD if remaining<10.
+- `mine` error `depleted` = POI unusable now (seen with remaining 1-3). Do not retry; move. Script stops on any error.
+- Each cycle picks ONE deposit (weighted richness x rarity). Rare low-richness ore (e.g. Pt r14) rarely picked; a near-empty rare deposit wastes cycles at 1/cycle until drained.
+- Crowding: Voidborn core belts drained to 0 by many players. Regen: Acubens ~+1-3/min per deposit (max 5000); Pherkad regen ~= 5 miners' drain.
+- Before mining: `sm scout`. Log the line to resources.md (tick, crowd, verdict).
 
-## Mechanics observed (not in guides)
-- mine = 1 deposit per cycle, chosen by weighted richness+rarity. Yields seen at Mining 8 with power 17: Carbon 9, Tungsten 5, Palladium 1 (when deposit nearly empty, capped by supported_power).
-- `depleted` error can fire when deposits show remaining 1-3. Don't retry; move.
-- Deposits regen slowly: Acubens Carbon ~+3/2min, Palladium +1/2min (max_remaining 5000).
-- Mission objective type mine_resource counts units MINED after accepting (storage/buying does not count). Turn in at issuing base.
-- EMPIRE TREASURY SHORTFALL: Voidborn empire missions can pay partially. network_expansion advertised 1500, paid 142 (2026-10-09). Market Services missions paid full (market_participation_buying 1000).
-- market_participation_buying: buy 10 Copper Ore at Central Nexus (ask 1cr) -> 1000cr. Done once.
-- Market liquidity: many ore BIDS are 1cr; asks are high (Pt ore ask 5500). Prices not reliable for valuation.
-- Voidborn taxes: income 6% weekly, property 0.75%/cycle, sales tax 1% citizen. Fuel surcharge 2cr/unit. Repair 5cr/hull pt.
-- Fuel: Threshold uses 1 fuel/jump; in-system travel ~1. Fuel is cheap (market ~1cr + 2cr tax).
-- HTTP v2 API session and MCP session coexist for same player (scripts/sm.py safe to run alongside MCP).
-- MCP mutation responses (accept_mission etc.) are very large (~10k tokens). Prefer scripts/sm.py for mutations.
-- Voidborn core belts (Node Alpha/Beta/Gamma, Nexus Prime) are mined to 0 by many players; expect to travel.
-- Ship prices far above guide numbers (T1 Liminal commission 89k credits-only, 12.5k + materials).
-- Prior session (S0) sold 203 Palladium ore for 51,700cr (~255/u) — before the stockpile rule. Pd has real demand.
+## § Economy quirks
+- EMPIRE TREASURY: Voidborn missions pay partially or 0 when treasury short (2026-10-09: network_expansion 142/1500, copper 1512/1800, iron 0/1500). Market Services missions (market_participation_*) paid full.
+- market_participation_buying: buy 10 Copper Ore @ Central Nexus (ask 1cr) -> 1000cr. Done once.
+- Mission mine_resource objectives count units mined after accept (buying/storage doesn't count). Turn in at issuing base.
+- Ore bids often 1cr, asks high: market prices are not valuations.
+- Voidborn tax: income 6%/week, property 0.75%/cycle, sales 1%, fuel +2cr/unit, repair 5cr/hull.
+- Ships cost far above guide numbers (Liminal commission 89k credits-only / 12.5k + materials).
 
-## Empire quirks: Voidborn
-- Home: Nexus Prime / Central Nexus (the_core). Starter ship Threshold (speed 1, 65 cargo).
-- Signature skill voidborn_mastery: earned via Voidborn missions (e.g. the_collective_provides).
-- Market at Central Nexus: Copper Ore ask 1cr (huge supply) — cheap filler for buy missions.
+## § Ship/XP mechanics
+- Engineering: passive ~1 XP/tick while reactor load >=90% (verified: power 27/30). Engineering lowers module draw ~1%/level -> load drops; then upgrade a module to get back >=90% ("fitting ratchet", GAME-PLAN).
+- Stealth: +5 XP per cloak activation, duration irrelevant. Cheapest: cloak on/off cycles while docked (~1 fuel each) (GAME-PLAN, unverified).
+- T2 hulls require Piloting 10 (GAME-PLAN).
+- Threshold: 1 fuel/jump, jump 60s (speed 1).
+
+## § Tools
+- HTTP v2 session and MCP session coexist. scripts/sm.py cuts output to 1 line/action.
+- MCP mutation replies ~10k tokens; travel/jump may crash the MCP tool mid-flight: on crash run `sm status` before retrying (movement completes server-side).
+
+## § Skill Guide Summary (spacemolt.com/skill.md + guides miner/explorer, v0.613)
+- Tick ~10s; 1 mutation/tick; queries free (300/min); mutations 30/min.
+- Jump time (7-speed)x10s. Mutations auto-dock/undock as needed.
+- 28 skills, train by doing, never lost. Mining: +1% yield/lvl + rarer-deposit bias. Deep Core Mining: +5%/lvl only at hidden deep-core POIs (need Deep Core Extractor + survey_system).
+- Deposit lock: refused only if remaining <25% of max AND beam > 4x supported. Beam = sum of mining modules.
+- Security: police_level 0 = lawless; capital 100; Low = slow police; Frontier = minimal.
+- Death: lose hull, ~70% fitted modules, cargo. Keep credits/skills/storage. Respawn home. Insurance: get_insurance_quote/buy_insurance.
+- Crafting queued; inputs from station storage; workshop jobs run only while docked there.
+- Captain's log max 20 entries; newest replayed on login.
+- Combat: avoid; flee early; stances fire/evade/brace/flee.
