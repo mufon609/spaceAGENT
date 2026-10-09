@@ -11,6 +11,10 @@ Usage:
   sm.py status                            one-line status
   sm.py mine [max_cycles] [min_avg]       mine until cargo full / error / pirates / low yield
   sm.py scout                             1-line POI report: sec, crowd, ores (paste to resources.md)
+  sm.py loop <belt_sys> <belt_poi> <home_sys> <station> [trips]
+                                          full mine->bank loop; run in background:
+                                          nohup python3 -u sm.py loop ... > /tmp/loop.log 2>&1 &
+                                          graceful stop after current trip: touch /tmp/sm_stop
   sm.py go <poi_id>                       travel within system
   sm.py jump <system_id>                  jump to adjacent system
   sm.py dock | undock
@@ -20,7 +24,7 @@ Usage:
   sm.py route <system_or_poi>             jump path + fuel
   sm.py missions | active                 board missions | my active missions (compact)
   sm.py storage [station_id]              storage here or remote
-Tools: spacemolt, spacemolt_storage, spacemolt_market, spacemolt_social ...
+Tools: spacemolt, spacemolt_storage, spacemolt_market, spacemolt_social, spacemolt_catalog(action=catalog)
 """
 import json, os, sys, time, urllib.request, urllib.error
 
@@ -143,6 +147,47 @@ def dump():
           " ".join("%s=%s" % (i["item_id"], i["quantity"]) for i in items))
 
 
+def loop(belt_sys, belt_poi, home_sys, station, trips):
+    """Repeat: go belt -> mine till full -> home station -> dock -> dump -> refuel if <40%.
+    Safety: stops on hull damage, pirates, any nav/dock error. Ends docked if possible."""
+    for t in range(1, trips + 1):
+        s = sc(call("spacemolt", "get_status"))
+        sh, lo = s.get("ship", {}), s.get("location", {})
+        if sh.get("hull", 0) < sh.get("max_hull", 0):
+            print("STOP trip%d hull damaged %s/%s" % (t, sh.get("hull"), sh.get("max_hull")))
+            return
+        if lo.get("system_id") != belt_sys:
+            if not step("jump", belt_sys):
+                return
+        if sc(call("spacemolt", "get_status")).get("location", {}).get("poi_id") != belt_poi:
+            if not step("travel", belt_poi):
+                return
+        print("trip%d %s" % (t, time.strftime("%H:%M:%S")), end=" ")
+        scout()
+        mine(40, 2)
+        for a, tgt in (("jump", home_sys), ("travel", station), ("dock", None)):
+            if not step(a, tgt):
+                return
+        dump()
+        sh = sc(call("spacemolt", "get_status")).get("ship", {})
+        if sh.get("fuel", 0) < 0.4 * sh.get("max_fuel", 1):
+            print("refuel:", short(call("spacemolt", "refuel"))[:120])
+        print(status_line())
+        if os.path.exists("/tmp/sm_stop"):
+            os.remove("/tmp/sm_stop")
+            print("STOP requested via /tmp/sm_stop (docked)")
+            return
+    print("LOOP DONE")
+
+
+def step(action, target):
+    r = call("spacemolt", action, {"id": target} if target else {})
+    if "error" in r:
+        print("STOP %s %s: %s" % (action, target, short(r)))
+        return False
+    return True
+
+
 def missions(action):
     r = call("spacemolt", action)
     if "error" in r:
@@ -180,6 +225,8 @@ def main(a):
         print(status_line())
     elif c == "mine":
         mine(int(a[1]) if len(a) > 1 else 100, float(a[2]) if len(a) > 2 else 0.0)
+    elif c == "loop":
+        loop(a[1], a[2], a[3], a[4], int(a[5]) if len(a) > 5 else 1)
     elif c == "scout":
         scout()
     elif c == "go":

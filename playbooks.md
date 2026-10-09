@@ -1,26 +1,26 @@
 # Playbooks
 
 Shell setup (once): `export SM_USER='Alien_Abductee_Gemini' SM_PASS='<from user>'`; `S="python3 scripts/sm.py"`.
-Wrap long loops: `timeout 280 $S mine 20` (bash calls cap ~5 min). No shell? Use MCP spacemolt actions with the same names.
+Bash tool calls crash near 5 min: wrap with `timeout 280`, poll background jobs with `sleep <=145`.
+No shell? Use MCP spacemolt actions with the same names.
 
 ## PB-0 Start / after any crash
 ```
 $S status    # where am I, fuel, cargo, hull
 $S active    # missions
 ```
+On tool crash mid-travel: movement still completes server-side. Run `$S status`, never blind-resend.
 
-## PB-1 Acubens stockpile loop (C/W/Pb/Pt/Pd) — also best Piloting XP
-Start docked node_beta_industrial_station or node_gamma_relay_station.
+## PB-1 Acubens stockpile loop (C/W/Pb/Pt/Pd) — best Piloting XP (~30/trip)
+Start docked node_beta_industrial_station. Run in background, supervise by tailing log:
 ```
-$S jump acubens          # 60s, lands acubens_belt
-$S scout                 # log to resources.md if changed
-$S mine 20 2             # stops: cargo full / error / pirates / avg<2
-$S jump node_beta        # or node_gamma
-$S go node_beta_industrial_station
-$S dock
-$S dump
+nohup python3 -u scripts/sm.py loop acubens acubens_belt node_beta node_beta_industrial_station 6 > /tmp/loop.log 2>&1 &
+sleep 140; grep -E "^(trip|TOTAL|STOP|LOOP|refuel|cr=)" /tmp/loop.log | tail -4
+touch /tmp/sm_stop        # graceful stop after current trip (ends docked)
 ```
-Per trip: ~W20 C21 Pd2, Pt 0-2; ~6 min; 2 fuel. Refuel <30 fuel (MCP spacemolt action=refuel, docked).
+Loop auto-stops on: hull damage, pirates at belt, nav/dock error. Refuels <40% fuel.
+Measured S2 (6 trips, ~5.2 min each, ~3 fuel each): total W115 C116 Pt18 Pd12 Pb6. Per trip ~W19 C19 Pt3 Pd2.
+If a trip prints STOP: run PB-0, read the STOP line, fix, restart.
 
 ## PB-2 Pherkad Cu/Fe (mission units only)
 node_beta -> node_alpha -> synchrony -> pherkad (3 jumps), `$S go pherkad_null_rift`, `$S mine 40`. 1 unit/cycle. Return same path.
@@ -37,3 +37,6 @@ $S active ; $S call spacemolt complete_mission '{"id":"<mission_id>"}' ; $S dump
 $S route <sys> ; $S jump <sys> ; $S sys     # read Security first; unknown/lawless & unapproved -> jump back
 $S go <belt> ; $S scout                     # paste line into resources.md
 ```
+
+## PB-5 Catalog lookup (cheap)
+`$S call spacemolt_catalog catalog '{"type":"items","id":"<item>"}'` (also type ships/recipes, search=...)
