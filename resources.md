@@ -2,7 +2,15 @@
 
 Verdict: STOCK = worth stockpile mining | MISSION = mission units only | DEAD = skip | FUTURE = needs gear we lack.
 Ore cell: ore r<richness>/<remaining>/p<supported_power>. Generate rows with `python3 scripts/explore.py md`.
-PATTERN (t2091600): policed belts are drained to ~0; LAWLESS belts are near-untouched (10k-100k units).
+PATTERN (S2): policed belts are drained to ~0; LAWLESS belts are near-untouched (10k-100k units). Rare ores sit in nebulae/special POIs.
+
+## Crafting-material locations (quick index)
+Trade crystal: frostpeak uncut_gems_frostpeak (423, p21) > azmidi unclaimed_facets (206, p10) > keelbreak (63, p3).
+Titanium: frontier pioneer_fields (39-60, p1-3, regenerating). Silver: errai (64, p3), nusakan (18).
+Silicon: zubenelhakrabi Crystal Sand (GAME-PLAN, unscanned) — only other silicon seen = stripped capital belts (haven commerce_fields, nexus_prime material_harvesters).
+Aluminum 29k + manganese 14k: sheliak. Lithium 287: wazn. Zinc 8.1k: cloverfield. Phase crystal ~450: cloverfield / alsciaukat / sheliak / altais. Quantum fragments 400-1000: markeb / sheliak / alsciaukat / errai / the_telescope.
+Energy crystal: frontier veil_nebula r40 (drained 4). Cobalt: Krynn War Materials (forum). Nickel: frontier pioneer_fields (14).
+Wildlife-only: raw_focusing_crystal (ranched "druse"), anchor_plate (magnet-barnacle -> titanium_alloy), irradiated_marrow (geiger-hound -> power_cell).
 
 ## Systems (police: 0 = lawless)
 | System | Empire | Police | Station | Links |
@@ -48,15 +56,61 @@ PATTERN (t2091600): policed belts are drained to ~0; LAWLESS belts are near-unto
 | the_levy | nebula | 30 | the_levy_customs_station | ogma, wealth_lane, gliese_436, stonecrest |
 | wealth_lane | none | 0 LAWLESS | player station 22c5a816... (access denied) | copernicus, the_levy, gold_run |
 | cargo_lanes | nebula | 55 | cargo_lanes_freight_depot | gold_run, market_prime, bunda, alrakis, alula |
-| the_experiment, gsc_0027, hamal, schedar | voidborn/none | ? | ? | visited S1, belts unrecorded (check for Silicon) |
-Verified safe-to-transit (no contact S2): gsc_0041, antares, homam, miaplacidus, maplevale, dubhe, alfirk, revati, zibal, keelbreak, nusakan, wealth_lane. Sol->Haven = 14 jumps (~45 min with scouting). Solarian stations docked OK: sirius, alpha_centauri, nova_terra, procyon, sol. Route node_beta->sirius = 9 jumps, ~25 min with belt scouting.
+| stonecrest | none | 0 LAWLESS | none | frostpeak, maia, the_levy |
+| frostpeak | none | 0 LAWLESS | none | kurhah, maia, wazn, stonecrest |
+| wazn | none | 0 LAWLESS | none | frostpeak, kurhah, maia, cloverfield |
+| cloverfield | none | 0 LAWLESS | none | zosma, wazn, cocibolca, driftwood |
+| cocibolca | none | 0 LAWLESS | none | castor, driftwood, beid, cloverfield, gsc_0023, zosma |
+| beid | none | 0 LAWLESS | none | markeb, ironpeak, driftwood, castor, cocibolca |
+| markeb | outerrim | 30 | none | beid, void_gate, first_step, ironpeak |
+| first_step | outerrim | 55 | first_step_memorial_station + mobile_capital (= Frontier Station, the OR capital; explore.py docks the FIRST listed = memorial) | horizon, void_gate, markeb, the_telescope |
+| void_gate | outerrim | 30 | void_gate_outpost | markeb, haedus, first_step, sulafat, kochab, starfall |
+| starfall | outerrim | 30 | starfall_salvage_station | kochab, sulafat, the_telescope, void_gate |
+| the_telescope | outerrim | 55 | none | distant_light, altais, first_step, starfall, horizon, unknown_edge |
+| unknown_edge | outerrim | 55 | unknown_edge_waystation | distant_light, altais, last_light, the_telescope |
+| last_light | outerrim | 30 | ramens_rest (SHIP DOCKED HERE t2094013) | fang, tidewater, gsc_0046, unknown_edge, ain |
+| altais | outerrim | 80 | none | distant_light, horizon, frontier, unknown_edge, the_telescope |
+| frontier | outerrim | 100 | none (capital SYSTEM; the capital station is mobile_capital in first_step) | horizon, altais, deep_range |
+| deep_range | outerrim | 80 | deep_range_outpost | frontier, horizon |
+| horizon | outerrim | 80 | none | altais, first_step, frontier, the_telescope, deep_range, distant_light |
+| fang | none | 0 LAWLESS | none | gsc_0046, last_light, ain, tidewater, errai |
+| errai | none | 0 LAWLESS | none | wezen, brightfall, tarazed, fang, alsciaukat, gsc_0046 |
+| alsciaukat | none | 0 LAWLESS | none | sheliak, merope, merak, errai |
+| sheliak | none | 0 LAWLESS | none | merak, alathfar, alsciaukat, titawin, merope, zubenelhakrabi |
+| zubenelhakrabi | none | 0 LAWLESS | none (arrival POI "Crystal Sand") | titawin, merope, merak, sheliak, 70_ophiuchi |
+| the_experiment, gsc_0027, hamal, schedar | voidborn/none | ? | ? | visited S1, belts unrecorded |
+Verified safe-to-transit (no contact S2): gsc_0041, antares, homam, miaplacidus, maplevale, dubhe, alfirk, revati, zibal, keelbreak, nusakan, wealth_lane, stonecrest, frostpeak, wazn, cloverfield, cocibolca, beid, fang, errai, alsciaukat, sheliak, zubenelhakrabi.
+Route times (speed 1, with scouting): node_beta->sirius 9 jumps ~25 min; sol->haven 14 jumps ~45 min; ramens_rest->zubenelhakrabi 5 jumps.
 Unvisited frontier near home: achernar, gj_3470, gsc_0050, ironhollow, megrez, okab, ruchbah, shaula, thornhaven, wolf_1061.
 
 ## Deposits / belt health
 | System | POI ID | Police | Equip | Players | Last seen (tick: ore r/rem/p) | Verdict |
 |---|---|---|---|---|---|---|
+| zubenelhakrabi | Crystal Sand (arrival POI) | 0 | laser? | ? | NOT SCANNED (explore.py skipped its type; fixed). GAME-PLAN: Silicon r40 | SILICON TARGET - 5 jumps from ramens_rest |
 | acubens | acubens_belt | low | laser | 0-5 | 2091440: carbon r55/789/p39 tungsten r34/347/p17 platinum r14/664/p33 palladium r28/4/p1 uranium r13/72/p3 lead r15/923/p46 (max 5000) | STOCK (PB-1) |
 | acubens | acubens_shadow_pocket | low | ? | 6 | S1: camped dry | DEAD |
+| errai | errai_belt | 0 | laser | 1 | 2093300: iron r57/100000 copper r27/100000 silver r30/64/p3 | SILVER (64) |
+| sheliak | sheliak_belt | 0 | laser | 0 | 2093350: iron r48/100000 copper r37/100000 aluminum r48/29311/p1465 manganese r22/13859/p692 | ALUMINUM + MANGANESE |
+| errai / alsciaukat / sheliak | nebulae | 0 | laser | 0-1 | 2093300: quantum_fragments 422-648 (p21-32), phase_crystal 455-498 (p22-24) + Fe/Cu 100k | QUANTUM / PHASE |
+| errai / alsciaukat | gas | 0 | gas harvester | 0-1 | 2093300: argon/neon ~50k, H2 44k, ion_gas 9k, xenon/nebula/chlorine/plasma ~10k | FUTURE |
+| frontier | pioneer_fields | 100 | laser | 1-3 | 2093200: iron r80/188/p9 copper r70/233/p11 nickel r60/3/p1 titanium r30/61/p3 | TITANIUM (thin, picks fall as Fe/Cu regen). Bank at deep_range_outpost (1j) |
+| frontier | veil_nebula | 100 | laser | 1 | 2092900: quantum_fragments r25/6 phase_crystal r18/5 energy_crystal r40/4 (p1) | energy_crystal r40 (drained) |
+| altais | shifting_nebula_altais | 80 | laser | 0 | 2092880: iron r20/100000 copper r27/100000 phase_crystal r10/428/p21 | PHASE CRYSTAL (policed) |
+| the_telescope | the_telescope_entangled_drift | 55 | laser | 0 | 2092820: iron r23/100000 copper r17/100000 quantum_fragments r13/286/p14 | QUANTUM FRAGMENTS |
+| unknown_edge | unknown_edge_mineral_fields | 55 | laser | 1 | 2092830: carbon r63/120 vanadium r34/459/p22 iridium r25/433/p21 aluminum r58/191 dark_matter_residue r4/63/p3 | iridium/vanadium |
+| deep_range | deep_range_mineral_fields | 80 | laser | 1 | 2092920: carbon r65/104 vanadium r41/94 tungsten r45/86 platinum r20/110 dark_matter_residue r5/69 osmium r9/113 (p3-5) | thin mixed |
+| last_light | last_light_mineral_fields | 30 | laser | 1 | 2092850: carbon r54/158 tungsten r26/299/p14 thorium r10/57 aluminum r68/73 dark_matter_residue r4/73 | thin |
+| starfall / void_gate | belts | 30 | laser | 0-1 | 2092800: carbon/tungsten/vanadium/iridium/lead/polonium(13)/lithium(5) <80 | DEAD |
+| OR ice/gas (altais, frontier, deep_range, last_light, horizon) | various | 80-100 | harvesters | 0-1 | 2092900: water+nitrogen ice 25-50k, CO2 ice 7k, argon ~48k | FUTURE |
+| frostpeak | uncut_gems_frostpeak | 0 | laser | 2 | 2092600: iron r26/100000 copper r29/100000 trade_crystal r18/423/p21 | TRADE CRYSTAL x2 azmidi stock (lawless) |
+| wazn | wazn_belt_a / wazn_belt_b | 0 | laser | 0 | 2092620: a: iron r38/99999 copper r27/99998 lithium r27/287/p14; b: iron r69/100000 copper r42/100000 | LITHIUM + rich Fe |
+| cloverfield | phantom_glint_cloverfield (nebula) | 0 | laser | 0 | 2092650: iron r23/100000 copper r22/99999 phase_crystal r6/448/p22 | PHASE CRYSTAL |
+| cloverfield | cloverfield_belt | 0 | laser | 0 | 2092650: iron r30/100000 copper r32/99999 zinc r21/8151/p407 | ZINC |
+| markeb | markeb_quantum_eddy (nebula) | 30 | laser | 0 | 2092700: iron r25/100000 copper r18/100000 quantum_fragments r17/1016/p50 | QUANTUM FRAGMENTS |
+| markeb | markeb_belt | 30 | laser | 5 | 2092700: carbon 0 uranium r15/70 lead r16/286 radium r6/70 aluminum 0 | thin |
+| first_step | colony_debris_field | 55 | laser | 13 | 2092720: carbon r30/9691/p484 iron r25/75867/p3793 | crowded |
+| stonecrest / cocibolca / beid | belts | 0 | laser | 0-1 | 2092600: iron 26k-100k, copper 17k-100k | STOCK Fe/Cu |
+| cloverfield / wazn | gas+ice | 0 | harvesters | 0 | 2092650: H2 30-47k, plasma 8.3k, fluorine 5k, chlorine 4k, ammonia_ice 7k | FUTURE |
 | azmidi | unclaimed_facets_azmidi | 30 | laser | 2 | 2092300: iron r34/100000/p5000 copper r34/100000/p5000 trade_crystal r30/206/p10 | BEST TRADE CRYSTAL: picked 7/8 cycles, 2-3/cycle (Mining 8). Nearest dock: treasure_cache (2j) / the_levy (3j) |
 | nusakan | nusakan_belt | 0 | laser | 1 | 2092300: iron r42/99988 copper r41/99982 silver r32/18/p1 | SILVER (18). Come with empty hold: Fe/Cu picks are 5/cycle |
 | gliese_436 | gliese_436_belt | 55 | laser | 4 | 2092500: carbon r42/1839/p91 platinum r19/205/p10 iridium r18/1047/p52 gold r29/73/p3 osmium r12/230/p11 thorium 0 | STOCK mixed (iridium/osmium) |
@@ -87,27 +141,22 @@ Unvisited frontier near home: achernar, gj_3470, gsc_0050, ironhollow, megrez, o
 | nova_terra | nova_terra_industrial_belt | 55 | laser | 0 | 2091600: carbon/tungsten/iridium/thorium/lead/aluminum/legacy all 0 | DEAD |
 | nova_terra | gas_plume / ice_shelf | 55 | harvesters | 0-1 | 2091600: ~0 | DEAD |
 | sirius | sirius_gas_pocket | 80 | gas harvester | 1 | 2091600: all 0 | DEAD |
-| sol | main_belt | 100 | laser | 2-5 | 2091900: iron r80/10 copper r60/10 nickel r70/2 titanium r25/2 sol_alloy r15/2 antimatter_cell r5/1 (all p1) | DEAD but proves Ti+Ni exist in Solarian belts |
+| sol | main_belt | 100 | laser | 2-5 | 2091900: iron r80/10 copper r60/10 nickel r70/2 titanium r25/2 sol_alloy r15/2 antimatter_cell r5/1 (all p1) | DEAD |
 | epsilon_eridani | delta_major_belt | 55 | laser | 0 | 2091880: carbon r61/87/p4 vanadium r50/32/p1 platinum r16/34/p1 aluminum r57/91/p4 legacy r5/20/p1 | thin |
 | epsilon_eridani | epsilon_eridani_ice_fields | 55 | ice harvester | 0 | 2091880: water_ice r67/25830/p1291 nitrogen_ice r53/50000/p2500 | FUTURE (policed!) |
 | procyon | procyon_gas_cloud | 30 | gas harvester | 0 | 2091860: hydrogen r48/217 argon r42/194 chlorine r25/18 | thin |
 | alpha_centauri / procyon / sol ice+gas | various | 30-100 | harvesters | 0-3 | 2091900: ~0 | DEAD |
-| nexus_prime | material_harvesters | 100 | laser | 0 | 2090790: iron r70/0 silicon r90/0 copper r80/0 energy_crystal r8/0 | DEAD now; recheck (only Si + energy_crystal seen in Voidborn) |
+| nexus_prime | material_harvesters | 100 | laser | 0 | 2090790: iron r70/0 silicon r90/0 copper r80/0 energy_crystal r8/0 | DEAD now; recheck regen (silicon!) |
 | nexus_prime | null_matter_anomaly | 100 | laser | 2 | 2090790: null_matter r30/0 | DEAD |
 | node_beta | eltanin_prime_belt | high | laser | 1-3 | 2090950: all 0 | DEAD |
 | node_gamma | bellatrix_major_belt | 55 | laser | 0 | 2091600: all 0 | DEAD |
 | node_gamma | node_gamma_ice_belt | 55 | ice harvester | 1 | 2091600: nitrogen_ice r44/10 | DEAD |
 | node_alpha | alpha_extraction_zone | high | laser | 3 | 2090780: all 0 | DEAD |
 
-## Still unfound (crafting blockers)
-titanium_ore, silicon_ore (metallic-belt table; all known core belts stripped), energy_crystal (rare), nickel_ore, cobalt_ore (Krynn War Materials belt per forum).
-Trade crystal: azmidi unclaimed_facets_azmidi (206, p10, verified) > keelbreak (63, p3). Silver: nusakan (18).
-Wildlife sources: raw_focusing_crystal (ranched "druse"), anchor_plate (magnet-barnacle shell -> titanium_alloy), irradiated_marrow (geiger-hound -> power_cell).
-
 ## Market reference (asks unless noted; thin books, not valuations)
 Grand Exchange (haven) t2092400: trade_crystal 547 (179k listed, bid 546 = liquid) | energy_crystal 1400 (802) | silver_ore 148 | circuit_board 905 | focused_crystal 2236 | mining_laser_i 1520 | ice_harvester_i 5000 | silicon/titanium/nickel: bids only (180/102/64) | anchor_plate bid 204 | deep_core_extractor_mk_i bid 6000.
-Sirius t2091650: energy_crystal 34123 | focused_crystal 3000 | silver_wiring 171 | titanium_alloy bid 264 | silicon_ore bid 180 (no asks) | iron 13 | copper 1 | platinum_ore 167 | palladium 234 | tungsten 107 | deuterium_ice 120 | mining_survey_probe 180 | mining_laser_ii 5388 | ship_scanner_i 2661 | survey_scanner_ii 29395 | ice_harvester_i 7293 | gas_harvester_i 8304.
+Sirius t2091650: energy_crystal 34123 | focused_crystal 3000 | silver_wiring 171 | titanium_alloy bid 264 | silicon_ore bid 180 (no asks) | mining_survey_probe 180 | mining_laser_ii 5388 | survey_scanner_ii 29395 | ice_harvester_i 7293 | gas_harvester_i 8304.
 Central Nexus t2090790: copper ore 1 | silicon bid 181 | titanium ore bid 80 | exotic matter 10000.
 Modules Voidborn core t2091300: mining_laser_ii 7007 (node_beta) | cargo_expander_ii 1414-1672 | afterburner_iii ~4950 | cloaking_device_i 13.8k-19.8k.
-Fuel: Voidborn tax 2cr/unit; Solarian ~6cr/unit; Nebula ~5cr/unit.
+Fuel tax: Voidborn 2cr/unit; Solarian ~6; Nebula ~5; Outer Rim ~1.
 Forum bounty: 25,000cr per live seam location (>300 units) of adamantite/darksteel/tritium_ice/polonium (Wren Farwander).

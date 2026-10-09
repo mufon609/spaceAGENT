@@ -1,22 +1,25 @@
 #!/usr/bin/env python3
-"""explore.py - scout a path of adjacent systems; record security, stations, every belt/ice/gas field.
+"""explore.py - scout a path of adjacent systems; record security, stations, every resource POI.
 Usage (background):  setsid nohup python3 -u explore.py sysA,sysB,sysC [nobelts] [dock] > /tmp/explore.log 2>&1 < /dev/null &
   dock = after scouting, dock at the first station of each system (inspection missions, refuel <70%).
+  !sys = jump through/dock but skip belt scan for that system (already recorded).
 Output: /tmp/explore.log (readable lines) + /tmp/explore.jsonl (one JSON per system; convert with
         `python3 explore.py md` -> markdown rows for resources.md).
 Safety: leaves a POI with pirates; safe() on hull damage/battle; fuel guard turns home when fuel < return+8.
-Needs SM_USER/SM_PASS. Imports sm.py from the same folder.
+Needs SM_USER/SM_PASS. Imports sm.py from the same folder. Keep runs short near session end (a dead job leaves the ship undocked -> tow).
 """
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sm import call, sc, wait_idle, in_battle, safe, step, status_line
 
 def explore(route, belts=True, home="node_beta_industrial_station", dock=False):
-    """Scout a path of adjacent systems. Per system: security, stations, POIs; per belt/ice/gas: ores + crowd.
+    """Scout a path of adjacent systems. Per system: security, stations, POIs; per resource POI: ores + crowd.
     Pirates at a POI -> leave it at once. Hull damage / battle -> safe(). Fuel guard: turns back when
     fuel < route-home estimate + 8. Appends JSON lines to /tmp/explore.jsonl."""
     out = open("/tmp/explore.jsonl", "a")
     for sysid in route:
+        scan = belts and not sysid.startswith("!")
+        sysid = sysid.lstrip("!")
         s = wait_idle()
         sh = s.get("ship", {})
         if in_battle() or sh.get("hull", 0) < sh.get("max_hull", 0):
@@ -37,10 +40,10 @@ def explore(route, belts=True, home="node_beta_industrial_station", dock=False):
         tag = "LAWLESS" if not sysd.get("police_level") else "police=%s" % sysd.get("police_level")
         print("SYS %s %s empire=%s stations=%s links=%s" % (sysid, tag, sysd.get("empire"), rec["stations"],
               [c.get("system_id", c) if isinstance(c, dict) else c for c in (sysd.get("connections") or [])]))
-        if belts:
+        if scan:
             for p in pois:
-                if p.get("type") not in ("asteroid_belt", "ice_field", "gas_cloud", "nebula"):
-                    continue
+                if p.get("type") in ("sun", "planet", "station", "relic", "wormhole", "jump_gate") or p.get("has_base"):
+                    continue  # scan every other POI type (belts, ice, gas, nebula, crystal sand, ...)
                 if not step("travel", p["id"]):
                     return safe()
                 st = wait_idle()
@@ -79,7 +82,7 @@ def to_md():
         sec = "LAWLESS" if not r["police"] else "police %s" % r["police"]
         links = ",".join(c.get("system_id", c) if isinstance(c, dict) else c for c in (r["links"] or []))
         print("| %s | %s | %s | %s | %s |" % (r["system"], r["empire"] or "none", sec, ",".join(r["stations"]) or "none", links))
-    eqm = {"asteroid_belt": "laser", "ice_field": "ice harvester", "gas_cloud": "gas harvester", "nebula": "laser"}
+    eqm = {"asteroid_belt": "laser", "ice_field": "ice harvester", "gas_cloud": "gas harvester", "nebula": "laser"}  # other types -> "?"
     for l in open("/tmp/explore.jsonl"):
         r = json.loads(l)
         for b in r["belts"]:
