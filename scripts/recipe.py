@@ -9,6 +9,7 @@ Usage:
   recipe.py item <item_id>         item stats (slot, cpu, power, required_skills, base_value)
   recipe.py -f ...                 force catalog refresh (after a game version change)
 Leaves = items with no hand-craftable recipe (ores, salvage, creature parts...).
+Tags: wk = Station Workshop (free, docked) | FAC = needs a production facility (own/faction/rented) | SHIP = onboard_*, runs automatically only on hulls with that built-in capability.
 """
 import json, os, sys, urllib.request
 
@@ -24,8 +25,13 @@ def load(force=False):
     return rl, {i["id"]: i for i in il}
 
 
+def hand(r):
+    """Workshop-craftable. onboard_* recipes only run automatically on ships with that capability."""
+    return bool(r.get("hand_craftable")) and not r["id"].startswith("onboard_")
+
+
 def fmt(r):
-    tag = "wk " if r.get("hand_craftable") else "FAC"
+    tag = "wk " if hand(r) else ("SHIP" if r["id"].startswith("onboard_") else "FAC")
     return "%s %-34s t%-6s %s -> %s" % (tag, r["id"], r.get("crafting_time"),
         " + ".join("%sx%s" % (i["quantity"], i["item_id"]) for i in r["inputs"]),
         " + ".join("%sx%s" % (o["quantity"], o["item_id"]) for o in r["outputs"]))
@@ -37,7 +43,7 @@ def makers(rl, item):
 
 def best(rl, item):
     """Pick a hand-craftable recipe with the fewest distinct inputs, then most output."""
-    c = [r for r in makers(rl, item) if r.get("hand_craftable")]
+    c = [r for r in makers(rl, item) if hand(r)]
     if not c:
         return None
     return min(c, key=lambda r: (len(r["inputs"]), -sum(o["quantity"] for o in r["outputs"] if o["item_id"] == item)))

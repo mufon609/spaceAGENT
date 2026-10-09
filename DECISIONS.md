@@ -12,8 +12,8 @@ Time = game tick (`curl -s https://game.spacemolt.com/health` -> tick; ~10s/tick
 ## D2 t2091300 — Laser upgrade path
 - Need: more beam power (yield super-linear in beam).
 - Thinking: ML II 7,007cr on market; ML III not sold anywhere. User rule (later): craft, don't buy items.
-- Decision: do NOT buy ML II. Craft it: 3 titanium_alloy (onboard_alloy_synthesis 3 Ti ore + 2 Fe) + 3 circuit_board (carbon_arc 12 C + 2 Si) + 1 focused_crystal (focus_energy_crystal 4 energy_crystal + 1 Pd). All workshop recipes, no facility.
-- Why: have C/Fe/Pd. Missing raw: titanium_ore 9, silicon_ore 2, energy_crystal 4 -> exploration target.
+- Decision: do NOT buy ML II. Craft it: 3 titanium_alloy + 3 circuit_board (carbon_arc 12 C + 2 Si) + 1 focused_crystal. (Ti alloy route corrected in D18.)
+- Why: have C/Fe/Pd. Missing raw: titanium_ore, silicon_ore, focused_crystal source -> exploration target.
 
 ## D3 t2091440 — Safety layer before risk
 - Need: survive PC shutdowns and lawless trips.
@@ -32,39 +32,62 @@ Time = game tick (`curl -s https://game.spacemolt.com/health` -> tick; ~10s/tick
 - Why: user approved risk; expected loss small (~10k modules worst case, partly recoverable) vs. unlocking all crafting.
 
 ## D6 t2091490 — First exploration target: Solarian space via Pherkad
-- Options: (a) frontier ring 2-3 jumps (gsc_0050, okab, megrez...) (b) Solarian border 7 jumps (furud) then Sirius 9.
-- Decision: (b) node_gamma>synchrony>pherkad>gsc_0041>antares>homam>furud>nova_terra>sirius, scouting every belt.
-- Why: Solarian = mining empire (Fe/Ti likely), stations to refuel/dock at the far end, Sirius sells Mining Survey Probe, Solarian treasury may pay missions. Only ~3 unclaimed systems to cross.
+- Decision: node_gamma>synchrony>pherkad>gsc_0041>antares>homam>furud>nova_terra>sirius, scouting every belt.
+- Why: Solarian = mining empire, stations at far end, Solarian treasury may pay missions. Only ~3 unclaimed systems to cross.
 - RESULT t2091660: no contact in 3 lawless systems; lawless belts untouched (homam Fe 17k/Cu 69k; antares Fe/Cu 12k; ice/gas 10k-50k). No Ti/Si found.
 
 ## D7 t2091700 — Solarian missions vs ore-delivery missions
-- Thinking: Sol board has dock-only exploration missions (infrastructure audit 20,000cr) and ore/refined delivery missions (faction: 2,000 Lead Ore -> 20,000cr; old_charts: 5 circuit_board -> 3,500cr). Delivering ore/refined for credits = selling ore in effect; hard rule forbids it.
-- Decision: accept infrastructure audit + old_charts (dock objective free; circuit delivery parked). No ore-delivery missions; raised as Open Question.
-- Why: audit costs only jumps that also scout new systems; ore rule respected.
+- Thinking: Sol board has dock-only exploration missions (audit 20,000cr) and ore/refined delivery missions (2,000 Lead Ore -> 20,000cr; 5 circuit_board -> 3,500cr). Delivering ore/refined for credits = selling ore in effect.
+- Decision: dock-only missions yes; no ore-delivery missions; raised as Open Question.
 - RESULT t2091929: audit paid 20,000cr IN FULL (Solarian treasury pays; Voidborn does not).
 
 ## D8 t2091700 — Titanium source
-- Thinking: Sol main_belt lists titanium r25 + nickel r70 but drained (1-2 left). Lawless belts near empires are untouched.
-- Decision: look for Ti/Ni in lawless systems bordering Solarian space (tau_ceti, lacaille_9352, acrux, nihal, markab, proxima_centauri, bluerift, gsc_0033).
-- Why: same pattern that produced untouched Fe/Cu at homam/antares.
+- Thinking: Sol main_belt lists titanium r25 + nickel r70 but drained. Lawless belts near empires are untouched.
+- Decision: look for Ti/Ni in less-trafficked systems.
+- RESULT t2093000: titanium at frontier pioneer_fields (Outer Rim capital system, r30, ~50 units regenerating).
 
 ## D9 t2091929 — Five Capitals circuit (15,000cr, Solarian-paid, expires ~t2152400)
-- Thinking: docks at Sol(done), Central Nexus, War Citadel(krynn 19j), Grand Exchange(haven 14j), Frontier(mobile_capital, first_step 13j), then back to Sol. ~60+ jumps at 60s each. Haven = Nebula space = silicon + trade_crystal (focused_crystal source) + biggest market.
-- Decision: accept; first leg Sol -> Haven scouting every belt and docking at stations (refuel <70%).
-- Why: pays reliably, scouts Nebula space for the two biggest crafting blockers, exploration XP per new system. Risk: unknown lawless gaps; starter hull, nothing in cargo.
+- Decision: accept; first leg Sol -> Haven scouting every belt and docking at stations.
+- Why: pays reliably, scouts Nebula space for crafting blockers, exploration XP per new system.
 - RESULT t2092400: Haven reached, 7 lawless systems no contact. Haven board added grand_tour (12k) + federation prospectus (20k, PAID IN FULL t2092456).
 
 ## D10 t2092300 — Silver at Nusakan skipped
-- Thinking: silver r32 uncommon (18 units, p1) vs iron/copper r41 common at 5/cycle; only 7 cargo free, no station within 2 jumps.
+- Thinking: silver r32 uncommon (18 units, p1) vs iron/copper r41 common at 5/cycle; only 7 cargo free.
 - Decision: skip; return later with empty hold or bigger ship.
-- Why: expected 1-2 silver before hold fills; not worth a detour.
 
-## D11 t2092456 — Craft 8 focused crystals at Grand Exchange now
-- Thinking: 33 trade_crystal mined at azmidi. focused_crystal is needed for ML II (1), cloak (1), survey_scanner_i (2), shield_booster_ii (2). 192 docked ticks; crafting XP; my docked time is used for memory commits anyway.
-- Decision: queue facet_trade_crystal x8 (workshop, free). Outputs stay in storage at grand_exchange_station.
-- Why: removes the focused_crystal blocker entirely without buying anything.
+## D11 t2092456 — Craft 8 focused crystals at Grand Exchange
+- Thinking: 33 trade_crystal mined at azmidi. focused_crystal needed for ML II (1), cloak (1), survey_scanner_i (2), shield_booster_ii (2).
+- Decision: queue facet_trade_crystal x8 (workshop, free) at grand_exchange_station.
+- Why: removes the focused_crystal blocker without buying anything.
 
 ## D12 t2092456 — Capitals tour order
-- Options computed by BFS: haven>first_step>frontier>nexus_prime>krynn>sol>haven = 84 jumps (best).
-- Decision: do it after crafting finishes; stop at nexus_prime to craft lead ingots + check for the new ship; mine cobalt at krynn if live.
-- Why: completes five_capitals (15k, return Sol) + grand_tour (12k, return Haven) in one loop.
+- BFS: haven>first_step>frontier>nexus_prime>krynn>sol>haven = 84 jumps (best). Stop at nexus_prime for lead-ingot crafting + new-ship check; cobalt at krynn.
+
+## D13 t2092480 — Leave Haven with focused_crystal job unfinished
+- Thinking: workshop jobs pause on undock and resume on return; Haven is the final stop.
+- Decision: depart now; also accepted deep_space_cartography (Horizon + The Crucible on the loop).
+- Why: saves ~28 min idle.
+
+## D14 t2092760 — Swap dead missions for Outer Rim work
+- Decision: abandon Voidborn titanium contract + old_charts; take the_memorial (8k), frontier_wayfinder_circuit (20k), debris_field_reports (4.5k).
+- RESULT t2093000: all paid in full (32.5k). Credits 103,729.
+
+## D15 t2093000 — Mine titanium for an Outer Rim mining contract
+- Thinking: OR titanium_extraction_contract (3,500; mine 20 Ti, ore stays mine). pioneer_fields Ti r30 p1-3; deep_range_outpost 1 jump for banking.
+- Decision: sm.py loop frontier pioneer_fields deep_range deep_range_outpost. Also local_sector_survey (route-compatible).
+- Why: titanium is a hard crafting blocker.
+
+## D16 t2093100 — Silicon plan: Zubenelhakrabi detour on the way home
+- Thinking: GAME-PLAN names Zubenelhakrabi Crystal Sand (Silicon r40); 8 jumps from first_step, then 11 to nexus_prime.
+- Decision: fly first_step>...>zubenelhakrabi, mine silicon, continue to nexus_prime; craft circuit boards at central_nexus (carbon there); ML II at haven (focused crystals there).
+- Why: one route closes every ML II blocker without buying anything.
+
+## D17 t2093200 — Stop titanium grind at 13 Ti
+- Thinking: Fe/Cu regenerated to 6-7/pick, hold fills in ~12 cycles; Ti/trip fell 5 -> 4 -> 3 -> 1.
+- Decision: stop; keep contract for the Resonance Miner (5.5x hold). 13 Ti covers ML II.
+- Why: exploration trains Piloting faster and capitals pay 27k+.
+
+## D18 t2093100 — Use rented station facilities for facility-only steps
+- Thinking: titanium_alloy has no ore-based workshop recipe (onboard_ = ship-only). Station production facilities rent per run. Facility fees are a service; outputs come from our own ore.
+- Decision: refine_steel x3 (6 steel, 57cr) + process_copper_wiring x20 (40 wiring, 340cr) at deep_range_outpost; forge_titanium_alloy x4 (148cr) at Frontier Station.
+- RESULT t2093125: 4 titanium_alloy in cargo. Remaining ML II input: 3 circuit_board (needs 2 silicon).
