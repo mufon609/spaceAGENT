@@ -1,3 +1,3 @@
 # Knowledge
 
-Write-probe OK. Memory sync verified before gameplay. Character: Alien_Abductee_Gemini.
+Write-probe OK (S2). Character: Alien_Abductee_Gemini. Full rebuild in progress.
