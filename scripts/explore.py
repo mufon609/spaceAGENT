@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """explore.py - scout a path of adjacent systems; record security, stations, every belt/ice/gas field.
-Usage (background):  setsid nohup python3 -u explore.py sysA,sysB,sysC [nobelts] > /tmp/explore.log 2>&1 < /dev/null &
+Usage (background):  setsid nohup python3 -u explore.py sysA,sysB,sysC [nobelts] [dock] > /tmp/explore.log 2>&1 < /dev/null &
+  dock = after scouting, dock at the first station of each system (inspection missions, refuel <70%).
 Output: /tmp/explore.log (readable lines) + /tmp/explore.jsonl (one JSON per system; convert with
         `python3 explore.py md` -> markdown rows for resources.md).
 Safety: leaves a POI with pirates; safe() on hull damage/battle; fuel guard turns home when fuel < return+8.
@@ -10,7 +11,7 @@ import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sm import call, sc, wait_idle, in_battle, safe, step, status_line
 
-def explore(route, belts=True, home="node_beta_industrial_station"):
+def explore(route, belts=True, home="node_beta_industrial_station", dock=False):
     """Scout a path of adjacent systems. Per system: security, stations, POIs; per belt/ice/gas: ores + crowd.
     Pirates at a POI -> leave it at once. Hull damage / battle -> safe(). Fuel guard: turns back when
     fuel < route-home estimate + 8. Appends JSON lines to /tmp/explore.jsonl."""
@@ -61,6 +62,13 @@ def explore(route, belts=True, home="node_beta_industrial_station"):
                     break
         out.write(json.dumps(rec) + "\n")
         out.flush()
+        if dock and rec["stations"]:
+            ok = step("travel", rec["stations"][0]) and step("dock")
+            print("  DOCK %s %s" % (rec["stations"][0], "ok" if ok else "FAILED"))
+            if ok:
+                sh = wait_idle().get("ship", {})
+                if sh.get("fuel", 0) < 0.7 * sh.get("max_fuel", 1):
+                    print("  refuel:", str(call("spacemolt", "refuel").get("result", ""))[:80])
     print("EXPLORE route done |", status_line())
     return True
 
@@ -84,6 +92,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "md":
         to_md()
     elif len(sys.argv) > 1:
-        explore(sys.argv[1].split(","), belts=not (len(sys.argv) > 2 and sys.argv[2] == "nobelts"))
+        opts = sys.argv[2:]
+        explore(sys.argv[1].split(","), belts="nobelts" not in opts, dock="dock" in opts)
     else:
         print(__doc__)

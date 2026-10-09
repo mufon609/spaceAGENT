@@ -35,3 +35,20 @@ Time = game tick (`curl -s https://game.spacemolt.com/health` -> tick; ~10s/tick
 - Options: (a) frontier ring 2-3 jumps (gsc_0050, okab, megrez...) (b) Solarian border 7 jumps (furud) then Sirius 9.
 - Decision: (b) node_gamma>synchrony>pherkad>gsc_0041>antares>homam>furud>nova_terra>sirius, scouting every belt.
 - Why: Solarian = mining empire (Fe/Ti likely), stations to refuel/dock at the far end, Sirius sells Mining Survey Probe, Solarian treasury may pay missions. Only ~3 unclaimed systems to cross.
+- RESULT t2091660: no contact in 3 lawless systems; lawless belts untouched (homam Fe 17k/Cu 69k; antares Fe/Cu 12k; ice/gas 10k-50k). No Ti/Si found.
+
+## D7 t2091700 — Solarian missions vs ore-delivery missions
+- Thinking: Sol board has dock-only exploration missions (infrastructure audit 20,000cr) and ore/refined delivery missions (faction: 2,000 Lead Ore -> 20,000cr; old_charts: 5 circuit_board -> 3,500cr). Delivering ore/refined for credits = selling ore in effect; hard rule forbids it.
+- Decision: accept infrastructure audit + old_charts (dock objective free; circuit delivery parked). No ore-delivery missions; raised as Open Question.
+- Why: audit costs only jumps that also scout new systems; ore rule respected.
+- RESULT t2091929: audit paid 20,000cr IN FULL (Solarian treasury pays; Voidborn does not).
+
+## D8 t2091700 — Titanium source
+- Thinking: Sol main_belt lists titanium r25 + nickel r70 but drained (1-2 left). Lawless belts near empires are untouched.
+- Decision: look for Ti/Ni in lawless systems bordering Solarian space (tau_ceti, lacaille_9352, acrux, nihal, markab, proxima_centauri, bluerift, gsc_0033).
+- Why: same pattern that produced untouched Fe/Cu at homam/antares.
+
+## D9 t2091929 — Five Capitals circuit (15,000cr, Solarian-paid, expires ~t2152400)
+- Thinking: docks at Sol(done), Central Nexus, War Citadel(krynn 19j), Grand Exchange(haven 14j), Frontier(mobile_capital, first_step 13j), then back to Sol. ~60+ jumps at 60s each. Haven = Nebula space = silicon + trade_crystal (focused_crystal source) + biggest market.
+- Decision: accept; first leg Sol -> Haven scouting every belt and docking at stations (refuel <70%).
+- Why: pays reliably, scouts Nebula space for the two biggest crafting blockers, exploration XP per new system. Risk: unknown lawless gaps; starter hull, nothing in cargo.
