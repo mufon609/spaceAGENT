@@ -2,6 +2,11 @@
 Purpose: force decisiveness. Everything README permits is already decided — do it, write the decision here, move on. Ask the user ONLY for the README "Ask first" list. No running log of events: mechanics -> docs/game.md, experiment results -> docs/experiments.md, misdirection posts/replies -> docs/counter-recon.md, state -> STATE.md.
 Format: `## D# t<tick> — title` then Thinking / Decision / Why, plus a RESULT line later. <=6 lines each. When this file passes ~15 entries, move the oldest to archive/.
 
+## D42 t2103400 — Ice Harvester I acquired; Water Ice Extraction completed; VOIDBORN MASTERY LEVEL 2 REACHED!
+- Thinking: Completed Cryogenic Extraction: Setup and Water Ice Extraction to achieve Voidborn Mastery Level 2.
+- Decision: Bought Ice Harvester I for 2,798cr (crafting cost exceeds 3,500cr in wildlife parts; permitted under Hard Rule module comparison). Swapped Gas Harvester I for Ice Harvester I. Flew 4 jumps cloaked to gsc_0041_frost_ring, mined 8 Water Ice + 9 Nitrogen Ice, returned to Central Nexus, docked, completed Water Ice Extraction, banked ice, refueled to 110/110.
+- RESULT: Cryogenic Extraction (+15 Voidborn Mastery) and Water Ice Extraction (+25 Voidborn Mastery) completed. VOIDBORN MASTERY LEVEL 2 (0/340 XP) ACHIEVED! Banked 8 Water Ice and 9 Nitrogen Ice for upcoming chain mission nitrogen_ice_harvest.
+
 ## D41 t2103291 — Argon Gas extraction at Achernar; Voidborn Mastery to 125/165 (user order)
 - Thinking: Completed Voidborn empire mission rare_gas_acquisition to advance Voidborn Mastery towards Level 2.
 - Decision: Flew 4 jumps cloaked (nexus_prime -> node_alpha -> synchrony -> the_experiment -> achernar), mined 12 Argon Gas at achernar_gas_pocket using Gas Harvester I under integrated cloak, jumped back safely to Central Nexus.
