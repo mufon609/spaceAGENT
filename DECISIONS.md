@@ -2,6 +2,11 @@
 Purpose: force decisiveness. Everything README permits is already decided — do it, write the decision here, move on. Ask the user ONLY for the README "Ask first" list. No running log of events: mechanics -> docs/game.md, experiment results -> docs/experiments.md, misdirection posts/replies -> docs/counter-recon.md, state -> STATE.md.
 Format: `## D# t<tick> — title` then Thinking / Decision / Why, plus a RESULT line later. <=6 lines each. When this file passes ~15 entries, move the oldest to archive/.
 
+## D44 t2106000 — 5 Voidborn missions completed; Survey Scanner I crafted; Mastery to 185/340
+- Thinking: Pushing Voidborn Mastery from L2 towards L5+ via systematic empire chains and self-crafted exploration upgrades.
+- Decision: Completed Amplification Materials (15 Silver Ore mined cloaked at Errai Belt; +25 Mastery), The Resonance Chamber & Crystal Resonance Harvest (20 Energy Crystals mined at Garnet Dim Lattice; +60 Mastery), Material Synthesis: Basic (10 Iron Ore mined at Miaplacidus; +25 Mastery), Conductor Fabrication (+25 Mastery), Advanced Material Processing (+25 Mastery). Hauled materials from Ramen's Rest to hand-craft Survey Scanner I at Central Nexus Workshop and fitted it to Absence.
+- RESULT: 5 Voidborn empire missions complete (+160 Voidborn Mastery total, now 185/340 XP at Level 2). Scanning leveled to L1 (15/165). Crafting advanced to 240/900. Absence upgraded with Survey Scanner I.
+
 ## D43 t2103550 — Nitrogen Ice Harvest completed; Fuel cells in-flight; Stock consolidated
 - Thinking: Completed Nitrogen Ice Harvest to progress Voidborn Mastery further into Level 2 (25/340 XP).
 - Decision: Flew 4 jumps cloaked to gsc_0041_frost_ring, mined 12 Nitrogen Ice + 12 Water Ice + 1 Deuterium Ice. Returned, turned in mission at Central Nexus (+25 Voidborn Mastery, +40 Mining XP). Consolidated all stock at Central Nexus; withdrew 2 fuel cells into Absence hold for autonomous mobile refueling.
