@@ -1,6 +1,13 @@
 # Game knowledge — mechanics + play-only facts
 Untagged lines = verified live in S1–S3 (game <= v0.613.4, t <= 2098845). `[docs]` = official docs only, never tested by us. `[?]` = hypothesis. When play contradicts a line, fix it in place and note it in LOG.md. Full official rules: docs/reference.md (grep it, don't read it whole).
 
+## Verified S5 (t2100055, v0.613.4)
+- **Public rented facilities:** Facility-only recipes (`FAC` in recipe.py) like `create_superconductor` auto-route to public facilities at stations via `spacemolt craft` preset=fast/cheap. At Central Nexus, rented Precious-Metal Refinery cost 140cr rental fee + 9cr labor per run. Crucial: rented facility jobs keep running in the background even after you undock or leave the system.
+- **Station Workshop mechanics:** Free of fees, awards +5 Crafting and +5 Refining XP per run. Runs only advance while docked; undocking pauses the job and resuming occurs upon redocking.
+- **Cargo volume compression via en-route sintering:** 48 silicon ore + 24 nickel ore (72 cargo size) sintered at Deep Range Outpost into 12 silicate composites (12 cargo size) yields a 6:1 volume compression, enabling single-trip hauling across multi-region chains.
+- **P2P Trading vs Commodity Exchange:** Unique documents/notes created via `spacemolt_social create_note` cannot be listed on the commodity order book via `create_sell_order` (`ERR invalid_item: Unknown item`). They are transferred/sold via `spacemolt_transfer trade_offer` or gifts.
+- **Ship Commissioning:** `commission_quote` with `bare_hull: true` excludes default modules (e.g. Shield Booster I) and quotes strictly hull materials (Absence: 12 silicate composite, 11 copper wiring, 1 processing core, 3 shield emitter, 5 steel plate for 9,255cr labor + yard fee vs 10,241cr with default booster).
+
 ## Verified S4 (t2099600, v0.613.4)
 - Module skill requirements are NOT enforced: em_disruptor_i (lists weapons 3) installed with Weapons 0 (EXP-2). Fit cloaks/scanners without the listed skill.
 - Empire-exclusive hulls: commission_quote/commission_ship for a Voidborn design (absence, eigenstate...) at a non-Voidborn yard -> `wrong_faction` ("commission it at a voidborn shipyard, or license and build it at your own faction station").
