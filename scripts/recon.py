@@ -85,7 +85,7 @@ def check(hours=24.0, log=False):
             continue
         for m in msgs(call("spacemolt_social", "get_chat_history", {"channel": ch, "limit": 100, "after": first})):
             who, ts, txt = field(m, "sender_name", "sender", "username", "from", "player_name"), \
-                field(m, "timestamp", "created_at", "sent_at"), field(m, "content", "message", "text")
+                field(m, "timestamp_utc", "timestamp", "created_at"), field(m, "content", "message", "text")
             if who == os.environ.get("SM_USER"):
                 continue
             ref = ([p[0] for p in posts if p[1] <= ts and (ch == "private" or p[2] == ch)] or ["R?"])[-1]

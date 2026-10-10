@@ -2,6 +2,10 @@
 Purpose: force decisiveness. Everything README permits is already decided — do it, write the decision here, move on. Ask the user ONLY for the README "Ask first" list. No running log of events: mechanics -> docs/game.md, experiment results -> docs/experiments.md, misdirection posts/replies -> docs/counter-recon.md, state -> STATE.md.
 Format: `## D# t<tick> — title` then Thinking / Decision / Why, plus a RESULT line later. <=6 lines each. When this file passes ~15 entries, move the oldest to archive/.
 
+## D37 t2099600 — Taxes always prepaid; nomadic; one stock hub (user order)
+- Decision: boot runs `sm.py tax` (prepay to owed+10%) and `sm.py stock` (data/stock.tsv). Prepaid 9,867 now (pool 12,499 vs owed 11,363). Never own/lease facilities or bases (no ongoing costs). Hub = central_nexus (Voidborn shipyard, biggest pile); absence will be built there.
+- RESULT: workshop_production_run +3,500 (5 craft runs at ramens_rest); EXP-2 confirmed skill reqs unenforced.
+
 ## D36 t2099202 — Counter-recon is standing policy (user order)
 - Decision: post misdirection questions in system/local chat using the user's template ("does anyone else notice they updating something at [LOCATION]? seems [MORE PRODUCTIVE / LESS RISKY / ITEM NOT FOUND THERE]") and sell `EMPTY` notes about far places, to pull players away from the belts we harvest. No asking first; no need to watch the named place; DO record every reply and sender.
 - How + full running log: docs/counter-recon.md (scripts/recon.py post | note | check log). Only new strategic choices about it come back here.

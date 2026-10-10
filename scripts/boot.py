@@ -32,6 +32,11 @@ print("-- ships")
 r = call("spacemolt_ship", "list_ships")
 txt = r.get("result") or json.dumps(sc(r))[:600]
 print(txt if isinstance(txt, str) else str(txt)[:600])
+print("-- tax")
+from sm import tax, stock
+tax()
+print("-- stock (data/stock.tsv)")
+stock()
 print("-- preflight")
 preflight()
 print("NEXT: undocked + no job running? -> scripts/safe_dock.sh. Read STATE.md. res.py for where/route.")

@@ -6,7 +6,8 @@ Be the ship nobody sees. Train **Stealth + Scanning + Engineering**, fly fast cl
 ## Why Voidborn
 Every empire has its own ship line (T0 starter -> T1 -> ... T5) with its own flavour; hulls are empire-specific. Voidborn's line is built around shields, cloaking and scan resistance — no other empire's T1 has an integrated cloak like `absence`. Our home empire bonus = shields/cloak (docs).
 
-## Ship plan (T1 = no Piloting requirement; build with `commission_ship provide_materials=true`, quote first)
+## Ship plan (T1 = no Piloting requirement; Voidborn designs ONLY at a Voidborn shipyard, e.g. central_nexus)
+Quote: `sm.py call spacemolt_ship commission_quote '{"ship_class":"absence","bare_hull":false,"source_missing_materials":false}'` (shows credits-only vs provide-materials price). Build: same params on `commission_ship` with the materials in that station's storage.
 | Hull | Speed | Cargo | CPU/Power | Slots W/D/U | Built-in | Role |
 |---|---|---|---|---|---|---|
 | threshold (now) | 1 | 65 | 16/30 | 1/2/2 | — | keep stored: mining + backup |

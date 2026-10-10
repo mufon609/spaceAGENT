@@ -1,6 +1,17 @@
 # Game knowledge — mechanics + play-only facts
 Untagged lines = verified live in S1–S3 (game <= v0.613.4, t <= 2098845). `[docs]` = official docs only, never tested by us. `[?]` = hypothesis. When play contradicts a line, fix it in place and note it in LOG.md. Full official rules: docs/reference.md (grep it, don't read it whole).
 
+## Verified S4 (t2099600, v0.613.4)
+- Module skill requirements are NOT enforced: em_disruptor_i (lists weapons 3) installed with Weapons 0 (EXP-2). Fit cloaks/scanners without the listed skill.
+- Empire-exclusive hulls: commission_quote/commission_ship for a Voidborn design (absence, eigenstate...) at a non-Voidborn yard -> `wrong_faction` ("commission it at a voidborn shipyard, or license and build it at your own faction station").
+- Missions "Craft N items" count craft RUNS, not output units. `quantity` on a multi-output recipe is output units, rounded to runs (slugs: quantity 2 -> 1 run of 5).
+- Uninstall/reinstall of a weapon empties its magazine. install_mod needs the module in CARGO (withdraw from storage first); uninstall_mod takes `module_id` from get_ship.
+- Storage API: tool spacemolt_storage actions view|deposit|withdraw (item_id, quantity). `view` with no station returns `locations` = every station holding our items (sm.py stock uses it).
+- Jettison [help text]: containers last 10 min and are lootable; when one despawns, ore matching that POI's deposit settles back into the deposit (dumping filler does not strip the belt). Mid-flight jettison destroys the cargo.
+- Taxes: Voidborn income tax 6% (missions + market margin + salvage + ship/facility sales + rescue), property tax 0.75% of hull+fitted modules of every owned ship, weekly-ish assessment. `prepay_tax` escrows credits (surplus refunded); unpaid tax becomes a bounty (`pay_bounty empire source=self`). Sales tax: Voidborn/Nebula 1%, Solarian 3%, Crimson 4%. Tax record showed 51,700cr market sales from early sessions.
+- Chat: get_chat_history fields sender, content, timestamp_utc, system_id. Last Light system chat: 2 messages in 3 weeks (quiet systems are useless for counter-recon).
+- Achievements 8/68 (t2099600): open targets with progress — voyager_ii 127/250 systems, jump_master 1,204/25,000, artisan 166/10,000 crafts, deep_core_master 0/25, threshold_crosser 0/25, industrialist 0/10, well_insured 0/10, first_blood 0/1.
+
 ## Version watch (v0.613.4) — official changes that override older beliefs
 - [docs v0.566.3] Module skill requirements are NOT enforced (only CPU/power limit fitting). The catalog still lists required_skills; our old "cloak needs Stealth 1" belief is probably dead -> EXP-2.
 - [catalog] Ship gates: T1 hulls have no piloting_required; higher tiers need Piloting 10/20/30/50. Each empire has its own hull line. See docs/strategy.md ship plan.
@@ -21,7 +32,7 @@ Untagged lines = verified live in S1–S3 (game <= v0.613.4, t <= 2098845). `[do
 ## Mining
 - Each cycle picks ONE deposit: weight = richness x (1 + 0.1 x Mining x rank); rank common0 uncommon1 rare2 exotic3 legendary4. Yield is super-linear in beam, but supported power p caps rare picks (Si p2-4 -> +1..3 per pick whatever the beam). A big beam mostly fills the hold with filler faster; at pioneer_fields beam 24 gave 0 Ti in 24 cycles while beam 12 gave ~1 Ti per 2.6-4.5 cycles (hypothesis, repeatable). For rare ores use ONE ML II.
 - Depleted deposits cap usable beam; regen ~0.3-0.5/tick policed, ~1/min for Ti at pioneer_fields; Crystal Sand Si shrinks when mined and regenerates slowly. Other players mine the same deposits (Ti 76->0 in ~20 min with 4 miners).
-- `mine` returns error cargo_full when the hold is full (sm.py treats it as normal). JETTISONED ORE IS DESTROYED: user-approved ONLY for iron/copper filler while mining rare ore (scripts/stackmine.py). With jettison the hold (65) caps a trip at ~55-59 of the rare ore.
+- `mine` returns error cargo_full when the hold is full (sm.py treats it as normal). Jettisoned ore is lost to us (container despawns after 10 min, matching ore returns to the deposit): user-approved ONLY for iron/copper filler while mining rare ore (scripts/stackmine.py). With jettison the hold (65) caps a trip at ~55-59 of the rare ore.
 - Policed belts are drained; lawless belts have 10k-100k Fe/Cu. Rare ores sit in nebulae/special POIs (Crystal Sand, null_dust, garnet_belt...). Use `python3 scripts/res.py ore <name>`. NICKEL is scarce on the known map (only pioneer_fields).
 - unknown_edge_mineral_fields (station in same system): beam 24 -> carbon 16, aluminum 14, vanadium ~8, iridium 4 per pick; hold 65 fills in ~9 cycles.
 

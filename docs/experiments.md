@@ -3,14 +3,14 @@ Rules: the game changes constantly, so test cheaply before betting big. One line
 Status: OPEN | RUNNING | DONE (result) | DEAD (why).
 
 ## Seeded (user-approved t2099202)
-- **EXP-1 Commission a T1 hull from own materials** — `sm.py call spacemolt commission_quote '{"ship_class":"absence"}'` (also eigenstate, qualia, fugue). Cost: a query. Payoff: speed 3 + integrated cloak 30 + scan resistance 20, no Piloting gate. Then gather ~6 iridium, consolidate inputs, craft components, `commission_ship provide_materials=true`. User pre-approved (D33): commissioning a T1 from our own materials is OK without asking (it is not buying a ship); log it. OPEN
+- **EXP-1 Commission a T1 hull from own materials** — `sm.py call spacemolt commission_quote '{"ship_class":"absence"}'` (also eigenstate, qualia, fugue). Cost: a query. Payoff: speed 3 + integrated cloak 30 + scan resistance 20, no Piloting gate. Then gather ~6 iridium, consolidate inputs, craft components, `commission_ship provide_materials=true`. User pre-approved (D33): commissioning a T1 from our own materials is OK without asking (it is not buying a ship); log it. PARTIAL t2099600: quote at ramens_rest -> wrong_faction; Voidborn hulls only at a Voidborn shipyard (central_nexus). All raw inputs are in storage (iridium 20 @ unknown_edge). Next: quote at central_nexus.
   - EXP-1b: measure Piloting XP/tick in the T1 vs Threshold (catalog: higher tiers earn more per action). OPEN
-- **EXP-2 Module skill requirements unenforced?** (docs v0.566.3) — install a module whose listed skill we lack (cloaking_device_i stealth 1, or em_disruptor_i weapons 3 which we own @ ramens_rest). Cost: ~0. Payoff: cloak/stealth training now. OPEN
+- **EXP-2 Module skill requirements unenforced?** (docs v0.566.3) — install a module whose listed skill we lack (cloaking_device_i stealth 1, or em_disruptor_i weapons 3 which we own @ ramens_rest). Cost: ~0. Payoff: cloak/stealth training now. DONE t2099600: NOT enforced — em_disruptor_i (weapons 3) installed at Weapons 0.
 - **EXP-3 Mining drone** — `recipe.py tree mining_drone` / `light_drone_bay`; a DroneLang MINE/DEPOSIT loop deposits straight to station storage (passive ore + Drone Control XP, +5 per action). Cost: crafting. Payoff: income while the ship does other things. OPEN
 - **EXP-4 Freight + passengers on mission circuits** (PB-3) — `spacemolt_shipping list`, `list_station_passengers` at each capital dock. Cost: cargo space/time. Payoff: 400+200/hop per package on routes we fly anyway; carrier tier grows. OPEN
 - **EXP-5 Arena** (Krynn Blood Arena) — does it give Piloting XP, or only combat skills (500/skill/day cap)? Cost: travel. Payoff: risk-free combat skills. OPEN
 - **EXP-6 survey_system** — needs a survey scanner (craft? survey_scanner_i 3 CPU/4 pw). Reveals hidden deep-core POIs (+Scanning/Deep Core XP). Deep Core Mining is 8 already. OPEN
-- **EXP-7 Achievements with rewards** — `get_achievements` + catalog achievements[].rewards (credits/skill_xp/titles). Cost: queries. Payoff: free goals. OPEN
+- **EXP-7 Achievements with rewards** — `get_achievements` + catalog achievements[].rewards (credits/skill_xp/titles). Cost: queries. Payoff: free goals. DONE t2099600: 8/68 earned; targets listed in docs/game.md § Verified S4.
 
 ## Stealth / intel (user direction t2099202, D34)
 - **EXP-8 Stealth XP sources** — which actions give Stealth XP: cloaking_device activation (+5 known), the absence integrated cloak, docked cloak cycles (docs: cloak free while docked)? Measure XP/h and fuel/h for each; pick the passive loop. OPEN
@@ -27,4 +27,4 @@ Status: OPEN | RUNNING | DONE (result) | DEAD (why).
 - Nickel elsewhere on the 505-system map (only pioneer_fields known).
 
 ## Results log (newest first; move proven facts to docs/game.md)
-- (none yet)
+- t2099600: EXP-2 done (skill reqs unenforced), EXP-1 partial (Voidborn yard only), EXP-7 done (achievements).

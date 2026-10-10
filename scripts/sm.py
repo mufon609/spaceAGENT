@@ -29,6 +29,8 @@ Usage:
   sm.py route <system_or_poi>             jump path + fuel
   sm.py missions | active                 board missions | my active missions (compact)
   sm.py storage [station_id]              storage here or remote
+  sm.py stock                             every station's storage -> data/stock.tsv (+ 1 line per station)
+  sm.py tax                               tax check; tops up prepay to owed + 10% (user rule: always prepaid)
 See also: boot.py (session start), res.py (knowledge queries), stackmine.py (rare-ore stacking), explore.py.
 Tools: spacemolt, spacemolt_storage, spacemolt_market, spacemolt_social, spacemolt_battle,
        spacemolt_salvage, spacemolt_facility, spacemolt_catalog(action=catalog)
@@ -430,6 +432,37 @@ def missions(action):
         print(short(r))
 
 
+def stock():
+    """Snapshot ALL personal storage (every station) into data/stock.tsv; print one line per station."""
+    loc = sc(call("spacemolt_storage", "view")).get("locations") or []
+    rows, tick = [], "?"
+    try:
+        tick = json.loads(urllib.request.urlopen("https://game.spacemolt.com/health", timeout=8).read().decode()).get("tick")
+    except Exception:
+        pass
+    for l in loc:
+        b = l.get("base_id")
+        st = sc(call("spacemolt_storage", "view", {"station_id": b}))
+        its = sorted(((i.get("item_id"), i.get("quantity", 0)) for i in st.get("items") or []), key=lambda x: -x[1])
+        rows += ["%s\t%s\t%s\t%s" % (b, l.get("system"), i, q) for i, q in its]
+        print("%s (%s): %s" % (b, l.get("system"), " ".join("%s=%s" % x for x in its)[:400]))
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "stock.tsv")
+    open(p, "w").write("# station\tsystem\titem\tqty  (sm.py stock, t%s; regenerate, don't hand-edit)\n" % tick + "\n".join(rows) + "\n")
+
+
+def tax():
+    """User rule: taxes always prepaid. Top up the prepay pool to owed + 10%; pay any outstanding empire bounty."""
+    s = sc(call("spacemolt", "get_tax_estimate"))
+    owed = (s.get("income_tax_total") or 0) + (s.get("property_tax_total") or 0)
+    pre = s.get("tax_prepaid") or 0
+    for b in s.get("outstanding_bounties") or []:
+        print("TAX DEBT", b, "->", short(call("spacemolt", "pay_bounty", {"empire": b.get("empire"), "source": "self"}))[:120])
+    gap = int(owed * 1.1) - pre
+    if gap > 0:
+        print("TAX prepay %d:" % gap, short(call("spacemolt", "prepay_tax", {"amount": gap})).split("\n")[1:3])
+    print("TAX owed=%s prepaid=%s next_in=%.1fh" % (owed, max(pre, pre + gap), (s.get("next_assessment_approx_seconds") or 0) / 3600.0))
+
+
 def short(r):
     if "error" in r:
         return "ERR %s: %s" % (r["error"].get("code"), r["error"].get("message"))
@@ -478,6 +511,10 @@ def main(a):
         missions("get_missions")
     elif c == "active":
         missions("get_active_missions")
+    elif c == "stock":
+        stock()
+    elif c == "tax":
+        tax()
     elif c == "storage":
         body = {"station_id": a[1]} if len(a) > 1 else {}
         print(short(call("spacemolt_storage", "view", body)))

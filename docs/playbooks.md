@@ -70,6 +70,7 @@ S3 results: Krynn strategic_readiness_assessment 20,000 + last_known_position 8,
 ```
 scripts/safe_dock.sh      # stop loops, dock at nearest known station, bank cargo
 $S status                 # must show docked=<station>
+$S tax ; $S stock         # taxes prepaid, data/stock.tsv current
 ```
 Then update STATE.md (location, credits, skills, stock, Now), DECISIONS.md (new decisions, RESULT lines), docs/counter-recon.md (`recon.py check 24 log`), docs/experiments.md (results), commit + `git push`.
 
