@@ -39,5 +39,16 @@ Misleading chat questions + EMPTY notes about far places pull players away from 
 ## Stockpile notes (t2098845)
 Ti ore 135, Nickel 159, Silicon 258, copper wiring 110, steel 86, trade crystal 25, circuit boards 3, carbon 2300+, Pt 760, Pd 330 — locations in STATE.md. Not yet sourced: null matter (intercrus_null_dust 440, atlas_null_dust 577, lawless), energy crystal (garnet_dim_lattice 65), phase crystal (merope 158, cloverfield 448, altais 428), gold (garnet_belt 681), silver (errai 64), graphene, superconductors (FAC from Pd + iridium), purified water / liquid nitrogen / argon (ice/gas belts need harvester modules).
 
+## Fuel Self-Sufficiency & Independence (user directive t2100128)
+Stop relying on station refuel services and empire taxes; eliminate purchasing token costs.
+- **In-flight consumables:** `fuel_cell` (size 1) restores +20 fuel anywhere via `spacemolt use_item '{"item_id":"fuel_cell"}'`. Keeping 5 in cargo provides +100 autonomous fuel (covers a full tank on Absence, fuel cap 110).
+- **Zero-cost production chain:**
+  - `gas_harvester_i` (utility, 4 CPU, 6 power, mining power 8) harvests `hydrogen_gas` from clouds (e.g. `achernar_gas_pocket`, 4 jumps from Nexus Prime).
+  - Workshop: `compress_hydrogen_gas` (8 H2 gas -> 3 liquid H2, 1.1 ticks).
+  - Workshop: `craft_fuel_cell` (2 liquid H2 + 1 steel plate -> 1 fuel cell, 1.35 ticks).
+  - Salvage alternative: `scavenge_fuel_cells` (8 salvage metal + 3 salvage components -> 4 fuel cells).
+- **Rule:** Never pay station refuel tariffs or burn round-trips for fuel when autonomous fuel cells can be crafted from stocked filler steel + harvested gas.
+
 ## Earlier plan (S1–S3, kept for context)
 Role: Voidborn Frontier Prospector, home central_nexus, primary mission a raw SILICON supply from frontier/lawless space (cloaked hops to Zubenelhakrabi Crystal Sand, Silicon r40). Fitting ratchet: Engineering -1% module power/CPU per level; Threshold 2x Mining Laser II + recharger + hardener + EM disruptor = 29/30. Cloak strength = module + hull bonus x Stealth skill; Stealth 3 unlocks Emergency Cloaking System, 5 gives +5% strength. The one-laser Ti/Ni stacking fit (power 18-22/30) conflicts with the >=90% load rule; refit 2x ML II for XP grinding at jettison belts.
+
