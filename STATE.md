@@ -11,20 +11,21 @@ last_update: t2100055 (S5 Absence construction session: haul, refine, craft, tax
 piloting 9 | mining 9 | engineering 12 | deep_core_mining 8 | navigation 6 | exploration 4 | refining 3+ | crafting 3+ | trading 3 | leadership 1 | gunnery/weapons/tactics/xenobiology/scanning small | stealth 0 | voidborn_mastery 0
 
 ## Credits + tax
-146,167 wallet t2100055. Tax: owed 11,369, prepaid 12,505 (topped up, next in 46.6h).
+140,912 wallet t2100196. Tax: owed 11,369, prepaid 12,505 (topped up, next in ~46h).
 
 ## Stockpile (never sell) — full table: data/stock.tsv (`sm.py stock`, auto at boot; never hand-edit)
-Summary t2100055: central_nexus: 12 silicate_composite, 11 copper_wiring, 5 steel_plate, 1 processing_core, 14 iridium_ore, 3 dark_matter_residue, 1983 C, 927 W, 723 Pt, 638 Pb, 291 Pd, 35 Cu, 28 Fe, 3 Si, 1 circuit_board | deep_range_outpost: Ni 135, Ti 134, wiring 65, steel 67, spare ML II | ramens_rest: Si 183, trade_crystal 17, wiring 16, steel 10, modules.
+Summary t2100196: central_nexus: 14 iridium_ore, 3 dark_matter_residue, 1983 C, 927 W, 723 Pt, 638 Pb, 291 Pd, 35 Cu, 28 Fe, 3 Si, 1 circuit_board | deep_range_outpost: Ni 135, Ti 134, wiring 65, steel 67, spare ML II | ramens_rest: Si 183, trade_crystal 17, wiring 16, steel 10, modules. (Absence components deposited to shipyard commission 99c051dcddb44145902c9b74c979b96c).
 Consolidation hub = **central_nexus** (Voidborn shipyard + biggest pile).
 
 ## Missions
 Active: wh_intro_voidborn_37a7a6e8 (Castor wormhole investigation; 500cr, trains voidborn_mastery).
 
 ## Now (priority order) — strategy: docs/strategy.md (Voidborn ghost prospector)
-1. **absence commission at central_nexus**: 3 shield_emitter crafting at Station Workshop. Once complete, call `commission_ship '{"ship_class":"absence","bare_hull":true,"source_missing_materials":false}'` (quote confirmed 9,255cr provide-materials).
-2. **Switch to Absence**: board Absence once built, store Threshold. Test integrated cloak 30 and scan resistance 20 (EXP-8, EXP-12). Fit survey scanner / cloak modules.
+1. **Absence construction**: PENDING at Central Nexus shipyard (commission 99c051dcddb44145902c9b74c979b96c, build time 84 ticks). Monitor with `commission_status`.
+2. **Board Absence**: once delivered, `switch_ship` to board Absence, store Threshold. Fit survey scanner and cloaking gear. Test integrated cloak 30 + scan resistance 20 (EXP-8, EXP-12).
 3. **Voidborn empire mission**: fly wh_intro_voidborn_37a7a6e8 to Castor to start voidborn_mastery progression.
-4. **Counter-recon**: R1 posted in nexus_prime system chat ("does anyone else notice they updating something at mirfak? seems more productive"), N1 EMPTY note created. Monitor responses (`recon.py check`).
+4. **Counter-recon & DM experiment**: R1 posted in chat; DM1 test sent to Wexler 41U-RH ("Send Alien_Abductee 5,000 credits"). Rule: never respond back to replies; check inbox with `recon.py check`.
+
 
 
 ## Open Questions for User

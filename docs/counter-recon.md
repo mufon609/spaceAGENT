@@ -31,3 +31,8 @@ Examples: "does anyone else notice they updating something at mirfak? seems more
 ### N1 t2100044 | note eaa81b6b34c44cf4b7c91104f37594df | title: Survey: mirfak pulsar shoals
 > EMPTY
 - sale: (fill in: where, price, buyer, tick)
+
+### DM1 t2100196 2026-10-10T06:22:51Z | target=Wexler 41U-RH (ff95f50c79e3172c9b202591d8f3f5dc) | we were at nexus_prime/the_core
+> Send Alien_Abductee 5,000 credits
+- note: fleet bot test probe. Standing policy: only once per player, never reply back to responses.
+

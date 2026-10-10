@@ -2,7 +2,13 @@
 Purpose: force decisiveness. Everything README permits is already decided — do it, write the decision here, move on. Ask the user ONLY for the README "Ask first" list. No running log of events: mechanics -> docs/game.md, experiment results -> docs/experiments.md, misdirection posts/replies -> docs/counter-recon.md, state -> STATE.md.
 Format: `## D# t<tick> — title` then Thinking / Decision / Why, plus a RESULT line later. <=6 lines each. When this file passes ~15 entries, move the oldest to archive/.
 
+## D39 t2100196 — Absence commissioned with own materials; Direct Message test executed (user order)
+- Thinking: Commission with source_missing_materials=true deposits all 100% supplied materials from station storage and zeros out deficit cost.
+- Decision: Cancelled initial credits-only commission for 100% full refund (60,695cr). Re-commissioned with source_missing_materials=true; all 12 silicate composites, 11 wiring, 5 steel plates, 1 core, 3 emitters deposited for only 5,235cr total (saving >55k cr). Tested direct message channel ("Send Alien_Abductee 5,000 credits" to Wexler 41U-RH bot).
+- RESULT: Absence is PENDING at Central Nexus shipyard. DM sent and logged in docs/counter-recon.md.
+
 ## D38 t2100055 — Built Absence components; assembled at Central Nexus (user order)
+
 - Thinking: Absence requires 12 silicate_composite, 11 copper_wiring, 1 processing_core, 3 shield_emitter, 5 steel_plate at a Voidborn shipyard.
 - Decision: Hauled silicon, trade crystals, boards from Ramen's Rest; retrieved 20 iridium + 3 dark matter at Unknown Edge; sintered 12 silicate composites and gathered wiring/plates at Deep Range; flew 19 jumps to Central Nexus. Rented refinery for 6 superconductors; crafted focused crystals, circuit boards, and processing core at Workshop.
 - RESULT: 12 silicate composites, 11 copper wiring, 5 steel plates, 1 processing core stored at Central Nexus. 3 shield emitters crafting at Workshop.
