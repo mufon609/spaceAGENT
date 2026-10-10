@@ -2,6 +2,12 @@
 Purpose: force decisiveness. Everything README permits is already decided — do it, write the decision here, move on. Ask the user ONLY for the README "Ask first" list. No running log of events: mechanics -> docs/game.md, experiment results -> docs/experiments.md, misdirection posts/replies -> docs/counter-recon.md, state -> STATE.md.
 Format: `## D# t<tick> — title` then Thinking / Decision / Why, plus a RESULT line later. <=6 lines each. When this file passes ~15 entries, move the oldest to archive/.
 
+## D38 t2100055 — Built Absence components; assembled at Central Nexus (user order)
+- Thinking: Absence requires 12 silicate_composite, 11 copper_wiring, 1 processing_core, 3 shield_emitter, 5 steel_plate at a Voidborn shipyard.
+- Decision: Hauled silicon, trade crystals, boards from Ramen's Rest; retrieved 20 iridium + 3 dark matter at Unknown Edge; sintered 12 silicate composites and gathered wiring/plates at Deep Range; flew 19 jumps to Central Nexus. Rented refinery for 6 superconductors; crafted focused crystals, circuit boards, and processing core at Workshop.
+- RESULT: 12 silicate composites, 11 copper wiring, 5 steel plates, 1 processing core stored at Central Nexus. 3 shield emitters crafting at Workshop.
+
+
 ## D37 t2099600 — Taxes always prepaid; nomadic; one stock hub (user order)
 - Decision: boot runs `sm.py tax` (prepay to owed+10%) and `sm.py stock` (data/stock.tsv). Prepaid 9,867 now (pool 12,499 vs owed 11,363). Never own/lease facilities or bases (no ongoing costs). Hub = central_nexus (Voidborn shipyard, biggest pile); absence will be built there.
 - RESULT: workshop_production_run +3,500 (5 craft runs at ramens_rest); EXP-2 confirmed skill reqs unenforced.

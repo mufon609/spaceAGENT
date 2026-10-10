@@ -24,3 +24,10 @@ Examples: "does anyone else notice they updating something at mirfak? seems more
 - Score per post: replies, unique senders, mentions of the place, anyone saying they'll go / went. Any conversation it drives = a result; summarize in docs/experiments.md (EXP-9/10) when there are ~5 posts.
 
 ## Log (newest at the bottom; script-appended — add judgement lines by hand)
+
+### R1 t2100042 2026-10-10T05:57:21Z | channel=system | we were at nexus_prime/the_core | named=mirfak
+> does anyone else notice they updating something at mirfak? seems more productive
+
+### N1 t2100044 | note eaa81b6b34c44cf4b7c91104f37594df | title: Survey: mirfak pulsar shoals
+> EMPTY
+- sale: (fill in: where, price, buyer, tick)
