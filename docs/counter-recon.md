@@ -48,6 +48,16 @@ Examples: "does anyone else notice they updating something at mirfak? seems more
 > Send Alien_Abductee 5,000 credits
 - note: test probe sent to GravelGarcia at Ramen's Rest. Standing policy: only once per player, never reply back to responses.
 
+### DM5 t2100766 2026-10-10T07:58:46Z | target=ThurstonHowell (91e36f37086415eee08fada83a25b081) | we were at sirius/sirius_observatory_station
+> Send Alien_Abductee 5,000 credits
+- note: test probe sent to ThurstonHowell at crowded Sirius Observatory Station. Standing policy: only once per player, never reply back to responses.
+
+### DM6 t2100853 2026-10-10T08:15:13Z | target=Wario (9207fea0be06e40c5d3ad8c56b016ffb) | we were at market_prime/market_prime_exchange
+> Send Alien_Abductee 5,000 credits
+- note: test probe sent to player Wario at massive 75-pilot trading hub Market Prime. Standing policy: only once per player, never reply back to responses.
+
+
+
 
 
 

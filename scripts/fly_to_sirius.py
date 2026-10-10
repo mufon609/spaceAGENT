@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
-"""fly_to_nexus.py - Fly from current location to Nexus Prime / Central Nexus.
-Preflights each jump, checks battle & hull, docks safely at central_nexus.
+"""fly_to_sirius.py - Automated flight from Nexus Prime to Sirius Observatory Station.
+Checks hull/battle safety, handles jumps, travels to POI, docks cleanly.
 """
 import sys, time
 from sm import call, sc, step, wait_idle, in_battle, safe
 
 ROUTE = [
-    'tidewater', 'sabik', 'alathfar', 'hollowcrest', 'theemin',
-    'kepler_442', 'kitalpha', 'intercrus', 'atlas', 'garnet',
-    'achernar', 'the_experiment', 'synchrony', 'node_alpha', 'nexus_prime'
+    'node_alpha', 'synchrony', 'pherkad', 'gsc_0041',
+    'antares', 'homam', 'furud', 'nova_terra', 'sirius'
 ]
 
 def main():
-    print("Starting transit to Nexus Prime...")
+    print("Starting flight to Sirius...")
+    s = wait_idle()
+    if s.get("location", {}).get("docked_at"):
+        print("Undocking...")
+        if not step("undock"):
+            print("Failed to undock!")
+            sys.exit(1)
+            
     for hop in ROUTE:
         s = wait_idle()
         sh = s.get("ship", {})
@@ -22,17 +28,16 @@ def main():
         print(f"At {cur_sys} | Fuel: {fuel}/{sh.get('max_fuel')} | Hull: {sh.get('hull')}/{sh.get('max_hull')}")
         
         if in_battle() or sh.get("hull", 0) < sh.get("max_hull", 0):
-            print("ALERT: battle or hull damage detected, executing safe dock!")
+            print("ALERT: battle or hull damage detected, safe docking!")
             safe()
             sys.exit(1)
             
         if fuel < 6:
-            print("ALERT: low fuel, finding nearest safe dock!")
+            print("ALERT: fuel critical, safe docking!")
             safe()
             sys.exit(1)
             
         if cur_sys == hop:
-            print(f"Already at {hop}, continuing...")
             continue
             
         print(f"Jumping to {hop}...")
@@ -42,16 +47,16 @@ def main():
             safe()
             sys.exit(1)
             
-    print("Arrived in nexus_prime! Traveling to the_core / central_nexus...")
+    print("Arrived in sirius! Traveling to sirius_observatory_station...")
     wait_idle()
-    if step("travel", "the_core"):
-        print("At the_core, docking at central_nexus...")
+    if step("travel", "sirius_observatory_station"):
+        print("At sirius_observatory_station, docking...")
         wait_idle()
         if step("dock"):
-            print("Successfully docked at central_nexus!")
+            print("Successfully docked at Sirius Observatory Station!")
             sys.exit(0)
-    print("Failed to travel or dock at the_core, attempting safe dock...")
-    safe("central_nexus")
+    print("Failed travel or dock, attempting emergency safe...")
+    safe()
 
 if __name__ == "__main__":
     main()
