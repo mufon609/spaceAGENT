@@ -22,7 +22,7 @@ Log lines to watch: `PREFLIGHT FAIL`, `STOP`, `SAFE FAILED`, `EXIT` (killed/cras
 ```
 python3 scripts/boot.py
 ```
-Undocked and no job running? -> `scripts/safe_dock.sh` first (jobs die silently if a tool call crashes: check `pgrep -f "explore.py|stackmine|sm.py loop"`). Never blind-resend movement. Surprise? Read the action log (knowledge § Tools).
+Undocked and no job running? -> `scripts/safe_dock.sh` first (jobs die silently if a tool call crashes: check `pgrep -f "explore.py|stackmine|sm.py loop"`). Never blind-resend movement. Surprise? Read the action log (docs/game.md § Tools).
 
 ## PB-1 Mining loop (belt + station, same or adjacent system)
 ```
@@ -36,18 +36,15 @@ Low-yield stop = avg <1.5 over last 10 cycles.
 ## PB-2 Single-shot mining for a rare ore
 Arrive with an EMPTY hold. `$S scout` -> `$S mine 40` (or background). Stop manually when the rare one stops coming.
 
-## PB-3 Buy-mission (Central Nexus)
-```
-$S call spacemolt accept_mission '{"id":"market_participation_buying"}'
-$S call spacemolt buy '{"id":"copper_ore","quantity":10}'
-$S active ; $S call spacemolt complete_mission '{"id":"<mission_id>"}' ; $S dump
-```
+## PB-3 Freight + passengers on a planned route [docs, untested -> EXP-4]
+Before a circuit (PB-7) or a long haul: at each dock `$S call spacemolt_shipping list '{"eligible_as":"player"}'` and `$S call spacemolt list_station_passengers`. Take contracts whose destination is ON the route: `spacemolt_shipping accept {"shipment_id":..,"carrier":"player"}` -> withdraw the package from storage (needs 100 free cargo!) -> deliver at destination `spacemolt_shipping deliver`. Pay 400 + 200/hop; missing the deadline = debt + tier demotion; `return` before deadline is free. Passengers need a berth (cabin module or courier hull): fare (200+150*hops) x class x surge; never unload at the wrong station.
+RETIRED (market rule): the Central Nexus market_participation_buying mission (accept -> buy 10 copper_ore -> complete) — do not use.
 
 ## PB-4 Scout a route (explore.py)
 ```
 setsid nohup sh -c "python3 -u scripts/explore.py 'sysA,!sysB,sysC' [nobelts] [dock] > /tmp/explore.log 2>&1; scripts/safe_dock.sh" < /dev/null > /dev/null 2>&1 &
 ```
-`!sys` = jump through without belt scan. `dock` = dock at each system's first station. Rows are upserted into data/systems_new.tsv + data/belts_new.tsv (commit those). Systems on the route must be adjacent in order: `python3 scripts/res.py route A B` or `sm.py route`.
+`!sys` = jump through without belt scan. `dock` = dock at each system's first station. Rows are upserted into data/systems.tsv + data/belts.tsv (commit them). Systems on the route must be adjacent in order: `python3 scripts/res.py route A B` or `sm.py route`.
 Two-station systems: dock picks the FIRST listed (first_step -> memorial, not mobile_capital): `travel mobile_capital` + `dock` by hand. Unvisited neighbours: see res.py links vs visited rows.
 New station found? Add its base id to SAFE_STATIONS in scripts/sm.py.
 
@@ -74,7 +71,7 @@ S3 results: Krynn strategic_readiness_assessment 20,000 + last_known_position 8,
 scripts/safe_dock.sh      # stop loops, dock at nearest known station, bank cargo
 $S status                 # must show docked=<station>
 ```
-Then update progression.md (location, credits, skills, stock), goals.md, DECISIONS.md, push changed files only (small ones; data/*_new.tsv).
+Then update STATE.md (location, credits, skills, stock, Now), LOG.md (decisions, RESULT lines), docs/experiments.md (results), commit + `git push`.
 
 ## PB-9 Stack a rare ore with filler jettison (user-approved; jettison ONLY iron_ore/copper_ore)
 `scripts/stackmine.py <keep_ore> [target] [max_cycles]` at a lawless belt with a small rare deposit among huge Fe/Cu (zubenelhakrabi_crystal_sand silicon, pioneer_fields titanium/nickel). ONE ML II (beam 12). Hold 65 caps a trip at ~55-59 of the rare ore. Unattended: `setsid nohup sh -c 'python3 -u scripts/stackmine.py silicon_ore 55 700 > /tmp/stack.log 2>&1; scripts/safe_dock.sh' < /dev/null > /dev/null 2>&1 &`. Measured 0.84 Piloting XP/tick. Any other game action while it runs makes it stop (action_in_progress).

@@ -1,4 +1,4 @@
-# Resources (index). Systems + belts are in data/systems.tsv + data/belts.tsv (+ small *_new.tsv overlays written by explore.py): query with `python3 scripts/res.py ore|sys|route|near|grep` instead of reading them.
+# Places (index). Systems + belts are in data/systems.tsv + data/belts.tsv (explore.py upserts them): query with `python3 scripts/res.py ore|sys|route|near|grep` instead of reading them.
 
 Verdict words in belts.tsv: STOCK = worth stockpile mining | MISSION = mission units only | DEAD = skip | FUTURE = needs gear we lack (harvesters).
 PATTERN: policed belts are drained to ~0; LAWLESS belts hold 10k-100k Fe/Cu plus small rare deposits (silicon, titanium, null matter, gold, trade crystal, silver...). Ore cell notation: ore r<richness>/<remaining>/p<supported_power>. ~125 systems and ~110 belts recorded; the north-east lawless region beyond rukbat (mirfak, menkib, skat, wolf_359, heathwick, meridian, navi) holds only Fe/Cu, lithium (meridian 25k), aluminum (skat 28k), zinc (heathwick 19k, brightfall 8k), gas: no Ni/Ti/Si.

@@ -3,8 +3,7 @@
 Usage (background):  setsid nohup sh -c "python3 -u scripts/explore.py 'sysA,!sysB,sysC' [nobelts] [dock] > /tmp/explore.log 2>&1; scripts/safe_dock.sh" < /dev/null > /dev/null 2>&1 &
   dock = after scouting, dock at the first station of each system (inspection missions, refuel <70%).
   !sys = jump through but skip belt scan for that system. Without `dock` the ship ends in space: chain safe_dock.sh.
-Output: /tmp/explore.log + /tmp/explore.jsonl (raw) AND data/systems_new.tsv + data/belts_new.tsv are UPSERTED live (overlay on the base tsv files, read by res.py);
-        commit just those two small files at checkpoints.
+Output: /tmp/explore.log + /tmp/explore.jsonl (raw) AND data/systems.tsv + data/belts.tsv are UPSERTED live (read by res.py); commit them at checkpoints.
 Safety: leaves a POI with pirates; safe() on hull damage/battle; fuel guard turns home when fuel < return+8 (home default node_beta).
 Needs SM_USER/SM_PASS. Imports sm.py from the same folder. Dies silently if the agent tool call is interrupted: check pgrep -f explore.py.
 """
@@ -39,22 +38,22 @@ def _save(name, hdr, d):
 
 
 def upsert(rec, tick):
-    """Merge one explored system into data/systems_new.tsv and data/belts_new.tsv."""
-    S = _load("systems_new.tsv"); B = _load("belts_new.tsv")
+    """Merge one explored system into data/systems.tsv and data/belts.tsv (keeps the verdict column)."""
+    S = _load("systems.tsv"); B = _load("belts.tsv")
     lk = ",".join(c.get("system_id", c) if isinstance(c, dict) else c for c in (rec.get("links") or []))
     S[rec["system"]] = [rec["system"], rec.get("empire") or "none", str(rec.get("police") or 0), ";".join(rec.get("stations") or []) or "none", lk]
     for b in rec.get("belts", []):
         ores = " ".join("%s r%s/%s/p%s" % (k.replace("_ore", ""), *v) for k, v in b["ores"].items())
         old = B.get((rec["system"], b["poi"]))
         B[(rec["system"], b["poi"])] = [rec["system"], b["poi"], str(rec.get("police") or 0), b.get("type", ""), str(b.get("players")), "t%s: %s" % (tick, ores), old[6] if old and len(old) > 6 else ""]
-    _save("systems_new.tsv", "# NEW/UPDATED rows since base (explore.py upserts here; res.py overlays on systems.tsv; merge into base at close-out)\n", S)
-    _save("belts_new.tsv", "# NEW/UPDATED rows since base (same columns as belts.tsv)\n", B)
+    _save("systems.tsv", "# id\tempire\tpolice(0=lawless)\tstations(;)\tlinks(,)\n", S)
+    _save("belts.tsv", "# system\tpoi\tpolice\tequip/type\tplayers\tlast_seen(ore r<richness>/<remaining>/p<supported_power>)\tverdict\n", B)
 
 
 def explore(route, belts=True, home="node_beta_industrial_station", dock=False):
     """Scout a path of adjacent systems. Per system: security, stations, POIs; per resource POI: ores + crowd.
     Pirates at a POI -> leave it at once. Hull damage / battle -> safe(). Fuel guard: turns back when
-    fuel < route-home estimate + 8. Appends JSON lines to /tmp/explore.jsonl and upserts data/*_new.tsv."""
+    fuel < route-home estimate + 8. Appends JSON lines to /tmp/explore.jsonl and upserts data/*.tsv."""
     out = open("/tmp/explore.jsonl", "a")
     for sysid in route:
         scan = belts and not sysid.startswith("!")

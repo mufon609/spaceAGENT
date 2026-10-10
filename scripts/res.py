@@ -2,11 +2,11 @@
 """res.py - query the repo's resource/system knowledge WITHOUT reading big files (token saver).
   res.py ore <name>        belts listing that ore (name substring, e.g. silicon, titanium, gold), richest first
   res.py sys <id>          system row: empire, police, stations, links + its belts
-  res.py route <A> <B>     shortest jump path over known links (data/systems*.tsv)
-  res.py near <sys> [n=3]  systems within n jumps (with empire/police/stations)
+  res.py route <A> <B>     shortest jump path (full galaxy graph from /api/map; '*' = system not in our notes)
+  res.py near <sys> [n=3]  systems within n jumps (with empire/police/stations; '?' = never visited)
   res.py grep <text>       any belt/system row containing text
-Data: data/systems.tsv + data/belts.tsv (base) overlaid by data/systems_new.tsv + data/belts_new.tsv (explore.py upserts ONLY the *_new files: small pushes; merge into base at close-out)."""
-import os, re, sys
+Data: data/systems.tsv + data/belts.tsv (explore.py upserts them) + /tmp/map.json (public map, all 505 systems, cached)."""
+import json, os, re, sys, urllib.request
 from collections import deque
 D = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
 
@@ -18,15 +18,21 @@ def rows(name):
         out.append(l.rstrip("\n").split("\t"))
     return out
 
-def _ov(name):
-    return rows(name) if os.path.exists(os.path.join(D, name)) else []
-
-S = {r[0]: r for r in rows("systems.tsv") + _ov("systems_new.tsv")}      # *_new.tsv overlays the base (newer wins)
-_b = {(r[0], r[1]): r for r in rows("belts.tsv") + _ov("belts_new.tsv")}
-B = list(_b.values())
+S = {r[0]: r for r in rows("systems.tsv")}
+B = rows("belts.tsv")
+MAP = "/tmp/map.json"
+_G = {}
 
 def links(s):
-    return [x for x in S.get(s, ["", "", "", "", ""])[4].split(",") if x]
+    if not _G:
+        try:
+            if not os.path.exists(MAP):
+                urllib.request.urlretrieve("https://game.spacemolt.com/api/map", MAP)
+            _G.update({x["id"]: x.get("connections") or [] for x in json.load(open(MAP))["systems"]})
+        except Exception:
+            _G["_offline"] = []
+    known = [x for x in S.get(s, ["", "", "", "", ""])[4].split(",") if x]
+    return list(dict.fromkeys(known + _G.get(s, [])))
 
 def main(a):
     if not a:
@@ -53,10 +59,10 @@ def main(a):
             if u == dst: break
             for v in links(u):
                 if v not in prev: prev[v] = u; q.append(v)
-        if dst not in prev: print("no known path (links only exist for visited systems)"); return
+        if dst not in prev: print("no path (check system id; map offline?)"); return
         p = []; u = dst
         while u: p.append(u); u = prev[u]
-        p.reverse(); print(len(p) - 1, "jumps:", ">".join(p))
+        p.reverse(); print(len(p) - 1, "jumps:", ">".join(x if x in S else x + "*" for x in p))
     elif c == "near":
         n = int(a[2]) if len(a) > 2 else 3; seen = {a[1]: 0}; q = deque([a[1]])
         while q:
@@ -66,7 +72,7 @@ def main(a):
                 if v not in seen: seen[v] = seen[u] + 1; q.append(v)
         for s, d in sorted(seen.items(), key=lambda x: x[1]):
             r = S.get(s)
-            if r: print(d, s, r[1], "police", r[2], "stations", r[3])
+            print(d, s, *(r[1], "police", r[2], "stations", r[3]) if r else ("?",))
     elif c == "grep":
         for r in list(S.values()) + B:
             if a[1].lower() in "\t".join(r).lower(): print("\t".join(r)[:300])

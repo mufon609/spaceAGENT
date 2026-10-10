@@ -283,9 +283,9 @@ def preflight(require_docked=False):
 
 
 def kill_other_loops():
-    """Kill running sm.py loops except this process (and its parent wrapper)."""
+    """Kill running jobs (sm.py loop/mine, stackmine.py, explore.py) except this process (and its parent wrapper)."""
     me = {os.getpid(), os.getppid()}
-    for pid in os.popen("pgrep -f 'sm.py loop'").read().split():
+    for pid in os.popen("pgrep -f 'sm.py loop|sm.py mine|stackmine.py|explore.py'").read().split():
         if int(pid) not in me:
             try:
                 os.kill(int(pid), 15)

@@ -1,15 +1,23 @@
 #!/usr/bin/env python3
-"""boot.py - ONE command for session start (replaces status + active + preflight + list_ships + skills + tick).
-Needs SM_USER/SM_PASS env. Prints ~12 lines. Then read goals.md + progression.md and go."""
-import json, os, sys, urllib.request
+"""boot.py - ONE command for session start: tick + game version check + status + skills + modules + missions + ships + preflight.
+Needs SM_USER/SM_PASS env. Prints ~12 lines. Then read STATE.md and go."""
+import json, os, re, sys, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sm import call, sc, status_line, preflight, missions
 
 try:
-    t = json.loads(urllib.request.urlopen("https://game.spacemolt.com/health", timeout=10).read().decode()).get("tick")
-except Exception as e:
-    t = "?"
-print("TICK", t)
+    h = json.loads(urllib.request.urlopen("https://game.spacemolt.com/health", timeout=10).read().decode())
+except Exception:
+    h = {}
+print("TICK", h.get("tick", "?"))
+# The game patches often: STATE.md records the version our notes were last checked against.
+try:
+    noted = re.search(r"game_version:\s*(\S+)", open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "STATE.md")).read()).group(1)
+except Exception:
+    noted = "?"
+v = h.get("version", "?")
+print("VERSION %s (notes checked vs %s)%s" % (v, noted, "" if v == noted else
+      " -> CHANGED: read changelog (sm.py call spacemolt get_version), fix affected notes, then update game_version in STATE.md"))
 print(status_line())
 st = sc(call("spacemolt", "get_status"))
 sk = st.get("skills") or {}
@@ -26,4 +34,4 @@ txt = r.get("result") or json.dumps(sc(r))[:600]
 print(txt if isinstance(txt, str) else str(txt)[:600])
 print("-- preflight")
 preflight()
-print("NEXT: undocked + no job running? -> scripts/safe_dock.sh. Read goals.md Now + progression.md. res.py for where/route.")
+print("NEXT: undocked + no job running? -> scripts/safe_dock.sh. Read STATE.md. res.py for where/route.")

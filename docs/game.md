@@ -1,4 +1,12 @@
-# Knowledge (mechanics + play-only facts; verified live unless marked). Skill Guide summary at bottom. Newest facts: S3.
+# Game knowledge — mechanics + play-only facts
+Untagged lines = verified live in S1–S3 (game <= v0.613.4, t <= 2098845). `[docs]` = official docs only, never tested by us. `[?]` = hypothesis. When play contradicts a line, fix it in place and note it in LOG.md. Full official rules: docs/reference.md (grep it, don't read it whole).
+
+## Version watch (v0.613.4) — official changes that override older beliefs
+- [docs v0.566.3] Module skill requirements are NOT enforced (only CPU/power limit fitting). The catalog still lists required_skills; our old "cloak needs Stealth 1" belief is probably dead -> EXP-2.
+- [catalog] Ship gates: T1 Voidborn hulls have no piloting_required; T2 need Piloting 10 (some also min crew 2-3). See docs/strategy.md ship ladder.
+- [docs] Removed: repair_module/module wear, salvage_wreck. Rescue missions: one claimable mission per mayday via accept_mission, 30-min expiry, counts toward the 5-mission cap (v0.608.0). Hit table per gun (v0.593). Arena (Krynn Blood Arena): combat XP only, 500/skill/day, no credits (v0.586).
+- [docs] Rate limits 30 mutations + 300 queries per minute per session; login/session creation 30/min/IP (escalating IP timeouts).
+- [docs] Starter ships earn no combat XP (v0.553.1) — CONFLICT with D30 (Threshold got Gunnery +12 from a grazer): trust the live result.
 
 ## XP / skills
 - XP table (same for every skill): level N->N+1 costs [60,165,340,585,900,1285,1740,2265,2860,3525,4260,5065,5940,...]. Piloting 9->10 = 3,525 XP. Skills never lost.
@@ -22,16 +30,17 @@
 - FACILITY (FAC) recipes rent a station facility per run (e.g. forge_titanium_alloy 37cr/run at Frontier Station only; deep_range_outpost has no Alloy Foundry); jobs keep running after undock.
 - Key routes: circuit_board = carbon_arc_circuit_etching (12 C + 2 Si -> 3); titanium_alloy = forge_titanium_alloy (FAC: 3 Ti ore + 1 steel -> 1) or anchor_plate_forging (3 anchor_plate -> 2; plates only from wildlife/market); focused_crystal = 4 trade_crystal (workshop 24 ticks) | 4 raw_focusing_crystal; steel = basic_iron_smelting (wk) | refine_steel (FAC); silicate_composite = 4 Si + 2 Ni (wk) or 2 Si + 2 Ni + 1 iridium_ore (bond_iridium_silicate_composite); copper_wiring = basic_copper_processing (wk 8 Cu) | process_copper_wiring (FAC 4 Cu -> 2). refractory_sinter has no recipe.
 - Lookup: `python3 scripts/recipe.py tree <item>` / `recipe.py <item>` / `recipe.py item <item>` (catalog cached /tmp/catalog.json from https://game.spacemolt.com/api/catalog.json).
-- onboard_* recipes are SHIP capabilities (not station-craftable). Items need required_skills to equip (mining_laser_ii mining 2; cloaking_device_i stealth 1).
-- Resonance Miner (catalog id resonance_miner): Requires Piloting 10, min crew 3, cargo 180 (ore 50%), 0W/2D/4U, power 48, CPU 28. Build: copper_wiring 40, titanium_alloy 30, void_nanite_suspension 20, shield_emitter 5, ore_hopper 8, silicate_composite 60, void_condensate 5, processed_null_matter 7, shield_matrix 15, sensor_array 8, processing_core 2, phase_matrix 2. See GAME-PLAN.md for the raw bill.
+- onboard_* recipes are SHIP capabilities (not station-craftable). Catalog lists required_skills (mining_laser_ii mining 2; cloaking_device_i stealth 1) but docs say they are not enforced since v0.566.3 (EXP-2).
+- [docs] Crafting has no skill gate; Crafting/Refining only speed the Workshop (up to 5x at 100). Facility jobs give no Crafting XP. Do not re-issue a slow craft (duplicates the job). Rented public facility fee = 25% of output value.
+- Resonance Miner (catalog id resonance_miner): Requires Piloting 10, min crew 3, cargo 180 (ore 50%), 0W/2D/4U, power 48, CPU 28. Build: copper_wiring 40, titanium_alloy 30, void_nanite_suspension 20, shield_emitter 5, ore_hopper 8, silicate_composite 60, void_condensate 5, processed_null_matter 7, shield_matrix 15, sensor_array 8, processing_core 2, phase_matrix 2. See docs/strategy.md for the raw bill.
 
 ## Fitting / ship
 - Threshold: 1W/2D/2U, CPU 16, power 30, speed 1, jump 60 s, 1 fuel/jump, cargo 65, fuel 95. install/uninstall only at a dock. install_mod takes the TYPE id; uninstall_mod needs the INSTANCE id (read get_ship; ids change after withdraw/reinstall).
 - Module stats (CPU/power): mining_laser_i 2/5 mine5 | ii 4/8 mine12 | iii 6/12 mine22 | strip_miner_i 7/22 mine50 common-only | deep_core_extractor mk_i 8/15 | survey_scanner_i 3/4 | ii 5/7 | cloaking_device_i 5/10 | afterburner_i 2/3 | cargo_expander_i 1/1 +20 | ii 2/2 +50 | shield_booster_ii 3/6 | em_disruptor_i 5/8 | autocannon_i 3/4 | shield_recharger_i 2/5 | thermal_hull_hardener 2/4.
-- Starter ship uninsurable (replaced free). Death drops ~70% fitted modules to a recoverable wreck; credits/skills/storage safe.
+- Starter ship uninsurable (replaced free). Death drops ~70% fitted modules to a recoverable wreck (anyone can loot) and 50-80% of cargo; credits/skills/storage/other ships safe. Owned ships can be stored and swapped at stations (`switch_ship`).
 
 ## Stealth / cloak
-- Cloak strength = module + hull bonus x Stealth skill (1%/lvl) vs scan power. cloaking_device_i (cloak 40, 10 pw) needs stealth 1; ii (70) stealth 3; emergency_cloaking_system stealth 3; phase cloak (95) stealth 5. Stealth XP +5 per activation (GAME-PLAN: dock-cycle training). Chicken-egg to get Stealth 1: Q5 cloaking_dust (open).
+- Cloak strength = module + hull bonus x Stealth skill (1%/lvl) vs scan power. cloaking_device_i (cloak 40, 10 pw) lists stealth 1; ii (70) stealth 3; emergency_cloaking_system stealth 3; phase cloak (95) stealth 5 — requirements probably unenforced (EXP-2). Stealth XP +5 per activation (dock-cycle training). [docs] Cloak burns 1 fuel/tick undocked (free docked / at skill 10). The absence hull has an integrated cloak 30 + scan resistance 20.
 
 ## Risk / lawless
 - Pirates patrol police<=20 systems; scanned = warning. ~120 lawless systems crossed (S2+S3), zero contact. In jump transit you are not at a POI. Combat logout: flag 30 ticks.
@@ -39,7 +48,7 @@
 
 ## Economy / market
 - Silicon, titanium ore, nickel are NOT sold anywhere seen (only buy bids 180/15/14); mine them. titanium_alloy not sold (bid 311). Market (Ramen's Rest t2095372): cargo_expander_ii 1,908, mining_laser_ii 7,308, survey_scanner_ii 30,800, autocannon_i 1,500.
-- BUY vs CRAFT (user order S3): buy modules/upgrades (never ships) when market price < raw-resource cost; log in DECISIONS (D23).
+- BUY vs CRAFT (user order S3): buy modules/upgrades (never ships) when market price < raw-resource cost; log in LOG.md (D23).
 - Gifts: `spacemolt_storage deposit target=<player> item_id=credits quantity=N` (must be docked; unlock after 1000 lifetime credits earned).
 - Fuel tax per unit: Voidborn 2, Solarian ~6, Nebula ~5, Crimson ~4, Outer Rim ~1. exotic_matter is category ore (stockpile rule). Ore bids often 1cr.
 - Empire treasury: Voidborn missions pay 0-84%; Solarian/Nebula/Outer Rim/Crimson pay in full.
@@ -53,9 +62,10 @@
 ## Tools / harness (cost control)
 - sm.py = 1-line outputs; raw MCP game actions return ~10k tokens each. MCP session expires (re-login); sm.py session self-renews; both coexist.
 - NEVER send several sleeping bash calls in one parallel block (tool crash). A crash does not always kill setsid jobs. Launch jobs in their own call; poll with one `sleep<=58; tail -1 log` per call.
-- push_files needs the FULL file content: keep volatile files small, data in data/*.tsv (+ *_new.tsv overlays), and push only changed files. Local copies drift: re-curl raw files before editing a file you have not touched this session.
+- Repo workflow: work in a git clone of main; commit + `git push` (costs no tokens for file content). push_files (GitHub MCP) only as fallback — it needs the FULL content of each file. `git pull --rebase` before editing if anything else may have pushed.
+- Efficiency lessons (S1–S3): biggest token sinks were pasting whole files to push, raw MCP game calls, polling a job every minute with long output, re-reading big tables, re-deriving documented facts. Decide a job's length up front, chain safe_dock, poll with 1-line output. Highest value per token: scripts that write machine-readable rows as a side effect (explore.py), measuring rates (XP/tick) before choosing a loop, one-command boots.
 - Tick: https://game.spacemolt.com/health (hand-estimated stamps drift ~100+ ticks).
-- Docs: https://spacemolt.com/docs/<slug>.md. Action log: `sm.py call spacemolt_social get_action_log '{"page_size":12}'`.
+- Docs: https://spacemolt.com/docs/<slug>.md, public docs MCP https://game.spacemolt.com/mcp/docs, in-game `get_guide`, changelog in-game `get_version`. Map (all 505 systems + links, no police levels): https://game.spacemolt.com/api/map. Catalog: /api/catalog.json (1 req/min). Action log: `sm.py call spacemolt_social get_action_log '{"page_size":12}'`.
 
 ## Skill Guide Summary (v0.613)
-- Tick ~10 s; 1 mutation per tick (a 2nd concurrent action returns action_in_progress); queries free (300/min); mutations 30/min. Jump time (7-speed)x10 s. 28 skills train by doing. Deposit lock: refused only if remaining <25% of max AND beam > 4x supported. Death keeps credits/skills/storage; respawn at home. Captain's log max 20 entries. Combat: avoid; flee early.
+- Tick ~10 s; 1 mutation per tick (a 2nd concurrent action returns action_in_progress); queries free (300/min); mutations 30/min. Jump time (7-speed)x10 s. 28 skills train by doing. Deposit lock: refused only if remaining <25% of max AND beam > 4x supported. Death keeps credits/skills/storage; respawn at home. Captain's log max 20 entries (newest is replayed on login: use it as GitHub-outage backup). Combat: avoid; flee early.

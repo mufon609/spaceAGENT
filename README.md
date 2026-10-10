@@ -1,38 +1,45 @@
-# spaceAGENT — Alien_Abductee_Gemini memory (read THIS first; keep reads small)
+# spaceAGENT — memory of SpaceMolt pilot Alien_Abductee_Gemini (read THIS first)
 
-Memory for an AI agent playing SpaceMolt. Proposed session prompt: `STARTUP.md`. Strategy: `GAME-PLAN.md`.
+One isolated account, one cheap agent, as long and as far as possible. The game patches constantly: **notes are evidence, not truth** — check the version line from boot.py and verify anything that matters live before betting on it.
 
 ## EMERGENCY / SHUTDOWN
 ```
-export SM_USER='Alien_Abductee_Gemini' SM_PASS='<from user>'
-scripts/safe_dock.sh          # kill loops -> wait out jump -> flee battle -> nearest known station -> dock -> bank cargo
+scripts/safe_dock.sh     # kill all jobs -> wait out jump -> flee battle -> nearest known station -> dock -> bank cargo
 ```
-Exit 0 = docked. Exit 1 = read the SAFE line (usually fuel / action_in_progress: retry). An undocked idle ship gets towed (~500cr). Tool crashes can kill background jobs: check `pgrep -f "explore.py|stackmine|sm.py loop"` and `sm.py status`.
+Exit 0 = docked. Exit 1 = read the SAFE line (usually fuel / action_in_progress: rerun). An undocked ship whose session idles gets towed (~500cr).
 
-## Session boot (cheap)
-1. `python3 scripts/boot.py` = tick + status + skills + modules + missions + ships + preflight (one command).
-2. Read goals.md (Now + Open Questions) and progression.md (state). Last entries of DECISIONS.md.
-3. Where to go / what is where: `python3 scripts/res.py ore <name> | sys <id> | route A B | near <sys> | grep <txt>` (reads data/*.tsv + *_new.tsv overlays; do NOT cat big files).
-4. playbooks.md (PB-0 preflight + PB-1..10 loops), knowledge.md (mechanics, measured rates), GAME-PLAN.md (strategy + Resonance bill vs stock) only when needed.
+## Boot (≈3 calls)
+1. `export SM_USER=Alien_Abductee_Gemini SM_PASS=<from user>`; `python3 scripts/boot.py` (tick, VERSION check, status, skills, modules, missions, ships, preflight).
+2. Read `STATE.md` (state + Now + Open Questions) and the top 3 entries of `LOG.md`.
+3. VERSION CHANGED? Read the changelog (`python3 scripts/sm.py call spacemolt get_version`), fix affected notes, bump `game_version` in STATE.md.
+4. Undocked with no job running → `scripts/safe_dock.sh` first.
+
+## Hard rules (user)
+- **Market:** NEVER sell mined ore or anything made from ore (stockpile in station storage). BUY a module/upgrade (never a ship) only when its price is below the raw-resource cost of crafting it; log the comparison in LOG.md. No other market buying (no market-participation missions); station refuel/repair services are fine. The point: learn the game by mining + crafting. Allowed income: mission rewards, freight, passengers, bounties, rescues, salvage — `sell_wreck` at an NPC salvage yard is allowed.
+- **Jettison** only iron/copper filler while mining a rarer ore (jettisoned ore is destroyed). Nothing else.
+- **Ask first:** selling valuable non-ore items, scrapping/buying a ship, self-destruct, other irreversible commitments. Credits < 2,000 with no payout queued → stop and ask.
+- **Isolated account:** no contact, gifts or coordination with other fleet accounts unless the user says so. Execute a user order exactly ONCE even if the message is re-sent.
+- **Secrets:** password only in env vars SM_USER/SM_PASS. Never in a file, commit or log. Never register an account.
+- **Repo:** only github.com/mufon609/spaceAGENT, branch `main`. Create/edit/move/delete files freely; keep it small. No force-push, no new repos/branches, no settings changes.
+- Lawless space is allowed. Leave a POI on pirates; log sightings.
 
 ## Files
-| File | Holds |
-|---|---|
-| STARTUP.md | proposed agent prompt + efficiency lessons |
-| GAME-PLAN.md | user's strategy + S3 status (Resonance Miner bill of materials vs stock) |
-| goals.md | priority stack, user orders, Open Questions |
-| progression.md | volatile state: ship, location, skills, credits, stock per station, missions |
-| playbooks.md | PB-0..PB-10 loops (stackmine, dock loop, refining training, missions, close-out) |
-| knowledge.md | mechanics + play-only facts (XP rules, rates, crafting, market, missions, harness) |
-| resources.md | index: material locations, ROUTES, STATIONS, market refs |
-| data/systems.tsv, data/belts.tsv (+ systems_new.tsv, belts_new.tsv overlays) | machine-readable systems + belts; explore.py upserts overlays, res.py queries |
-| DECISIONS.md | recent decisions D23+ (older in archive/DECISIONS_old.md) |
-| scripts/ | sm.py (client/loop/safe/train), boot.py, res.py, explore.py, stackmine.py, recipe.py, safe_dock.sh, poll.sh |
+| File | Holds | Read |
+|---|---|---|
+| STATE.md | volatile: ship, fit, location, skills, credits, stock per station, missions, Now, Open Questions | every boot |
+| LOG.md | decisions + discoveries, newest first (D#, t<tick>, RESULT) | top 3 at boot |
+| docs/experiments.md | ranked hypotheses to test + results | when choosing what to do |
+| docs/playbooks.md | PB-0..PB-10 step sequences, job launch pattern | when running a loop |
+| docs/game.md | mechanics verified in play, rates, quirks, harness | when a mechanic is unclear |
+| docs/places.md | ore locations, routes, stations, market reference | when choosing where to go |
+| docs/strategy.md | long plan, ship ladder, build bills vs stock | when planning |
+| docs/reference.md | condensed official docs/guides/changelog (v0.613.4) | for a mechanic never used yet |
+| data/systems.tsv, data/belts.tsv | machine-readable systems + belts (query with res.py, never cat) | via scripts |
+| scripts/ | sm.py (client, loop, safe, train), boot.py, res.py, recipe.py, explore.py, stackmine.py, safe_dock.sh, poll.sh | — |
+| archive/ | old decision log D1–D22 | rarely |
+| PROMPT.md | the agent's system prompt (user pastes it into the console) | never at boot |
 
-## Hard rules (user; see goals.md for updates)
-- NEVER sell mined ore or anything made from ore; stockpile in station storage. Jettison ONLY iron/copper filler while mining rare ore (approved). Never write the password anywhere.
-- Stack rare/blocker ores (silicon, titanium, nickel, iridium, null matter). BUY a module (not ships) if cheaper than crafting from raw; log it.
-- Lawless space OK. Ask before: selling valuable non-ore items, scrapping/buying ships, self-destruct, other irreversible acts. Credits < 2,000 with no payout queued: stop and ask.
-- Account is isolated: no contact with other fleet accounts unless the user says so (hand-off to Alien_Hauler-Opus55 when the user triggers it at Piloting 10). Execute a user gift/order once.
-- Repo: only mufon609/spaceAGENT branch Alien_Abductee_Gemini. User allows creating/editing/deleting files here (S3); no force-push, no new branches/repos.
-- End sessions docked (safe_dock.sh, PB-8), update progression/goals/DECISIONS, push changed files only. Commit message `session <date> t<tick>: <summary>`.
+## Cheap lookups (never cat big files)
+- Where/route: `python3 scripts/res.py ore <name> | sys <id> | route A B | near <sys> [n] | grep <txt>` (route uses the full public map).
+- Recipes/items/ships: `python3 scripts/recipe.py tree <item> [n] | <item> | uses <item> | item <item>` (catalog cached in /tmp; `-f` after a version change).
+- Live game: `python3 scripts/sm.py status | scout | missions | active | storage [station] | call <tool> <action> '{json}'`.

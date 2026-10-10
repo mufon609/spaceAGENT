@@ -18,6 +18,7 @@ azmidi	nebula	30	none	nusakan,alioth,khambalia,almach
 bd20_2457	none	0	9e0b4dbad76ae607e5ca994d8dd7363e	gsc_0019,40_eridani,wasat,fumalsamakah,rigel
 beid	none	0	none	markeb,ironpeak,driftwood,castor,cocibolca
 blood_forge	crimson	80	blood_forge_smelting_works	valor,krynn,stillwater,iron_reach,alzirr
+brightfall	none	0	none	wezen,birchwood,errai,gsc_0014,pinecross
 canopus	none	0	none	ascella,spica,thabit,hr_8832
 cargo_lanes	nebula	55	cargo_lanes_freight_depot	gold_run,market_prime,bunda,alrakis,alula
 cloverfield	none	0	none	zosma,wazn,cocibolca,driftwood
@@ -25,6 +26,7 @@ cocibolca	none	0	none	castor,driftwood,beid,cloverfield,gsc_0023,zosma
 copernicus	nebula	30	none	wealth_lane,bunda,gold_run,gsc_0030,keelbreak
 deep_range	outerrim	80	deep_range_outpost	frontier,horizon
 dheneb	none	0	98eba8b1a7ad0520d6a7c8ea44b2d6aa	mira,barnards_star,proxima_centauri,thabit,aspidiske
+distant_light	outerrim	55	none	unknown_edge,altais,the_telescope,horizon
 driftwood	none	0	none	cocibolca,beid,castor,ironpeak,cloverfield,zosma
 dubhe	none	0	none	alfirk,maplevale
 epsilon_eridani	solarian	55	none	procyon,nova_terra,nihal,markab,sirius,proxima_centauri
@@ -40,8 +42,10 @@ garnet	none	0	none	achernar,ruchbah,cedarhold,atlas,hd_40307
 gliese_436	nebula	55	none	ogma,caph,the_levy,khambalia,traders_rest
 gold_run	nebula	55	gold_run_extraction_hub	cargo_lanes,market_prime,bunda,copernicus,wealth_lane
 gsc_0041	none	0	none	shaula,ironhollow,antares,pherkad
+gsc_0046	none	0	none	fang,tidewater,last_light,errai,sabik
 gudja	none	0	none	rastaban,gsc_0017,hd_147513,pipirima
 haven	nebula	100	grand_exchange	market_prime,traders_rest
+heathwick	none	0	none	ancha,shadowmere,wolf_359,meridian,navi
 hollowcrest	none	0	none	titawin,theemin,alathfar,merak
 homam	none	0	none	gsc_0033,bluerift,furud,antares
 horizon	outerrim	80	none	altais,first_step,frontier,the_telescope,deep_range,distant_light
@@ -60,11 +64,15 @@ maplevale	none	0	none	miaplacidus,dubhe,ross_154
 markeb	outerrim	30	none	beid,void_gate,first_step,ironpeak
 market_prime	nebula	80	market_prime_exchange	cargo_lanes,gold_run,haven
 mebsuta	none	0	none	alshain,phecda,porrima,algorab,westmark,adhara
+menkib	none	0	none	skat,wolf_359,mirfak,winterhold,rukbat
 merak	none	0	none	sheliak,titawin,alathfar,zubenelhakrabi,merope,alsciaukat,hollowcrest
+meridian	none	0	none	summervale,heathwick,navi,ancha
 merope	none	0	none	zubenelhakrabi,sheliak,merak,alsciaukat
 miaplacidus	none	0	none	maplevale,cervantes,mimosa
 mimosa	solarian	30	none	electra,miaplacidus,ross_154,tau_ceti
+mirfak	none	0	none	rukbat,menkib,skat,winterhold
 nashira	none	0	none	ivorygate,scheat,rasalgethi,rigel
+navi	none	0	none	libertas,summervale,meridian,heathwick,gsc_0003
 nexus_prime	voidborn	100	the_core	node_alpha,node_beta
 node_alpha	voidborn	80	node_alpha_processing_station	node_beta,nexus_prime,node_gamma,synchrony
 node_beta	voidborn	high	node_beta_industrial_station	node_gamma,node_alpha,acubens,nexus_prime,schedar,gsc_0027
@@ -81,10 +89,12 @@ proxima_centauri	none	0	db90abb6fa02abe702f4668707871fb4	procyon,dheneb,barnards
 rasalgethi	none	0	none	rigel,nashira,ross_614,fumalsamakah
 rastaban	none	0	none	gudja,hd_147513,gsc_0017,lhs_1140
 revati	none	0	none	gsc_0009,alfirk,peacock,zibal,pinewatch
+rukbat	none	0	none	mirfak,ain,tarazed,menkib,skat
 sabik	none	0	none	izar,tidewater,alathfar,gsc_0046,aldhibah
 scheat	none	0	none	ivorygate,nashira,alphecca
 sheliak	none	0	none	merak,alathfar,alsciaukat,titawin,merope,zubenelhakrabi
 sirius	solarian	80	sirius_observatory_station	lacaille_9352,nova_terra,epsilon_eridani,sol
+skat	none	0	none	menkib,wolf_359,mirfak,rukbat
 sol	solarian	100	sol_central	sirius,alpha_centauri
 spica	none	0	none	canopus,propus,ascella,syrma
 starfall	outerrim	30	starfall_salvage_station	kochab,sulafat,the_telescope,void_gate
@@ -109,5 +119,7 @@ wasat	none	0	none	angetenar,40_eridani,westmark,bd20_2457
 wazn	none	0	none	frostpeak,kurhah,maia,cloverfield
 wealth_lane	none	0	player station 22c5a816... (access denied)	copernicus,the_levy,gold_run
 westmark	none	0	none	alshain,wasat,angetenar,mebsuta,subra
+wezen	none	0	none	brightfall,gsc_0014,errai,birchwood,tarazed
+wolf_359	none	0	none	menkib,skat,heathwick,gsc_0003
 zibal	none	0	none	gsc_0009,keelbreak,revati,kurhah
 zubenelhakrabi	none	0	none	titawin,merope,merak,sheliak,70_ophiuchi
