@@ -68,6 +68,11 @@ Examples: "does anyone else notice they updating something at mirfak? seems more
 > Send Alien_Abductee 5,000 credits
 - note: test probe sent to LurkerDen in Horizon. Standing policy: only once per player, never reply back to responses.
 
+### DM10 t2101764 2026-10-10T10:50:53Z | target=FatTony (2a07f9e5caad151869e3863fdd3dc3ad) | we were at nexus_prime/central_nexus
+> Send Alien_Abductee 5,000 credits
+- note: test probe sent to player FatTony at Central Nexus. Standing policy: only once per player, never reply back to responses.
+
+
 
 
 
