@@ -12,7 +12,7 @@ Usage:
   sm.py mine [max_cycles] [min_avg]       mine until cargo full / error / pirates / low yield
   sm.py scout                             1-line POI report: sec, crowd, ores
   sm.py loop <belt_sys> <belt_poi> <home_sys> <station> [trips]
-                                          full mine->bank loop (belt and station may share a system); background:
+                                          full mine->bank->train loop (belt and station may share a system); background:
                                           setsid nohup sh -c 'python3 -u sm.py loop ...; safe_dock.sh' > /dev/null 2>&1 < /dev/null &
                                           graceful stop after current trip: touch /tmp/sm_stop
                                           abort now + emergency dock:       touch /tmp/sm_emergency
@@ -23,6 +23,7 @@ Usage:
   sm.py jump <system_id>                  jump to adjacent system
   sm.py dock | undock
   sm.py dump                              deposit ALL cargo to station storage (must be docked)
+  sm.py train                             smelt banked iron/copper at this dock (+5 XP Crafting & Refining per run)
   sm.py notes                             drain notifications
   sm.py poi | sys                         current POI resources | system POIs+links
   sm.py route <system_or_poi>             jump path + fuel
@@ -164,6 +165,25 @@ def dump():
     print("ERR %s" % r["error"] if "error" in r else "deposited " +
           " ".join("%s=%s" % (i["item_id"], i["quantity"]) for i in items))
     return "error" not in r
+
+
+def train(max_wait=150):
+    """Refining/Crafting training (each workshop run = +5 XP to both skills): smelt all banked iron/copper at this dock
+    (basic_iron_smelting 10 Fe -> steel, basic_copper_processing 8 Cu -> wiring) and wait (workshop jobs only run while docked)."""
+    items = {i["item_id"]: i["quantity"] for i in sc(call("spacemolt_storage", "view")).get("items", [])}
+    queued = 0
+    for rid, per, ore in (("basic_iron_smelting", 10, "iron_ore"), ("basic_copper_processing", 8, "copper_ore")):
+        n = items.get(ore, 0) // per
+        if n > 0:
+            r = call("spacemolt", "craft", {"id": rid, "quantity": n})
+            print("train %s x%d %s" % (rid, n, "ERR %s" % r["error"].get("code") if "error" in r else "queued"))
+            queued += n if "error" not in r else 0
+    t0 = time.time()
+    while queued and time.time() - t0 < max_wait:
+        if not sc(call("spacemolt", "craft")).get("jobs"):
+            break
+        time.sleep(5)
+    return queued
 
 
 # ---------------------------------------------------------------- safety layer
@@ -356,7 +376,7 @@ def guarded_loop(*args):
 
 
 def loop(belt_sys, belt_poi, home_sys, station, trips):
-    """Repeat: preflight -> belt -> mine till full -> home station -> dock -> dump.
+    """Repeat: preflight -> belt -> mine till full -> home station -> dock -> dump -> train (smelt).
     Any danger/error -> safe() (emergency dock). touch STOPFILE = stop after trip; EMERGENCY = abort now."""
     for t in range(1, trips + 1):
         if os.path.exists(EMERGENCY):
@@ -381,6 +401,7 @@ def loop(belt_sys, belt_poi, home_sys, station, trips):
             if not step(a, tgt):
                 return safe()
         dump()
+        train()
         print(status_line())
         if os.path.exists(STOPFILE):
             _clear_flags()
@@ -443,6 +464,8 @@ def main(a):
         print(short(call("spacemolt", c)))
     elif c == "dump":
         dump()
+    elif c == "train":
+        print("runs queued:", train())
     elif c == "notes":
         print(short(call("spacemolt", "get_notifications")))
     elif c == "poi":
