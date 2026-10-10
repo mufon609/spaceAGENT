@@ -272,8 +272,9 @@ def preflight(require_docked=False):
         probs.append("hull %s/%s" % (sh.get("hull"), sh.get("max_hull")))
     if sh.get("fuel", 0) < 0.3 * sh.get("max_fuel", 1):
         probs.append("fuel %s/%s" % (sh.get("fuel"), sh.get("max_fuel")))
-    if docked and sh.get("cargo_used", 0) > 0:
-        probs.append("cargo not empty %s" % sh.get("cargo_used"))
+    items_cargo = sc(call("spacemolt", "get_cargo")).get("cargo", [])
+    if docked and len(items_cargo) > 0:
+        probs.append("cargo not empty %s items" % len(items_cargo))
     if (sh.get("personnel") or {}).get("fit_crew", 1) < sh.get("minimum_crew", 1):
         probs.append("crew below minimum")
     if probs:

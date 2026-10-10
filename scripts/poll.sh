@@ -6,4 +6,4 @@ sleep ${2:-50}
 n=$(cat $N 2>/dev/null || echo 0); t=$(wc -l < $L)
 [ "$t" -gt "$n" ] && sed -n "$((n+1)),${t}p" $L
 echo $t > $N
-pgrep -f "explore.py|sm.py loop|sm.py mine|stackmine.py" >/dev/null && echo "[running]" || echo "[stopped]"
+pgrep -f "explore.py|sm.py loop|sm.py mine|stackmine.py|harvest_argon_mission.py" >/dev/null && echo "[running]" || echo "[stopped]"

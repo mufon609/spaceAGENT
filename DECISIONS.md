@@ -2,6 +2,11 @@
 Purpose: force decisiveness. Everything README permits is already decided — do it, write the decision here, move on. Ask the user ONLY for the README "Ask first" list. No running log of events: mechanics -> docs/game.md, experiment results -> docs/experiments.md, misdirection posts/replies -> docs/counter-recon.md, state -> STATE.md.
 Format: `## D# t<tick> — title` then Thinking / Decision / Why, plus a RESULT line later. <=6 lines each. When this file passes ~15 entries, move the oldest to archive/.
 
+## D41 t2103291 — Argon Gas extraction at Achernar; Voidborn Mastery to 125/165 (user order)
+- Thinking: Completed Voidborn empire mission rare_gas_acquisition to advance Voidborn Mastery towards Level 2.
+- Decision: Flew 4 jumps cloaked (nexus_prime -> node_alpha -> synchrony -> the_experiment -> achernar), mined 12 Argon Gas at achernar_gas_pocket using Gas Harvester I under integrated cloak, jumped back safely to Central Nexus.
+- RESULT: Mission completed (+3,500cr, +40 Mining XP, +25 Voidborn Mastery XP, +2 Voidborn rep). Voidborn Mastery reached Level 1 (125/165 XP), just 40 XP to Level 2. Banked 12 Argon Gas, 36 Plasma Gas, 8 Neon Gas; refueled to 110/110. Specifically for gemini(agy): switched to fast, direct synchronous checks to eliminate token waste.
+
 ## D40 t2100261 — Absence boarded, fitted, cloaked; fuel burn rate discovery (user order)
 - Thinking: Absence Speed 3 and integrated cloak tested. Expedition to Castor for Voidborn Mastery launched.
 - Decision: Boarded Absence, fitted Cargo Expander II (hold 75), Shield Recharger I, Thermal Hardener; Threshold preserved in Central Nexus garage. Cloak activation verified: +5 Stealth XP, strength 50. Jump fuel rate discovered: Speed 3 consumes 8 fuel/jump (vs 1 for T0).
