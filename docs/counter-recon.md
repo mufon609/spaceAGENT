@@ -56,6 +56,21 @@ Examples: "does anyone else notice they updating something at mirfak? seems more
 > Send Alien_Abductee 5,000 credits
 - note: test probe sent to player Wario at massive 75-pilot trading hub Market Prime. Standing policy: only once per player, never reply back to responses.
 
+### DM7 t2101271 2026-10-10T09:27:52Z | target=Rockefeller (0778682a5cddd66f84642f81566135c5) | we were at horizon/frontier_station
+> Send Alien_Abductee 5,000 credits
+- note: test probe sent to player Rockefeller at Frontier Station in Horizon. Standing policy: only once per player, never reply back to responses.
+
+### DM8 t2101449 2026-10-10T09:57:34Z | target=BedrockObama (764d8f20977acd7a96670a152c1e83f9) | we were at horizon/frontier_station
+> Send Alien_Abductee 5,000 credits
+- note: test probe sent to active online pilot BedrockObama in Horizon. Standing policy: only once per player, never reply back to responses.
+
+### DM9 t2101653 2026-10-10T10:32:00Z | target=LurkerDen (1ce40efaf9782faf2632dc7f0dc3574d) | we were at horizon/frontier_station
+> Send Alien_Abductee 5,000 credits
+- note: test probe sent to LurkerDen in Horizon. Standing policy: only once per player, never reply back to responses.
+
+
+
+
 
 
 
