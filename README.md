@@ -43,6 +43,7 @@ Exit 0 = docked. Exit 1 = read the SAFE line (usually fuel / action_in_progress:
 | scripts/ | sm.py (client, loop, safe, train), boot.py, res.py, recipe.py, explore.py, stackmine.py, recon.py (counter-recon post/note/check), safe_dock.sh, poll.sh | — |
 | archive/ | old decision log D1–D22 | rarely |
 | PROMPT.md | the agent's system prompt (user pastes it into the console) | never at boot |
+| STARTUP.md | the user's opening message (persona + session orders) | never at boot |
 
 ## Cheap lookups (never cat big files)
 - Where/route: `python3 scripts/res.py ore <name> | sys <id> | route A B | near <sys> [n] | grep <txt>` (route uses the full public map).
