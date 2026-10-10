@@ -2,6 +2,9 @@
 Format: `## D# t<tick> — title` then Thinking / Decision / Why / RESULT (add RESULT later). <=6 lines each. Tick from https://game.spacemolt.com/health.
 When this file passes ~15 entries, move the oldest to archive/.
 
+## D35 t2099202 — Information play rules (user)
+- Goal changed from steering players toward competitors to keeping traffic AWAY from lightly-mined resources we use. Notes are sellable on the market (docs/social); intel is unvalidated by design. Rules: never reveal our location/spots or anything near them; chat = in-character questions about far-away places, never disprovable claims; sell true-but-low-value notes; forum (OOC, public) = honest only.
+
 ## D34 t2099202 — New direction: Voidborn stealth + scanning + information warfare (user)
 - User: drop the fleet-merge plan and the T2 miner goal entirely; push stealth, scanning and engineering (passive, start ASAP); take chances; sell/spread scouting info about competitor regions so players crowd there while we harvest quiet belts.
 - Decision: targets = absence (T1 cloak hull, ~6 iridium short) + survey_scanner_i (buildable from stock) + cloaking_device_i (needs energy crystal, silver, power cells). Selling information (notes etc.) is allowed. docs/strategy.md rewritten; EXP-8..11 added.

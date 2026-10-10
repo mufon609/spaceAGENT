@@ -14,9 +14,9 @@ Status: OPEN | RUNNING | DONE (result) | DEAD (why).
 
 ## Stealth / intel (user direction t2099202, D34)
 - **EXP-8 Stealth XP sources** — which actions give Stealth XP: cloaking_device activation (+5 known), the absence integrated cloak, docked cloak cycles (docs: cloak free while docked)? Measure XP/h and fuel/h for each; pick the passive loop. OPEN
-- **EXP-9 Selling information** — `create_note` + `write_note` (belt table / route / who-is-where for a region) -> can a note be listed on the exchange, or only sold via `trade_offer` / gifted? Who buys? Price? OPEN
-- **EXP-10 Crowd steering** — post scouting intel about rich belts in a competitor faction's region (public chat/forum); watch with `get_system_agents` whether traffic shifts there over the next hours. Never reveal our own spots. OPEN
-- **EXP-11 Who owns what** — map large factions' home regions (/api/map strongholds, `get_system` police/empire, `get_system_agents` faction tags) into data (add a column or a data/factions.tsv). Feeds EXP-10. OPEN
+- **EXP-9 Selling notes** — docs say notes sell on the market. Test: `create_note` (true but low-value: an EMPTY/depleted far belt, common-ore survey) -> `create_sell_order` at a busy station; does it sell, at what price, does anyone complain? OPEN
+- **EXP-10 Crowd steering away from our resources** — in-character `system` chat questions about FAR-away places (never near our spots; rules in docs/strategy.md § Information play). Log each post; watch with `get_system_agents` whether traffic at our spots drops / at the named place rises over hours. OPEN
+- **EXP-11 Traffic map** — record crowding per region (`get_system_agents` counts, faction tags) into data (column or data/traffic.tsv) to know which resources are lightly mined and which far places make good decoys. Feeds EXP-10. OPEN
 - **EXP-12 Scan-resistance in practice** — in lawless space with absence: how often are we scanned/engaged vs the Threshold? Being scanned = warning sign. OPEN
 
 ## Backlog (agent adds here)
