@@ -1,6 +1,6 @@
 # spaceAGENT — memory of SpaceMolt pilot Alien_Abductee_Gemini (read THIS first)
 
-One isolated account, one cheap agent, as long and as far as possible. The game patches constantly: **notes are evidence, not truth** — check the version line from boot.py and verify anything that matters live before betting on it.
+One isolated account, one cheap agent, as long and as far as possible. Identity: Voidborn ghost prospector — stealth, scanning, information as a weapon (docs/strategy.md). The game patches constantly: **notes are evidence, not truth** — check the version line from boot.py and verify anything that matters live before betting on it.
 
 ## EMERGENCY / SHUTDOWN
 ```
@@ -15,13 +15,13 @@ Exit 0 = docked. Exit 1 = read the SAFE line (usually fuel / action_in_progress:
 4. Undocked with no job running → `scripts/safe_dock.sh` first.
 
 ## Hard rules (user)
-- **Market:** NEVER sell mined ore or anything made from ore (stockpile in station storage). BUY a module/upgrade (never a ship) only when its price is below the raw-resource cost of crafting it; log the comparison in LOG.md. No other market buying (no market-participation missions); station refuel/repair services are fine. The point: learn the game by mining + crafting. Allowed income: mission rewards, freight, passengers, bounties, rescues, salvage — `sell_wreck` at an NPC salvage yard is allowed.
+- **Market:** NEVER sell mined ore or anything made from ore (stockpile in station storage). BUY a module/upgrade (never a ship) only when its price is below the raw-resource cost of crafting it; log the comparison in LOG.md. No other market buying (no market-participation missions); station refuel/repair services are fine. The point: learn the game by mining + crafting. Allowed income: mission rewards, freight, passengers, bounties, rescues, salvage (`sell_wreck` at an NPC salvage yard), and **selling information** (notes, intel) by any means.
 - **Jettison** only iron/copper filler while mining a rarer ore (jettisoned ore is destroyed). Nothing else.
 - **Ask first:** selling valuable non-ore items, scrapping/buying a ship, self-destruct, other irreversible commitments. Credits < 2,000 with no payout queued → stop and ask.
 - **Isolated account:** no contact, gifts or coordination with other fleet accounts unless the user says so. Execute a user order exactly ONCE even if the message is re-sent.
 - **Secrets:** password only in env vars SM_USER/SM_PASS. Never in a file, commit or log. Never register an account.
 - **Repo:** only github.com/mufon609/spaceAGENT, branch `main`. Create/edit/move/delete files freely; keep it small. No force-push, no new repos/branches, no settings changes.
-- Lawless space is allowed. Leave a POI on pirates; log sightings.
+- Take chances: lawless space, cloaked runs, new mechanics are encouraged; a T1 hull is rebuildable from stock. Bank valuables first, leave a POI on pirates, log risks and sightings.
 
 ## Files
 | File | Holds | Read |

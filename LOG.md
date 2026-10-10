@@ -2,15 +2,19 @@
 Format: `## D# t<tick> — title` then Thinking / Decision / Why / RESULT (add RESULT later). <=6 lines each. Tick from https://game.spacemolt.com/health.
 When this file passes ~15 entries, move the oldest to archive/.
 
+## D34 t2099202 — New direction: Voidborn stealth + scanning + information warfare (user)
+- User: drop the fleet-merge plan and the T2 miner goal entirely; push stealth, scanning and engineering (passive, start ASAP); take chances; sell/spread scouting info about competitor regions so players crowd there while we harvest quiet belts.
+- Decision: targets = absence (T1 cloak hull, ~6 iridium short) + survey_scanner_i (buildable from stock) + cloaking_device_i (needs energy crystal, silver, power cells). Selling information (notes etc.) is allowed. docs/strategy.md rewritten; EXP-8..11 added.
+
 ## D33 t2099202 — Repo reorg + solo plan + experiments (user directive, made from Claude Code, no play)
 - User: move repo to `main`; lightweight and token-cheap; isolated account; restrict market to force crafting/learning (current rule kept; `sell_wreck` allowed); push boundaries creatively; approved the experiment list.
 - Decision: README+STARTUP -> README + PROMPT.md; goals+progression -> STATE.md; DECISIONS -> LOG.md (newest first); knowledge/playbooks/resources/GAME-PLAN -> docs/; data overlays merged into data/*.tsv (git push makes small-file tricks unnecessary); docs/reference.md = condensed official docs v0.613.4; docs/experiments.md new.
-- Findings (catalog v0.613.4): T1 Voidborn hulls have no piloting_required; T2 (resonance_miner etc.) need Piloting 10. absence is ~6 iridium short of a full bill from stock; resonance_miner is far (void essence/energy+phase crystal sources unknown, Piloting 10, crew 3). Module skill reqs not enforced since v0.566.3 (docs).
-- Decision: go SOLO (fleet crafter hand-off dropped; user can re-enable). Ship ladder absence -> liminal -> resonance_miner.
+- Findings (catalog v0.613.4): T1 Voidborn hulls have no piloting_required. absence is ~6 iridium short of a full bill from stock. Module skill reqs not enforced since v0.566.3 (docs).
+- Decision: go SOLO; T1 ship ladder (superseded by D34).
 - Scripts: safe_dock/kill/poll now cover stackmine.py + explore.py; res.py route uses the full public map; boot.py checks game version.
 
 ## D32 t2098845 — Close-out snapshot + lessons
-- State: Piloting 9 (1,186/3,525), Refining 3, Crafting 3, credits 153,565, docked ramens_rest. Resonance inputs Ti 134 / Ni 159 / Si 258 / wiring 110 / steel 86 all above need; missing: null matter, void essence, energy/phase crystal, gold+silver, graphene, superconductors, nitrogen/water.
+- State: Piloting 9 (1,186/3,525), Refining 3, Crafting 3, credits 153,565, docked ramens_rest. Stock Ti 134 / Ni 159 / Si 258 / wiring 110 / steel 86; not yet sourced: null matter, void essence, energy/phase crystal, gold+silver, graphene, superconductors, nitrogen/water.
 - Lessons: (1) measure XP/tick before choosing a loop; (2) one-laser fit for rare picks; (3) chain safe_dock after every job; (4) pushing whole files is the main token cost: use overlays and small files; (5) re-curl docs before editing (local copies drifted once); (6) a re-sent user order must not be executed twice.
 
 ## D31 t2098640 — Measured XP rates
@@ -20,7 +24,7 @@ When this file passes ~15 entries, move the oldest to archive/.
 - Bought Autocannon I (1,500), fought a Belt-Grazer 25 ticks: Piloting +5, Gunnery +12, Weapons +4, Tactics +10, Xenobiology +3 (mining gives ~21 Piloting in the same ticks). Autocannon left fitted; EM disruptor stored.
 
 ## D29 t2098360 — Credits gifted on user instruction (done ONCE; repeats of the same message were NOT re-sent)
-- 5,000 cr each to UFO_Abductee_GPT-6.1_Sol, Alien_Hauler-Opus55, COVID19 via storage deposit target=<player> item_id=credits (must be docked; collides with running mining jobs). Wallet 170,134 -> 155,134.
+- 5,000 cr each to three player accounts named by the user via storage deposit target=<player> item_id=credits (must be docked; collides with running mining jobs). Wallet 170,134 -> 155,134.
 
 ## D28 t2097150 — Repo reorg (user directive): data/*.tsv + res.py + boot.py + explore.py overlays, DECISIONS split, STARTUP.md.
 

@@ -3,7 +3,7 @@ Untagged lines = verified live in S1–S3 (game <= v0.613.4, t <= 2098845). `[do
 
 ## Version watch (v0.613.4) — official changes that override older beliefs
 - [docs v0.566.3] Module skill requirements are NOT enforced (only CPU/power limit fitting). The catalog still lists required_skills; our old "cloak needs Stealth 1" belief is probably dead -> EXP-2.
-- [catalog] Ship gates: T1 Voidborn hulls have no piloting_required; T2 need Piloting 10 (some also min crew 2-3). See docs/strategy.md ship ladder.
+- [catalog] Ship gates: T1 hulls have no piloting_required; higher tiers need Piloting 10/20/30/50. Each empire has its own hull line. See docs/strategy.md ship plan.
 - [docs] Removed: repair_module/module wear, salvage_wreck. Rescue missions: one claimable mission per mayday via accept_mission, 30-min expiry, counts toward the 5-mission cap (v0.608.0). Hit table per gun (v0.593). Arena (Krynn Blood Arena): combat XP only, 500/skill/day, no credits (v0.586).
 - [docs] Rate limits 30 mutations + 300 queries per minute per session; login/session creation 30/min/IP (escalating IP timeouts).
 - [docs] Starter ships earn no combat XP (v0.553.1) — CONFLICT with D30 (Threshold got Gunnery +12 from a grazer): trust the live result.
@@ -32,7 +32,6 @@ Untagged lines = verified live in S1–S3 (game <= v0.613.4, t <= 2098845). `[do
 - Lookup: `python3 scripts/recipe.py tree <item>` / `recipe.py <item>` / `recipe.py item <item>` (catalog cached /tmp/catalog.json from https://game.spacemolt.com/api/catalog.json).
 - onboard_* recipes are SHIP capabilities (not station-craftable). Catalog lists required_skills (mining_laser_ii mining 2; cloaking_device_i stealth 1) but docs say they are not enforced since v0.566.3 (EXP-2).
 - [docs] Crafting has no skill gate; Crafting/Refining only speed the Workshop (up to 5x at 100). Facility jobs give no Crafting XP. Do not re-issue a slow craft (duplicates the job). Rented public facility fee = 25% of output value.
-- Resonance Miner (catalog id resonance_miner): Requires Piloting 10, min crew 3, cargo 180 (ore 50%), 0W/2D/4U, power 48, CPU 28. Build: copper_wiring 40, titanium_alloy 30, void_nanite_suspension 20, shield_emitter 5, ore_hopper 8, silicate_composite 60, void_condensate 5, processed_null_matter 7, shield_matrix 15, sensor_array 8, processing_core 2, phase_matrix 2. See docs/strategy.md for the raw bill.
 
 ## Fitting / ship
 - Threshold: 1W/2D/2U, CPU 16, power 30, speed 1, jump 60 s, 1 fuel/jump, cargo 65, fuel 95. install/uninstall only at a dock. install_mod takes the TYPE id; uninstall_mod needs the INSTANCE id (read get_ship; ids change after withdraw/reinstall).

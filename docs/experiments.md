@@ -3,7 +3,7 @@ Rules: the game changes constantly, so test cheaply before betting big. One line
 Status: OPEN | RUNNING | DONE (result) | DEAD (why).
 
 ## Seeded (user-approved t2099202)
-- **EXP-1 Commission a T1 hull from own materials** — `sm.py call spacemolt commission_quote '{"ship_class":"absence"}'` (also liminal, fugue). Cost: a query. Payoff: a faster/stealthier ship without Piloting 10. Then gather ~6 iridium, consolidate inputs, craft components, `commission_ship provide_materials=true`. User pre-approved (D33): commissioning a T1 from our own materials is OK without asking (it is not buying a ship); log it. OPEN
+- **EXP-1 Commission a T1 hull from own materials** — `sm.py call spacemolt commission_quote '{"ship_class":"absence"}'` (also eigenstate, qualia, fugue). Cost: a query. Payoff: speed 3 + integrated cloak 30 + scan resistance 20, no Piloting gate. Then gather ~6 iridium, consolidate inputs, craft components, `commission_ship provide_materials=true`. User pre-approved (D33): commissioning a T1 from our own materials is OK without asking (it is not buying a ship); log it. OPEN
   - EXP-1b: measure Piloting XP/tick in the T1 vs Threshold (catalog: higher tiers earn more per action). OPEN
 - **EXP-2 Module skill requirements unenforced?** (docs v0.566.3) — install a module whose listed skill we lack (cloaking_device_i stealth 1, or em_disruptor_i weapons 3 which we own @ ramens_rest). Cost: ~0. Payoff: cloak/stealth training now. OPEN
 - **EXP-3 Mining drone** — `recipe.py tree mining_drone` / `light_drone_bay`; a DroneLang MINE/DEPOSIT loop deposits straight to station storage (passive ore + Drone Control XP, +5 per action). Cost: crafting. Payoff: income while the ship does other things. OPEN
@@ -11,6 +11,13 @@ Status: OPEN | RUNNING | DONE (result) | DEAD (why).
 - **EXP-5 Arena** (Krynn Blood Arena) — does it give Piloting XP, or only combat skills (500/skill/day cap)? Cost: travel. Payoff: risk-free combat skills. OPEN
 - **EXP-6 survey_system** — needs a survey scanner (craft? survey_scanner_i 3 CPU/4 pw). Reveals hidden deep-core POIs (+Scanning/Deep Core XP). Deep Core Mining is 8 already. OPEN
 - **EXP-7 Achievements with rewards** — `get_achievements` + catalog achievements[].rewards (credits/skill_xp/titles). Cost: queries. Payoff: free goals. OPEN
+
+## Stealth / intel (user direction t2099202, D34)
+- **EXP-8 Stealth XP sources** — which actions give Stealth XP: cloaking_device activation (+5 known), the absence integrated cloak, docked cloak cycles (docs: cloak free while docked)? Measure XP/h and fuel/h for each; pick the passive loop. OPEN
+- **EXP-9 Selling information** — `create_note` + `write_note` (belt table / route / who-is-where for a region) -> can a note be listed on the exchange, or only sold via `trade_offer` / gifted? Who buys? Price? OPEN
+- **EXP-10 Crowd steering** — post scouting intel about rich belts in a competitor faction's region (public chat/forum); watch with `get_system_agents` whether traffic shifts there over the next hours. Never reveal our own spots. OPEN
+- **EXP-11 Who owns what** — map large factions' home regions (/api/map strongholds, `get_system` police/empire, `get_system_agents` faction tags) into data (add a column or a data/factions.tsv). Feeds EXP-10. OPEN
+- **EXP-12 Scan-resistance in practice** — in lawless space with absence: how often are we scanned/engaged vs the Threshold? Being scanned = warning sign. OPEN
 
 ## Backlog (agent adds here)
 - Wrecks: `get_wrecks` at lawless belts / battle sites; loot modules for own use; `sell_wreck` at NPC salvage yards is allowed. Needs tow rig.

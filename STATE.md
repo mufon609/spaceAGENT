@@ -27,14 +27,14 @@ piloting 9 (1,186/3,525) | mining 9 (1,951/3,525) | engineering 12 (3,125/5,940)
 ## Missions
 Active: NONE. Leads: exotic_crystal_synthesis (8,000; needs 6 exotic_matter, 10 @ node_gamma), wh_intro wormhole missions (500cr), grazer hunts (1.0-1.3k).
 
-## Now (priority order)
-1. **Ship ladder (docs/strategy.md):** T1 Voidborn hulls need NO Piloting. Build `absence` (stealth explorer, speed 3, integrated cloak) — only ~6 iridium_ore (unknown_edge, 1 jump) short. Verify first with `commission_quote` (EXP-1).
-2. Run the seeded experiments in docs/experiments.md between jobs (cheap ones first: EXP-2 cloak install, EXP-7 achievements).
-3. Piloting 9 -> 10 (2,339 XP left; gate for T2 incl. resonance_miner): stackmine 0.84 XP/tick or `sm.py loop frontier pioneer_fields deep_range deep_range_outpost N` 0.67/tick. Check whether a T1 hull earns faster (EXP-1b).
-4. Refining/Crafting 3 -> 7-8: `sm.py train` at every dock; lead/platinum/tungsten campaign at central_nexus (PB-10).
-5. Liminal (T1 miner) / resonance_miner inputs still missing: gold, null matter, argon gas, water+nitrogen ice (need harvesters), iridium, void essence, energy + phase crystal. Scout/mine on the zubenelhakrabi > nexus route.
-6. Credits via capital-board mission circuits when needed (PB-7), freight/passengers on the same routes (EXP-4).
+## Now (priority order) — strategy: docs/strategy.md (Voidborn ghost prospector)
+1. **Passive training today:** refit Threshold to >=90% load (2x ML II = 29/30: spare ML II @ deep_range_outpost) so Engineering ticks while we work. Run EXP-2 (install a module whose listed skill we lack).
+2. **Build survey_scanner_i** from stock at ramens_rest (trade crystals + boards + carbon; PB-6) and start `survey_system` on every system visited (Scanning XP).
+3. **Build absence** (EXP-1): mine ~6 iridium at unknown_edge, consolidate inputs at a shipyard station, craft components, commission. Then fit survey scanner + cloak and start stealth training (EXP-8).
+4. **cloaking_device_i inputs:** energy_crystal 4 (garnet_dim_lattice), silver 8 (errai_belt), power cells. Gather on scouting runs.
+5. **Information play** (EXP-9..11): log who works which region (get_system_agents) on every run; test note selling.
+6. Credits via capital-board circuits + freight/passengers on the same routes (PB-7, PB-3) when needed. Refining/Crafting via `sm.py train` at every dock.
 
 ## Open Questions for User
 - Q4: ore/refined DELIVERY missions (Sol: 2,000 lead ore -> 20,000cr; the_long_haul 10 Ti alloy -> 10,000) — allowed as mission payout or forbidden as selling ore? Default forbidden. OPEN.
-- (Q5 cloaking_dust and Q7 grind-vs-contribute are superseded: module skill reqs are no longer enforced (EXP-2) and the plan is now solo, see LOG D33.)
+- Q5 (cloaking_dust for Stealth 1) and Q7 (Piloting grind) are superseded by the stealth/intel strategy (LOG D34).

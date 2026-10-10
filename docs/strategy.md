@@ -1,36 +1,45 @@
-# Strategy (long plan). Live numbers are in STATE.md. Revise when experiments (docs/experiments.md) prove a better path.
+# Strategy — Voidborn ghost prospector (user direction t2099202). Live numbers: STATE.md. Revise when experiments prove a better path.
 
-## SOLO SHIP LADDER (D33, catalog v0.613.4) — verify each with `commission_quote` before committing materials
-Ships come from `commission_ship(ship_class, provide_materials=true)` at a shipyard (cheapest with own materials), not the market (rule: never buy ships). Keep the Threshold stored as the free mining/backup hull; swap with `switch_ship`.
-| Hull | Tier | Piloting | Cargo | Speed | Slots W/D/U | Power | Crew | Why |
-|---|---|---|---|---|---|---|---|---|
-| threshold (now) | T0 | - | 65 | 1 | 1/2/2 | 30 | 1 | starter |
-| absence | T1 | none | 25 | 3 | 0/2/3 | 32 | 1 | stealth explorer: integrated cloak 30 + scan resistance 20; 3x speed for scouting lawless space |
-| liminal | T1 | none | 75 | 2 | 0/2/3 | 34 | 1 | miner upgrade: 2x speed, +1 utility |
-| resonance_miner | T2 | 10 | 180 | 2 | 0/2/4 | 48 | 3 | end goal miner |
-Other T1 Voidborn (no piloting gate): fugue courier (55 cargo, speed 4), residuum salvager (100 cargo), rime ice harvester, accretion gas harvester, eigenstate scout, qualia explorer, apeiron EW, paradox fighter, vigil patrol. `python3 scripts/recipe.py` + catalog ships[] for bills.
-- absence bill: silicate_composite 12, copper_wiring 11, processing_core 1, shield_emitter 3, steel_plate 5. From stock: composites 48 Si + 24 Ni; core = 5 boards + 2 Pt + 3 Si; emitters = 6 superconductor (FAC create_superconductor: 2 palladium + 1 iridium + 3 wiring each) + 3 focused_crystal (12 trade_crystal) + 6 boards; boards = carbon_arc_circuit_etching (12 C + 2 Si -> 3). ONLY MISSING: ~6 iridium_ore (unknown_edge_mineral_fields, 1 jump from ramens_rest). Logistics: Si @ ramens_rest, Ni @ deep_range_outpost, C/Pt/Pd @ central_nexus -> consolidate at one shipyard station.
-- liminal bill: silicate_composite 12, copper_wiring 10, void_nanite_suspension 5, shield_emitter 2, shield_matrix 5, ore_hopper 3, processing_core 1. Extra needs vs stock: gold ~20 (gold_wiring for 5 shield matrices; garnet_belt), 10 graphene_sheet (FAC exfoliate_graphene 6 C -> 1), 5 purified_argon (25 argon_gas: gas harvester), void nanites (3 null_matter + water ice + nitrogen ice: ice harvester), flex_polymer 12 (8 Si + 4 Ni each), ~4 iridium.
-- resonance_miner: see STATUS below; still needs Piloting 10 + crew 3 + void essence/energy/phase crystal sources.
-- [?] Higher-tier hulls grant more XP per action (catalog text) — measure Piloting XP/tick in a T1 vs the Threshold (EXP-1b).
+## Concept
+Be the ship nobody sees. Train **Stealth + Scanning + Engineering**, fly fast cloaked hulls through lawless and contested space, map who is where and what is left, then **use information as a weapon**: publish/sell scouting data about competitor regions so other players crowd in there, which stresses the big factions holding those areas while we harvest quiet belts elsewhere. Take calculated chances; a T1 hull is cheap to rebuild from stock.
 
+## Why Voidborn
+Every empire has its own ship line (T0 starter -> T1 -> ... T5) with its own flavour; hulls are empire-specific. Voidborn's line is built around shields, cloaking and scan resistance — no other empire's T1 has an integrated cloak like `absence`. Our home empire bonus = shields/cloak (docs).
 
-## Original user plan (S1–S3; phases still valid, routes may change)
-Role: Voidborn Frontier Prospector. Ship Threshold (T0) -> Resonance Miner (T2). Home central_nexus. Primary mission: sustainable raw SILICON supply from frontier/lawless space. Phases:
-1. Wealth + XP stacking: grind Piloting to 10 (gate for any T2 hull); keep reactor load >=90% when convenient (Engineering passive ~1 XP/tick); stockpile ore (never sell).
-2. Resonance Miner commission (Requires Piloting 10, min crew 3): SOLO since D33 — craft every component ourselves (no skill gate; Workshop free, FAC rented). The old plan (fleet crafter Alien_Hauler-Opus55 crafts from our raw at Central Nexus, ~10-15k fees) is DROPPED unless the user re-enables it. The user sent 5,000 cr gifts to three fleet accounts via us once (D29).
-3. Fit + stealth base training: dual Laser II, Cloak I, Shield Booster II, Deep Core Extractor (45/48 MW); docked cloak cycles (Stealth +5 XP per activation; ~380 XP/h for ~77 fuel/h; always end docked + decloaked).
-4. Frontier Silicon expeditions: cloaked hops to Zubenelhakrabi Crystal Sand (Silicon r40); regular Si supply line (fleet hand-off / fleetctl approve-route only if the user re-enables fleet ties).
+## Ship plan (T1 = no Piloting requirement; build with `commission_ship provide_materials=true`, quote first)
+| Hull | Speed | Cargo | CPU/Power | Slots W/D/U | Built-in | Role |
+|---|---|---|---|---|---|---|
+| threshold (now) | 1 | 65 | 16/30 | 1/2/2 | — | keep stored: mining + backup |
+| **absence** (target 1) | 3 | 25 | 18/32 | 0/2/3 | integrated cloak 30, scan resistance 20 | ghost scout: stealth + intel runs |
+| eigenstate | 3 | 30 | 24/36 | 0/2/3 | integrated survey scanner 25 | survey runs (needs phase_matrix, void nanites: harder) |
+| qualia | 3 | 30 | 20/34 | 0/2/3 | survey scanner 15, scan resistance 15 | stealthy surveyor (same hard inputs) |
+| vigil | 3 | 20 | 22/38 | 2/2/2 | integrated ship scanner 12 | armed watcher |
+| fugue | 4 | 55 | 20/36 | 0/2/2 | fuel efficiency 25, 1 business berth | fast courier/passengers |
+| liminal | 2 | 75 | 18/34 | 0/2/3 | ore yield +15%, ore cargo efficiency 50 | stealth-less miner upgrade |
+Later goals (tier >= 2 needs Piloting 10+): Voidborn recon line (interstice/parallax T2 cloak + scan resistance; solipsism T4: speed 5, cloak 60, scan resistance 50, scanner 40 — the dream hull). Piloting keeps rising from normal flying; no dedicated grind.
 
-## Fitting ratchet (Engineering)
-Engineering gives -1% module power/CPU draw per level. Load >=90% of reactor = ~1 Engineering XP/tick. When load drops <90%, upgrade a module (laser I->II, recharger I->II) to push it back over 90%. Threshold: 2x Mining Laser II + recharger + hardener + EM disruptor = 29/30.
+**absence bill:** silicate_composite 12, copper_wiring 11, processing_core 1, shield_emitter 3, steel_plate 5. From stock: composites (48 Si + 24 Ni), core (5 boards + 2 Pt + 3 Si), emitters = 6 superconductor (FAC create_superconductor: 2 palladium + 1 iridium + 3 wiring each) + 3 focused_crystal (12 trade_crystal) + 6 boards; boards = carbon_arc_circuit_etching (12 C + 2 Si -> 3). ONLY MISSING: ~6 iridium_ore (unknown_edge_mineral_fields, 1 jump from ramens_rest). Logistics: Si @ ramens_rest, Ni @ deep_range_outpost, C/Pt/Pd @ central_nexus -> consolidate at one shipyard station.
 
-## Stealth notes
-Cloak strength = module + hull bonus x Stealth skill. cloaking_device_i lists Stealth 1 (probably unenforced since v0.566.3 -> EXP-2; old Q5 cloaking_dust idea superseded); the absence hull has an integrated cloak. Level 3 unlocks Emergency Cloaking System, 5 gives +5% strength.
+## Fit plan (absence: CPU 18, power 32, 3 utility)
+- **survey_scanner_i** (3 CPU/4 pw): sensor_array (6 trade_crystal + 3 boards -> 2) + 2 boards + 2 focused_crystal. Buildable from stock NOW (trade crystal 25 covers absence + scanner, barely). Reveals hidden POIs (`survey_system`), trains Scanning + Deep Core.
+- **ship_scanner_i** (3/4): sensor_array + 2 boards + 1 focused_crystal. Scans ships (alerts the target!). Needs 4 more trade_crystal (frostpeak uncut_gems / azmidi).
+- **cloaking_device_i** (5/10, cloak 40): 2 optical_fiber_bundle (3 Si + 2 energy_crystal each) + 3 boards + focused_crystal + 2 silver_wiring (8 silver) + 2 power_cell (FAC: 3 nickel_billet or 14 lithium + 2 wiring). Needs energy_crystal 4 (garnet_dim_lattice), silver 8 (errai_belt). Probably stacks with the integrated cloak — test.
+- Listed skill requirements (scanning 2, stealth 1) are not enforced since v0.566.3 (docs) -> EXP-2.
 
-## STATUS t2098845 (supersedes the old plan numbers)
-- Piloting is LEVEL 9 (1,186/3,525): ~2,340 XP to level 10 = ~8-10 h of mining (0.67-0.84 XP/tick). Combat gives no shortcut (tested). Catalog: higher-tier ships earn more XP per action (so the Resonance Miner should speed up XP).
-- Resonance Miner bill (catalog, 202 units, market ~104k): copper_wiring 40, titanium_alloy 30, void_nanite_suspension 20, shield_emitter 5, ore_hopper 8, silicate_composite 60, void_condensate 5, processed_null_matter 7, shield_matrix 15, sensor_array 8, processing_core 2, phase_matrix 2. Build time 1080 ticks, shipyard tier 1; defaults mining_laser_ii + shield_booster_ii.
-- Raw bill (recipe.py tree): silicate_composite = 4 Si + 2 Ni (workshop) OR 2 Si + 2 Ni + 1 iridium_ore (iridium @ unknown_edge); shield_matrix needs 1 composite each (75 composites total) + 2 graphene_sheet + gold_wiring/electrum (3 silver + 2 gold) + purified_argon. titanium_alloy = 3 Ti ore + 1 steel (forge_titanium_alloy at frontier_station only, FAC 37cr/run) => 90 Ti. void_nanite_suspension = null_matter + purified_water + liquid_nitrogen (2 per run, 10 runs). processed_null_matter = 2 null_matter (x7). void_condensate = 3 void_essence + 1 energy_crystal (x5). phase_matrix = 2 phase_crystal + 1 energy_crystal (x2). sensor_array = 3 circuit_board + 1 focused_crystal + 2 palladium (or 6 trade_crystal + 3 boards -> 2). processing_core = 5 boards + 2 platinum + 3 Si. ore_hopper = 10 steel + 4 flex_polymer + 3 wiring. shield_emitter = 2 superconductor + focused_crystal + 2 boards.
-- STOCK (t2098845): Ti ore 135 (need 90) OK | Nickel 159 (need ~150) OK | Silicon 258 (need ~240) OK | copper wiring 110 (need 64) OK | steel 86 (need 80) OK | trade crystal 25 | circuit boards 3 (carbon 2300 + Si make more). MISSING: null matter ~24 (intercrus_null_dust 440, atlas_null_dust 577, both lawless), void essence, energy crystal (garnet_dim_lattice 65), phase crystal (merope 158, cloverfield 448, altais 428), gold (garnet_belt 681) + silver (errai 64), graphene thread, superconductors, purified water/liquid nitrogen/argon (gas harvesters needed? ice/gas belts exist but need harvester modules).
-- The 'maintain >=90% load' rule conflicts with the one-laser Ti/Ni stacking fit (power 18-22/30); Ti/Ni/Si targets are now met, so refit 2x ML II (29/30) for pure XP grinding at jettison belts.
+## Passive training (start ASAP)
+- **Engineering:** ~1 XP/tick passive while fitted load >= 90% of reactor. Fit to 29+/32 on absence (or 2x ML II = 29/30 on Threshold today). When Engineering lowers draw below 90%, add/upgrade a module (fitting ratchet).
+- **Stealth:** +5 XP per cloak activation. [docs] cloak is free while docked -> docked cloak cycles (~380 XP/h for ~77 fuel/h undocked; docked ~free; always end docked + decloaked). Test whether the absence integrated cloak counts (EXP-8).
+- **Scanning:** `survey_system` on every new system with a survey scanner; `scan` targets sparingly (it warns them).
+- Refining/Crafting keep rising from building our own gear (`sm.py train` at docks).
+
+## Information play (see EXP-9..11)
+- Gather: `get_system_agents` (who is in a system, free), `get_nearby`, `subscribe_observation`, `survey_system`, belt rows via explore.py, faction territory from `/api/map` (strongholds) + `get_system` (police).
+- Package: `create_note` / `write_note` -> a tradeable note item (1 cargo slot). Sell P2P with `trade_offer` (same POI) or test whether notes can be listed on the exchange (user allows selling information).
+- Spread: public chat / forum posts about rich belts inside competitor regions draw miners and pirates there. Never reveal our own harvesting spots. Faction intel terminals accept submissions (`faction_submit_intel`, poisonable) — only if we ever join a faction.
+- Our quiet spots: Crystal Sand silicon, pioneer_fields Ti/Ni, unknown_edge iridium, lawless null_dust / garnet belts (docs/places.md).
+
+## Stockpile notes (t2098845)
+Ti ore 135, Nickel 159, Silicon 258, copper wiring 110, steel 86, trade crystal 25, circuit boards 3, carbon 2300+, Pt 760, Pd 330 — locations in STATE.md. Not yet sourced: null matter (intercrus_null_dust 440, atlas_null_dust 577, lawless), energy crystal (garnet_dim_lattice 65), phase crystal (merope 158, cloverfield 448, altais 428), gold (garnet_belt 681), silver (errai 64), graphene, superconductors (FAC from Pd + iridium), purified water / liquid nitrogen / argon (ice/gas belts need harvester modules).
+
+## Earlier plan (S1–S3, kept for context)
+Role: Voidborn Frontier Prospector, home central_nexus, primary mission a raw SILICON supply from frontier/lawless space (cloaked hops to Zubenelhakrabi Crystal Sand, Silicon r40). Fitting ratchet: Engineering -1% module power/CPU per level; Threshold 2x Mining Laser II + recharger + hardener + EM disruptor = 29/30. Cloak strength = module + hull bonus x Stealth skill; Stealth 3 unlocks Emergency Cloaking System, 5 gives +5% strength. The one-laser Ti/Ni stacking fit (power 18-22/30) conflicts with the >=90% load rule; refit 2x ML II for XP grinding at jettison belts.
