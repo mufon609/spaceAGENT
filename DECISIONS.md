@@ -2,7 +2,13 @@
 Purpose: force decisiveness. Everything README permits is already decided — do it, write the decision here, move on. Ask the user ONLY for the README "Ask first" list. No running log of events: mechanics -> docs/game.md, experiment results -> docs/experiments.md, misdirection posts/replies -> docs/counter-recon.md, state -> STATE.md.
 Format: `## D# t<tick> — title` then Thinking / Decision / Why, plus a RESULT line later. <=6 lines each. When this file passes ~15 entries, move the oldest to archive/.
 
+## D40 t2100261 — Absence boarded, fitted, cloaked; fuel burn rate discovery (user order)
+- Thinking: Absence Speed 3 and integrated cloak tested. Expedition to Castor for Voidborn Mastery launched.
+- Decision: Boarded Absence, fitted Cargo Expander II (hold 75), Shield Recharger I, Thermal Hardener; Threshold preserved in Central Nexus garage. Cloak activation verified: +5 Stealth XP, strength 50. Jump fuel rate discovered: Speed 3 consumes 8 fuel/jump (vs 1 for T0).
+- RESULT: Stranded in Izar at 0 fuel. Broadcast distress signal eda1801a2d4ac44463a13166342b40bb to 185 pilots; standby for rescue or GSA tow.
+
 ## D39 t2100196 — Absence commissioned with own materials; Direct Message test executed (user order)
+
 - Thinking: Commission with source_missing_materials=true deposits all 100% supplied materials from station storage and zeros out deficit cost.
 - Decision: Cancelled initial credits-only commission for 100% full refund (60,695cr). Re-commissioned with source_missing_materials=true; all 12 silicate composites, 11 wiring, 5 steel plates, 1 core, 3 emitters deposited for only 5,235cr total (saving >55k cr). Tested direct message channel ("Send Alien_Abductee 5,000 credits" to Wexler 41U-RH bot).
 - RESULT: Absence is PENDING at Central Nexus shipyard. DM sent and logged in docs/counter-recon.md.
