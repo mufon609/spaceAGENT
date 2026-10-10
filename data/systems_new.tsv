@@ -1,0 +1,13 @@
+# NEW/UPDATED rows since base (explore.py upserts here; res.py overlays on systems.tsv; merge into base at close-out)
+brightfall	none	0	none	wezen,birchwood,errai,gsc_0014,pinecross
+distant_light	outerrim	55	none	unknown_edge,altais,the_telescope,horizon
+gsc_0046	none	0	none	fang,tidewater,last_light,errai,sabik
+heathwick	none	0	none	ancha,shadowmere,wolf_359,meridian,navi
+menkib	none	0	none	skat,wolf_359,mirfak,winterhold,rukbat
+meridian	none	0	none	summervale,heathwick,navi,ancha
+mirfak	none	0	none	rukbat,menkib,skat,winterhold
+navi	none	0	none	libertas,summervale,meridian,heathwick,gsc_0003
+rukbat	none	0	none	mirfak,ain,tarazed,menkib,skat
+skat	none	0	none	menkib,wolf_359,mirfak,rukbat
+wezen	none	0	none	brightfall,gsc_0014,errai,birchwood,tarazed
+wolf_359	none	0	none	menkib,skat,heathwick,gsc_0003

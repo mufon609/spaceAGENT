@@ -1,0 +1,16 @@
+# NEW/UPDATED rows since base (same columns as belts.tsv)
+brightfall	brightfall_belt	0	asteroid_belt	0	t2097773: iron r42/97551/p4877 copper r30/100000/p5000 zinc r22/7959/p397	
+brightfall	brightfall_frost_ring	0	ice_field	0	t2097773: water_ice r52/3973/p198 nitrogen_ice r35/50000/p2500 deuterium_ice r16/1245/p62 methane_ice r15/1249/p62	
+distant_light	probability_cloud_distant_light	55	nebula	1	t2097734: iron r27/387/p19 copper r25/388/p19 quantum_fragments r12/278/p13	
+heathwick	heathwick_belt	0	asteroid_belt	0	t2097924: iron r66/53598/p2679 copper r42/100000/p5000 zinc r23/19000/p950	
+menkib	menkib_stellar_wind	0	gas_cloud	0	t2097880: plasma_gas r65/10399/p519 ion_gas r50/29800/p1490 nebula_gas r30/18000/p900	
+meridian	meridian_belt	0	asteroid_belt	0	t2097937: iron r57/100000/p5000 copper r43/100000/p5000 lithium r45/25000/p1250	
+mirfak	mirfak_belt	0	asteroid_belt	0	t2097869: iron r33/100000/p5000 copper r40/100000/p5000	
+mirfak	pulsar_fallout_shoals	0	asteroid_belt	1	t2097869: lead r14/350/p17 uranium r9/0/p0	
+navi	navi_belt	0	asteroid_belt	0	t2097962: iron r53/100000/p5000 copper r22/100000/p5000	
+navi	navi_haze	0	gas_cloud	0	t2097962: hydrogen_gas r43/50000/p2500 argon_gas r52/50000/p2500 xenon_gas r21/10000/p500 neon_gas r65/50000/p2500	
+navi	navi_ice_shelf	0	ice_field	0	t2097962: helium_ice r11/5000/p250	
+rukbat	rukbat_belt	0	asteroid_belt	0	t2097809: iron r32/100000/p5000 copper r47/100000/p5000	
+skat	skat_belt	0	asteroid_belt	3	t2097899: iron r49/99975/p4998 copper r48/99940/p4997 aluminum r48/28431/p1421	
+wezen	wezen_faint_entanglement	0	nebula	0	t2097789: iron r31/100000/p5000 copper r24/100000/p5000 quantum_fragments r9/568/p28	
+wolf_359	wolf_359_gas_pocket	0	gas_cloud	0	t2097911: hydrogen_gas r51/46959/p2347 argon_gas r52/50000/p2500 plasma_gas r28/10000/p500 neon_gas r53/50000/p2500	
