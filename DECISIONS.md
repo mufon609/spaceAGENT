@@ -2,6 +2,11 @@
 Purpose: force decisiveness. Everything README permits is already decided — do it, write the decision here, move on. Ask the user ONLY for the README "Ask first" list. No running log of events: mechanics -> docs/game.md, experiment results -> docs/experiments.md, misdirection posts/replies -> docs/counter-recon.md, state -> STATE.md.
 Format: `## D# t<tick> — title` then Thinking / Decision / Why, plus a RESULT line later. <=6 lines each. When this file passes ~15 entries, move the oldest to archive/.
 
+## D43 t2103550 — Nitrogen Ice Harvest completed; Fuel cells in-flight; Stock consolidated
+- Thinking: Completed Nitrogen Ice Harvest to progress Voidborn Mastery further into Level 2 (25/340 XP).
+- Decision: Flew 4 jumps cloaked to gsc_0041_frost_ring, mined 12 Nitrogen Ice + 12 Water Ice + 1 Deuterium Ice. Returned, turned in mission at Central Nexus (+25 Voidborn Mastery, +40 Mining XP). Consolidated all stock at Central Nexus; withdrew 2 fuel cells into Absence hold for autonomous mobile refueling.
+- RESULT: Nitrogen Ice Harvest complete. Voidborn Mastery advanced to Level 2 (25/340 XP). Stock consolidated at Central Nexus. Fuel independence mobile capability active.
+
 ## D42 t2103400 — Ice Harvester I acquired; Water Ice Extraction completed; VOIDBORN MASTERY LEVEL 2 REACHED!
 - Thinking: Completed Cryogenic Extraction: Setup and Water Ice Extraction to achieve Voidborn Mastery Level 2.
 - Decision: Bought Ice Harvester I for 2,798cr (crafting cost exceeds 3,500cr in wildlife parts; permitted under Hard Rule module comparison). Swapped Gas Harvester I for Ice Harvester I. Flew 4 jumps cloaked to gsc_0041_frost_ring, mined 8 Water Ice + 9 Nitrogen Ice, returned to Central Nexus, docked, completed Water Ice Extraction, banked ice, refueled to 110/110.

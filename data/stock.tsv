@@ -1,4 +1,4 @@
-# station	system	item	qty  (sm.py stock, t2103400; regenerate, don't hand-edit)
+# station	system	item	qty  (sm.py stock, t2103605; regenerate, don't hand-edit)
 central_nexus	nexus_prime	carbon_ore	1983
 central_nexus	nexus_prime	tungsten_ore	927
 central_nexus	nexus_prime	platinum_ore	723
@@ -6,21 +6,21 @@ central_nexus	nexus_prime	lead_ore	638
 central_nexus	nexus_prime	palladium_ore	291
 central_nexus	nexus_prime	argon_gas	50
 central_nexus	nexus_prime	hydrogen_gas	42
+central_nexus	nexus_prime	nitrogen_ice	21
+central_nexus	nexus_prime	water_ice	20
 central_nexus	nexus_prime	neon_gas	15
 central_nexus	nexus_prime	iridium_ore	14
-central_nexus	nexus_prime	plasma_gas	10
-central_nexus	nexus_prime	nitrogen_ice	9
 central_nexus	nexus_prime	iron_ore	8
-central_nexus	nexus_prime	water_ice	8
 central_nexus	nexus_prime	copper_wiring	4
 central_nexus	nexus_prime	copper_ore	3
 central_nexus	nexus_prime	silicon_ore	3
 central_nexus	nexus_prime	dark_matter_residue	3
-central_nexus	nexus_prime	steel_plate	2
+central_nexus	nexus_prime	plasma_gas	2
 central_nexus	nexus_prime	cargo_expander_i	1
 central_nexus	nexus_prime	shield_booster_i	1
 central_nexus	nexus_prime	mining_laser_i	1
 central_nexus	nexus_prime	gas_harvester_i	1
+central_nexus	nexus_prime	deuterium_ice	1
 deep_range_outpost	deep_range	nickel_ore	135
 deep_range_outpost	deep_range	titanium_ore	134
 deep_range_outpost	deep_range	steel_plate	67
