@@ -47,7 +47,7 @@ Untagged lines = verified live in S1–S3 (game <= v0.613.4, t <= 2098845). `[do
 
 ## Economy / market
 - Silicon, titanium ore, nickel are NOT sold anywhere seen (only buy bids 180/15/14); mine them. titanium_alloy not sold (bid 311). Market (Ramen's Rest t2095372): cargo_expander_ii 1,908, mining_laser_ii 7,308, survey_scanner_ii 30,800, autocannon_i 1,500.
-- BUY vs CRAFT (user order S3): buy modules/upgrades (never ships) when market price < raw-resource cost; log in LOG.md (D23).
+- BUY vs CRAFT (user order S3): buy modules/upgrades (never ships) when market price < raw-resource cost; log in DECISIONS.md (D23).
 - Gifts: `spacemolt_storage deposit target=<player> item_id=credits quantity=N` (must be docked; unlock after 1000 lifetime credits earned).
 - Fuel tax per unit: Voidborn 2, Solarian ~6, Nebula ~5, Crimson ~4, Outer Rim ~1. exotic_matter is category ore (stockpile rule). Ore bids often 1cr.
 - Empire treasury: Voidborn missions pay 0-84%; Solarian/Nebula/Outer Rim/Crimson pay in full.

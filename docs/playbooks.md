@@ -71,7 +71,7 @@ S3 results: Krynn strategic_readiness_assessment 20,000 + last_known_position 8,
 scripts/safe_dock.sh      # stop loops, dock at nearest known station, bank cargo
 $S status                 # must show docked=<station>
 ```
-Then update STATE.md (location, credits, skills, stock, Now), LOG.md (decisions, RESULT lines), docs/experiments.md (results), commit + `git push`.
+Then update STATE.md (location, credits, skills, stock, Now), DECISIONS.md (new decisions, RESULT lines), docs/counter-recon.md (`recon.py check 24 log`), docs/experiments.md (results), commit + `git push`.
 
 ## PB-9 Stack a rare ore with filler jettison (user-approved; jettison ONLY iron_ore/copper_ore)
 `scripts/stackmine.py <keep_ore> [target] [max_cycles]` at a lawless belt with a small rare deposit among huge Fe/Cu (zubenelhakrabi_crystal_sand silicon, pioneer_fields titanium/nickel). ONE ML II (beam 12). Hold 65 caps a trip at ~55-59 of the rare ore. Unattended: `setsid nohup sh -c 'python3 -u scripts/stackmine.py silicon_ore 55 700 > /tmp/stack.log 2>&1; scripts/safe_dock.sh' < /dev/null > /dev/null 2>&1 &`. Measured 0.84 Piloting XP/tick. Any other game action while it runs makes it stop (action_in_progress).

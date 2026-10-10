@@ -32,9 +32,9 @@ Active: NONE. Leads: exotic_crystal_synthesis (8,000; needs 6 exotic_matter, 10 
 2. **Build survey_scanner_i** from stock at ramens_rest (trade crystals + boards + carbon; PB-6) and start `survey_system` on every system visited (Scanning XP).
 3. **Build absence** (EXP-1): mine ~6 iridium at unknown_edge, consolidate inputs at a shipyard station, craft components, commission. Then fit survey scanner + cloak and start stealth training (EXP-8).
 4. **cloaking_device_i inputs:** energy_crystal 4 (garnet_dim_lattice), silver 8 (errai_belt), power cells. Gather on scouting runs.
-5. **Information play** (EXP-9..11): log traffic per region on every run (get_system_agents); test selling a true-but-low-value note; ask decoy questions about far-away places in system chat (never near our spots).
+5. **Counter-recon** (docs/counter-recon.md, EXP-9..11): post the misdirection template in system chat at least once per session and list an `EMPTY` note for a far place; `recon.py check 24 log` before leaving; log traffic per region (get_system_agents).
 6. Credits via capital-board circuits + freight/passengers on the same routes (PB-7, PB-3) when needed. Refining/Crafting via `sm.py train` at every dock.
 
 ## Open Questions for User
 - Q4: ore/refined DELIVERY missions (Sol: 2,000 lead ore -> 20,000cr; the_long_haul 10 Ti alloy -> 10,000) — allowed as mission payout or forbidden as selling ore? Default forbidden. OPEN.
-- Q5 (cloaking_dust for Stealth 1) and Q7 (Piloting grind) are superseded by the stealth/intel strategy (LOG D34).
+- Q5 (cloaking_dust for Stealth 1) and Q7 (Piloting grind) are superseded by the stealth/intel strategy (DECISIONS D34).

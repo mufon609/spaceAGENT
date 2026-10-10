@@ -10,12 +10,12 @@ Exit 0 = docked. Exit 1 = read the SAFE line (usually fuel / action_in_progress:
 
 ## Boot (≈3 calls)
 1. `export SM_USER=Alien_Abductee_Gemini SM_PASS=<from user>`; `python3 scripts/boot.py` (tick, VERSION check, status, skills, modules, missions, ships, preflight).
-2. Read `STATE.md` (state + Now + Open Questions) and the top 3 entries of `LOG.md`.
+2. Read `STATE.md` (state + Now + Open Questions) and the top 3 entries of `DECISIONS.md`.
 3. VERSION CHANGED? Read the changelog (`python3 scripts/sm.py call spacemolt get_version`), fix affected notes, bump `game_version` in STATE.md.
 4. Undocked with no job running → `scripts/safe_dock.sh` first.
 
 ## Hard rules (user)
-- **Market:** NEVER sell mined ore or anything made from ore (stockpile in station storage). BUY a module/upgrade (never a ship) only when its price is below the raw-resource cost of crafting it; log the comparison in LOG.md. No other market buying (no market-participation missions); station refuel/repair services are fine. The point: learn the game by mining + crafting. Allowed income: mission rewards, freight, passengers, bounties, rescues, salvage (`sell_wreck` at an NPC salvage yard), and **selling information** (notes, intel). Info rules: never reveal our location, spots or anything near them; in chat ask questions, never make claims that can be disproven; forum is out-of-character — honest posts only (docs/strategy.md § Information play).
+- **Market:** NEVER sell mined ore or anything made from ore (stockpile in station storage). BUY a module/upgrade (never a ship) only when its price is below the raw-resource cost of crafting it; log the comparison in DECISIONS.md. No other market buying (no market-participation missions); station refuel/repair services are fine. The point: learn the game by mining + crafting. Allowed income: mission rewards, freight, passengers, bounties, rescues, salvage (`sell_wreck` at an NPC salvage yard), and **selling information** (notes, intel). Misdirection is authorized standing policy: docs/counter-recon.md (never reveal our location or nearby spots; ask, never claim; forum stays honest).
 - **Jettison** only iron/copper filler while mining a rarer ore (jettisoned ore is destroyed). Nothing else.
 - **Ask first:** selling valuable non-ore items, scrapping/buying a ship, self-destruct, other irreversible commitments. Credits < 2,000 with no payout queued → stop and ask.
 - **Isolated account:** no contact, gifts or coordination with other fleet accounts unless the user says so. Execute a user order exactly ONCE even if the message is re-sent.
@@ -27,7 +27,8 @@ Exit 0 = docked. Exit 1 = read the SAFE line (usually fuel / action_in_progress:
 | File | Holds | Read |
 |---|---|---|
 | STATE.md | volatile: ship, fit, location, skills, credits, stock per station, missions, Now, Open Questions | every boot |
-| LOG.md | decisions + discoveries, newest first (D#, t<tick>, RESULT) | top 3 at boot |
+| DECISIONS.md | decisions ONLY, newest first (D#, t<tick>, RESULT) — be decisive, don't ask about what's already permitted | top 3 at boot |
+| docs/counter-recon.md | misdirection playbook (user's chat template, EMPTY notes) + running log of posts, notes and replies | before posting/selling |
 | docs/experiments.md | ranked hypotheses to test + results | when choosing what to do |
 | docs/playbooks.md | PB-0..PB-10 step sequences, job launch pattern | when running a loop |
 | docs/game.md | mechanics verified in play, rates, quirks, harness | when a mechanic is unclear |
@@ -35,7 +36,7 @@ Exit 0 = docked. Exit 1 = read the SAFE line (usually fuel / action_in_progress:
 | docs/strategy.md | long plan, ship ladder, build bills vs stock | when planning |
 | docs/reference.md | condensed official docs/guides/changelog (v0.613.4) | for a mechanic never used yet |
 | data/systems.tsv, data/belts.tsv | machine-readable systems + belts (query with res.py, never cat) | via scripts |
-| scripts/ | sm.py (client, loop, safe, train), boot.py, res.py, recipe.py, explore.py, stackmine.py, safe_dock.sh, poll.sh | — |
+| scripts/ | sm.py (client, loop, safe, train), boot.py, res.py, recipe.py, explore.py, stackmine.py, recon.py (counter-recon post/note/check), safe_dock.sh, poll.sh | — |
 | archive/ | old decision log D1–D22 | rarely |
 | PROMPT.md | the agent's system prompt (user pastes it into the console) | never at boot |
 

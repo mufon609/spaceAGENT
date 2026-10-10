@@ -14,8 +14,8 @@ Status: OPEN | RUNNING | DONE (result) | DEAD (why).
 
 ## Stealth / intel (user direction t2099202, D34)
 - **EXP-8 Stealth XP sources** — which actions give Stealth XP: cloaking_device activation (+5 known), the absence integrated cloak, docked cloak cycles (docs: cloak free while docked)? Measure XP/h and fuel/h for each; pick the passive loop. OPEN
-- **EXP-9 Selling notes** — docs say notes sell on the market. Test: `create_note` (true but low-value: an EMPTY/depleted far belt, common-ore survey) -> `create_sell_order` at a busy station; does it sell, at what price, does anyone complain? OPEN
-- **EXP-10 Crowd steering away from our resources** — in-character `system` chat questions about FAR-away places (never near our spots; rules in docs/strategy.md § Information play). Log each post; watch with `get_system_agents` whether traffic at our spots drops / at the named place rises over hours. OPEN
+- **EXP-9 EMPTY notes** — docs/counter-recon.md. Does a note titled for a far place with content `EMPTY` sell on the market / via trade_offer? Price, buyer, complaints. OPEN
+- **EXP-10 Misdirection questions** — docs/counter-recon.md (user's template). Per post: replies, unique senders, mentions of the place, anyone saying they'll go. Summarize here every ~5 posts. OPEN
 - **EXP-11 Traffic map** — record crowding per region (`get_system_agents` counts, faction tags) into data (column or data/traffic.tsv) to know which resources are lightly mined and which far places make good decoys. Feeds EXP-10. OPEN
 - **EXP-12 Scan-resistance in practice** — in lawless space with absence: how often are we scanned/engaged vs the Threshold? Being scanned = warning sign. OPEN
 

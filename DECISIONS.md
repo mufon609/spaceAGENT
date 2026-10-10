@@ -1,8 +1,12 @@
-# LOG — decisions + discoveries, NEWEST FIRST. Boot reads the top 3. Older D1–D22: archive/LOG_D1-D22.md.
-Format: `## D# t<tick> — title` then Thinking / Decision / Why / RESULT (add RESULT later). <=6 lines each. Tick from https://game.spacemolt.com/health.
-When this file passes ~15 entries, move the oldest to archive/.
+# DECISIONS — decisions only, NEWEST FIRST. Boot reads the top 3. Older D1–D22: archive/DECISIONS_D1-D22.md.
+Purpose: force decisiveness. Everything README permits is already decided — do it, write the decision here, move on. Ask the user ONLY for the README "Ask first" list. No running log of events: mechanics -> docs/game.md, experiment results -> docs/experiments.md, misdirection posts/replies -> docs/counter-recon.md, state -> STATE.md.
+Format: `## D# t<tick> — title` then Thinking / Decision / Why, plus a RESULT line later. <=6 lines each. When this file passes ~15 entries, move the oldest to archive/.
 
-## D35 t2099202 — Information play rules (user)
+## D36 t2099202 — Counter-recon is standing policy (user order)
+- Decision: post misdirection questions in system/local chat using the user's template ("does anyone else notice they updating something at [LOCATION]? seems [MORE PRODUCTIVE / LESS RISKY / ITEM NOT FOUND THERE]") and sell `EMPTY` notes about far places, to pull players away from the belts we harvest. No asking first; no need to watch the named place; DO record every reply and sender.
+- How + full running log: docs/counter-recon.md (scripts/recon.py post | note | check log). Only new strategic choices about it come back here.
+
+## D35 t2099202 — Information play rules (user; detailed in docs/counter-recon.md)
 - Goal changed from steering players toward competitors to keeping traffic AWAY from lightly-mined resources we use. Notes are sellable on the market (docs/social); intel is unvalidated by design. Rules: never reveal our location/spots or anything near them; chat = in-character questions about far-away places, never disprovable claims; sell true-but-low-value notes; forum (OOC, public) = honest only.
 
 ## D34 t2099202 — New direction: Voidborn stealth + scanning + information warfare (user)
