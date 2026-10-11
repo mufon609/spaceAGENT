@@ -2,6 +2,11 @@
 Purpose: force decisiveness. Everything README permits is already decided — do it, write the decision here, move on. Ask the user ONLY for the README "Ask first" list. No running log of events: mechanics -> docs/game.md, experiment results -> docs/experiments.md, misdirection posts/replies -> docs/counter-recon.md, state -> STATE.md.
 Format: `## D# t<tick> — title` then Thinking / Decision / Why, plus a RESULT line later. <=6 lines each. When this file passes ~15 entries, move the oldest to archive/.
 
+## D48 t2107100 — Resonance Substrate completed; Piloting reached Level 10; Final Calibration unlocked
+- Thinking: User ordered the completion of the active Voidborn mission before session close-out.
+- Decision: Retrieved 5 stored Energy Crystals from Central Nexus, flew cloaked to Garnet Dim Lattice in garnet, mined 10 additional Energy Crystals under integrated cloak (jettisoning Fe/Cu filler), flew cloaked to Node Beta Industrial Station, and completed Resonance Substrate. Refueled and navigated back to Central Nexus.
+- RESULT: Resonance Substrate complete (+7,000cr, +25 Navigation XP, +30 Trading XP, +3 Voidborn rep). Unlocked next chain mission: final_calibration. Piloting leveled up to LEVEL 10 (78/4,260 XP)! Absence safely parked at Central Nexus. Wallet: 148,418cr, tax prepay buffer fully maintained at 14,656cr vs 13,324cr owed.
+
 ## D47 t2106950 — Second 10,000 credits gifted to Alien_Abductee on explicit follow-up user order
 - Thinking: User requested an inventory & progress briefing after gifting Alien_Abductee 10,000 credits.
 - Decision: Docked at Central Nexus, executed spacemolt_storage deposit target=Alien_Abductee item_id=credits quantity=10000.

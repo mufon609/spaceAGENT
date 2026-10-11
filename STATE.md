@@ -1,6 +1,6 @@
 # STATE (volatile; replace stale lines in place at every checkpoint)
 game_version: 0.613.8   (notes last checked against this; boot.py compares)
-last_update: t2106965 (Session close-out; Absence parked docked at Central Nexus; Handover report compiled)
+last_update: t2107100 (Resonance Substrate completed; Piloting reached Level 10; Final Calibration unlocked; Absence parked docked at Central Nexus)
 
 ## Ship (active)
 - Absence id b18ca7242812c8ebcdf8c123c42b5122, T1 Voidborn stealth shuttle. Hull 45/45, Shield 80/80 (+5/tick), Fuel 110/110, Cargo 4/75 (4 fuel_cell carried for mobile refueling), Slots 0W/2D/3U, speed 3, power 18/32, CPU 10/18.
@@ -13,19 +13,20 @@ last_update: t2106965 (Session close-out; Absence parked docked at Central Nexus
 ## Skills (t2106927)
 voidborn_mastery 2 (185/340 XP)
 scanning 1 (55/165 XP)
-navigation 7 (1,512/2,265 XP) | piloting 9 (3,498/3,525 XP) | engineering 12 (3,243/5,940 XP)
-mining 9 (2,883/3,525 XP) | deep_core_mining 8 (2,667/2,860) | crafting 4 (260/900) | refining 4 (5/900) | exploration 4 (440/900) | trading 3 (525/585) | leadership 1 (56/165) | tactics 0 (58/60 XP) | stealth 0 (40/60 XP) | gunnery 0 (27/60 XP) | weapons 0 (9/60 XP) | wormhole_navigation 1 (30/165) | xenobiology 0 (3/60 XP)
+navigation 7 (1,569/2,265 XP) | piloting 10 (78/4,260 XP) [LEVEL 10 ACHIEVED!] | engineering 12 (3,243/5,940 XP)
+mining 9 (2,956/3,525 XP) | deep_core_mining 8 (2,793/2,860) | trading 3 (555/585) | crafting 4 (260/900) | refining 4 (5/900) | exploration 4 (440/900) | trading 3 (525/585) | leadership 1 (56/165) | tactics 0 (58/60 XP) | stealth 0 (40/60 XP) | gunnery 0 (27/60 XP) | weapons 0 (9/60 XP) | wormhole_navigation 1 (30/165) | xenobiology 0 (3/60 XP)
 
 ## Credits + tax
-142,029 wallet. Tax: owed 12,914, prepaid 14,213 (next in ~25.9h). User rule: always prepaid.
+148,418 wallet. Tax: owed 13,324, prepaid 14,656 (next in ~25.4h). User rule: always prepaid.
 
 ## Stockpile (never sell) — full table: data/stock.tsv (`sm.py stock`, auto at boot; never hand-edit)
 Summary: central_nexus: 14 iridium_ore, 3 dark_matter_residue, 1947 C, 925 W, 723 Pt, 638 Pb, 289 Pd, 151 Fe, 54 Cu, 50 argon_gas, 42 hydrogen_gas, 21 nitrogen_ice, 21 Si, 20 water_ice, 17 silver_ore, 15 neon_gas, 9 ammo, 7 sol_alloy, 6 wiring, 5 repair_kit, 5 energy_crystal, 4 steel_plate, 3 trade_crystal, 2 plasma_gas, 2 fuel_cell, 2 circuit_board, 1 sensor_array, 1 survey_scanner_i, 1 gas_harvester_i, 1 ice_harvester_i, 1 ship_scanner_i | deep_range_outpost: Ni 135, Ti 134, wiring 65, steel 67, spare ML II | ramens_rest: Si 159, wiring 16, steel 10, modules | frontier_station: 15 nickel_ore, 8 titanium_ore, 99 iron_ore, 69 copper_ore.
 Consolidation hub = **central_nexus** (Voidborn shipyard + biggest pile).
 
 ## Missions
-- Active: wh_intro_voidborn_37a7a6e8 (Castor wormhole investigation; 500cr, trains exploration, scanning, wormhole_navigation), threat_neutralization_protocol.
+- Active: threat_neutralization_protocol.
 - Completed this session:
+  - resonance_substrate (+7,000cr, +25 navigation, +30 trading, +3 voidborn rep; unlocks final_calibration; Piloting to L10!).
   - advanced_material_processing (+3,500cr, +25 refining, +25 voidborn_mastery, +20 crafting, +2 voidborn rep).
   - conductor_fabrication (+2,500cr, +30 crafting, +25 voidborn_mastery, +2 voidborn rep).
   - material_synthesis_basic (+1,500cr, +25 crafting, +25 voidborn_mastery, +1 voidborn rep).

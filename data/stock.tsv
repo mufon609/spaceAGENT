@@ -1,4 +1,4 @@
-# station	system	item	qty  (sm.py stock, t2107459; regenerate, don't hand-edit)
+# station	system	item	qty  (sm.py stock, t2107653; regenerate, don't hand-edit)
 central_nexus	nexus_prime	carbon_ore	1947
 central_nexus	nexus_prime	tungsten_ore	925
 central_nexus	nexus_prime	platinum_ore	723
@@ -17,7 +17,6 @@ central_nexus	nexus_prime	standard_rounds_box	9
 central_nexus	nexus_prime	sol_alloy_ore	7
 central_nexus	nexus_prime	copper_wiring	6
 central_nexus	nexus_prime	repair_kit	5
-central_nexus	nexus_prime	energy_crystal	5
 central_nexus	nexus_prime	liquid_hydrogen	4
 central_nexus	nexus_prime	dark_matter_residue	3
 central_nexus	nexus_prime	steel_plate	3
@@ -39,10 +38,10 @@ deep_range_outpost	deep_range	steel_plate	67
 deep_range_outpost	deep_range	copper_wiring	65
 deep_range_outpost	deep_range	iron_ore	4
 deep_range_outpost	deep_range	mining_laser_ii	1
-frontier_station	horizon	copper_ore	102
-frontier_station	horizon	iron_ore	99
-frontier_station	horizon	nickel_ore	20
-frontier_station	horizon	titanium_ore	15
+frontier_station	deep_range	copper_ore	102
+frontier_station	deep_range	iron_ore	99
+frontier_station	deep_range	nickel_ore	20
+frontier_station	deep_range	titanium_ore	15
 grand_exchange_station	haven	copper_ore	15
 grand_exchange_station	haven	iron_ore	10
 node_beta_industrial_station	node_beta	carbon_ore	339
