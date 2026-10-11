@@ -10,8 +10,8 @@ Every empire has its own ship line (T0 starter -> T1 -> ... T5) with its own fla
 Quote: `sm.py call spacemolt_ship commission_quote '{"ship_class":"absence","bare_hull":false,"source_missing_materials":false}'` (shows credits-only vs provide-materials price). Build: same params on `commission_ship` with the materials in that station's storage.
 | Hull | Speed | Cargo | CPU/Power | Slots W/D/U | Built-in | Role |
 |---|---|---|---|---|---|---|
-| threshold (now) | 1 | 65 | 16/30 | 1/2/2 | — | keep stored: mining + backup |
-| **absence** (target 1) | 3 | 25 | 18/32 | 0/2/3 | integrated cloak 30, scan resistance 20 | ghost scout: stealth + intel runs |
+| threshold | 1 | 65 | 16/30 | 1/2/2 | — | stored at Central Nexus: combat bounties & backup |
+| **absence (ACTIVE)** | 3 | 75 (w/ Expander II) | 18/32 | 0/2/3 | integrated cloak 30, scan resistance 20 | ghost scout, survey harvester, diplomatic courier |
 | eigenstate | 3 | 30 | 24/36 | 0/2/3 | integrated survey scanner 25 | survey runs (needs phase_matrix, void nanites: harder) |
 | qualia | 3 | 30 | 20/34 | 0/2/3 | survey scanner 15, scan resistance 15 | stealthy surveyor (same hard inputs) |
 | vigil | 3 | 20 | 22/38 | 2/2/2 | integrated ship scanner 12 | armed watcher |
@@ -19,9 +19,15 @@ Quote: `sm.py call spacemolt_ship commission_quote '{"ship_class":"absence","bar
 | liminal | 2 | 75 | 18/34 | 0/2/3 | ore yield +15%, ore cargo efficiency 50 | stealth-less miner upgrade |
 Later goals (tier >= 2 needs Piloting 10+): Voidborn recon line (interstice/parallax T2 cloak + scan resistance; solipsism T4: speed 5, cloak 60, scan resistance 50, scanner 40 — the dream hull). Piloting keeps rising from normal flying; no dedicated grind.
 
-**absence bill:** silicate_composite 12, copper_wiring 11, processing_core 1, shield_emitter 3, steel_plate 5. From stock: composites (48 Si + 24 Ni), core (5 boards + 2 Pt + 3 Si), emitters = 6 superconductor (FAC create_superconductor: 2 palladium + 1 iridium + 3 wiring each) + 3 focused_crystal (12 trade_crystal) + 6 boards; boards = carbon_arc_circuit_etching (12 C + 2 Si -> 3). ONLY MISSING: ~6 iridium_ore (unknown_edge_mineral_fields, 1 jump from ramens_rest). Logistics: Si @ ramens_rest, Ni @ deep_range_outpost, C/Pt/Pd @ central_nexus -> consolidate at one shipyard station.
+## Active Absence Configuration & Strategy
+- Absence commissioned at Central Nexus yard (id `b18ca7242812c8ebcdf8c123c42b5122`).
+- Fit: cargo_expander_ii (+50 cargo to 75 total), survey_scanner_i (survey 30, hidden anomaly detection), mining_laser_i (precision extraction), shield_recharger_i (+2 regen), thermal_hull_hardener (+25% thermal defense). All 5 slots fitted.
+- In-flight doctrine: automatic integrated cloaking immediately upon undock and after each hyperspace jump; 4 fuel cells held in cargo for autonomous mobile refueling; zero-market ore trading; separate armed Threshold stored at Central Nexus for combat missions.
 
-## Fit plan (absence: CPU 18, power 32, 3 utility)
+## Voidborn Mastery Progression Strategy (Target Level 5+)
+- Core insight: Voidborn Mastery CANNOT be trained by passive flight or cloaking. It is earned EXCLUSIVELY via Voidborn Empire storyline missions (+15 to +35 XP each).
+- Storyline chain progression: complete active contracts (Conductive Lattice -> Resonance Substrate -> Final Calibration -> The Crimson Resonance) to progress through levels (L1=60, L2=165, L3=340, L4=585, L5=900).
+
 - **survey_scanner_i** (3 CPU/4 pw): sensor_array (6 trade_crystal + 3 boards -> 2) + 2 boards + 2 focused_crystal. Buildable from stock NOW (trade crystal 25 covers absence + scanner, barely). Reveals hidden POIs (`survey_system`), trains Scanning + Deep Core.
 - **ship_scanner_i** (3/4): sensor_array + 2 boards + 1 focused_crystal. Scans ships (alerts the target!). Needs 4 more trade_crystal (frostpeak uncut_gems / azmidi).
 - **cloaking_device_i** (5/10, cloak 40): 2 optical_fiber_bundle (3 Si + 2 energy_crystal each) + 3 boards + focused_crystal + 2 silver_wiring (8 silver) + 2 power_cell (FAC: 3 nickel_billet or 14 lithium + 2 wiring). Needs energy_crystal 4 (garnet_dim_lattice), silver 8 (errai_belt). Probably stacks with the integrated cloak — test.

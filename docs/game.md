@@ -35,6 +35,8 @@ Untagged lines = verified live in S1–S3 (game <= v0.613.4, t <= 2098845). `[do
 
 ## XP / skills
 - XP table (same for every skill): level N->N+1 costs [60,165,340,585,900,1285,1740,2265,2860,3525,4260,5065,5940,...]. Piloting 9->10 = 3,525 XP. Skills never lost.
+- voidborn_mastery: CANNOT be trained passively through normal flight, mining, or cloaking. It is earned EXCLUSIVELY by completing Voidborn Empire storyline missions (+15 to +35 XP per contract). Each level grants +1% Cloak Effectiveness and +1% Energy Weapon Damage. Milestones: L1=60, L2=165, L3=340, L4=585, L5=900 XP.
+- wormhole_navigation: Trained strictly by traversing wormholes or predicting wormhole exit coordinates. Each level grants +1 wormholeAccuracy, stabilizing entry/exit trajectories.
 - Piloting XP: jump +3, in-system travel +1, mine cycle +1 (measured: stackmine 0.84 XP/tick = ~5/min; dock loop 0.67/tick; jumping 3 per 6 ticks = 0.5/tick). A mine cycle is 1 per tick. Catalog: 'higher-tier ships grant more XP per action'.
 - Crafting + Refining: EVERY workshop run gives +5 XP to BOTH (verified on iron smelt, copper wiring, glass, crystal facet) regardless of recipe time/size. Train with the cheapest-input recipes: basic_iron_smelting (10 Fe->1 steel, 0.3 tick), basic_copper_processing (8 Cu->1 wiring), smelt_lead_ingot (4 Pb->2), draw_platinum_wire (4 Pt->1), roll_lead_sheet (3 ingot->2), fuse_reinforced_glass (5 Si). 77 runs = ~385 XP each skill in ~4 min. `sm.py train` does it. Rented facility jobs give less XP; use the Station Workshop. Workshop speed scales with max(Crafting, Refining).
 - Engineering passive XP (~1/tick) needs reactor load >=90% (Threshold: ML II + ML II = 29/30 OK; ML II + Cargo Expander = 24/30 off; one ML II = 22/30 off). Engineering draw drops ~1%/level.
@@ -93,3 +95,16 @@ Untagged lines = verified live in S1–S3 (game <= v0.613.4, t <= 2098845). `[do
 
 ## Skill Guide Summary (v0.613)
 - Tick ~10 s; 1 mutation per tick (a 2nd concurrent action returns action_in_progress); queries free (300/min); mutations 30/min. Jump time (7-speed)x10 s. 28 skills train by doing. Deposit lock: refused only if remaining <25% of max AND beam > 4x supported. Death keeps credits/skills/storage; respawn at home. Captain's log max 20 entries (newest is replayed on login: use it as GitHub-outage backup). Combat: avoid; flee early.
+
+## Wormholes & Spatial Anomalies
+- Wormholes connect distant systems non-linearly across the 505-system galaxy.
+- Wormhole entrances appear as unstable anomaly POIs and are hidden until revealed by `survey_system` or high-resolution scanning modules (`survey_scanner_i`).
+- Wormhole destinations are unpredictable until traversed or calculated by `wormhole_navigation` skill (+1 wormholeAccuracy per level).
+- Router integration: `find_route(target_system)` returns wormhole hops (`via_wormhole`, `entrance_poi`) once entrance coordinates are discovered.
+
+## Stealth & Cloak Mechanics (Absence Ghost Prospector)
+- Absence has built-in integrated cloak (30) and scan resistance (20), giving effective strength 50 when cloaked.
+- Cloaking hides the vessel from local public scans (`get_nearby`) and prevents pirate aggro in lawless systems (`last_light`, `unknown_edge`, `errai`).
+- Automated cloaking protocol: triggers `cloak` immediately upon undocking and re-checks/maintains cloak after every hyperspace jump.
+- Fuel autonomy: carrying 4 `fuel_cell` units in hold enables in-flight emergency refueling via `spacemolt use_item fuel_cell` (+20 fuel per cell), bypassing expensive station refuel tariffs and remote dead-ends.
+
