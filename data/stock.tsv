@@ -1,4 +1,4 @@
-# station	system	item	qty  (sm.py stock, t2105994; regenerate, don't hand-edit)
+# station	system	item	qty  (sm.py stock, t2106965; regenerate, don't hand-edit)
 central_nexus	nexus_prime	carbon_ore	1947
 central_nexus	nexus_prime	tungsten_ore	925
 central_nexus	nexus_prime	platinum_ore	723
@@ -7,11 +7,10 @@ central_nexus	nexus_prime	palladium_ore	289
 central_nexus	nexus_prime	iron_ore	151
 central_nexus	nexus_prime	copper_ore	54
 central_nexus	nexus_prime	argon_gas	50
-central_nexus	nexus_prime	hydrogen_gas	42
+central_nexus	nexus_prime	hydrogen_gas	26
 central_nexus	nexus_prime	silicon_ore	21
 central_nexus	nexus_prime	nitrogen_ice	21
 central_nexus	nexus_prime	water_ice	20
-central_nexus	nexus_prime	silver_ore	17
 central_nexus	nexus_prime	neon_gas	15
 central_nexus	nexus_prime	iridium_ore	14
 central_nexus	nexus_prime	standard_rounds_box	9
@@ -19,19 +18,21 @@ central_nexus	nexus_prime	sol_alloy_ore	7
 central_nexus	nexus_prime	copper_wiring	6
 central_nexus	nexus_prime	repair_kit	5
 central_nexus	nexus_prime	energy_crystal	5
-central_nexus	nexus_prime	steel_plate	4
+central_nexus	nexus_prime	liquid_hydrogen	4
 central_nexus	nexus_prime	dark_matter_residue	3
+central_nexus	nexus_prime	steel_plate	3
 central_nexus	nexus_prime	trade_crystal	3
 central_nexus	nexus_prime	plasma_gas	2
-central_nexus	nexus_prime	fuel_cell	2
 central_nexus	nexus_prime	circuit_board	2
 central_nexus	nexus_prime	cargo_expander_i	1
 central_nexus	nexus_prime	gas_harvester_i	1
 central_nexus	nexus_prime	deuterium_ice	1
+central_nexus	nexus_prime	fuel_cell	1
 central_nexus	nexus_prime	null_matter	1
 central_nexus	nexus_prime	ice_harvester_i	1
 central_nexus	nexus_prime	ship_scanner_i	1
 central_nexus	nexus_prime	survey_scanner_i	1
+central_nexus	nexus_prime	voidborn_neural_soma	1
 deep_range_outpost	deep_range	nickel_ore	135
 deep_range_outpost	deep_range	titanium_ore	134
 deep_range_outpost	deep_range	steel_plate	67
@@ -46,7 +47,7 @@ grand_exchange_station	haven	copper_ore	15
 grand_exchange_station	haven	iron_ore	10
 node_beta_industrial_station	node_beta	carbon_ore	339
 node_beta_industrial_station	node_beta	tungsten_ore	223
-node_beta_industrial_station	node_beta	platinum_ore	38
+node_beta_industrial_station	node_beta	platinum_ore	39
 node_beta_industrial_station	node_beta	palladium_ore	30
 node_beta_industrial_station	node_beta	copper_ore	18
 node_beta_industrial_station	node_beta	lead_ore	16
