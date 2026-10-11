@@ -1,23 +1,23 @@
 # STATE (volatile; replace stale lines in place at every checkpoint)
 game_version: 0.613.8   (notes last checked against this; boot.py compares)
-last_update: t2106927 (Conductive Lattice completed; 10,000cr gifted to Alien_Abductee; Absence docked at Node Beta Industrial Station)
+last_update: t2106965 (Session close-out; Absence parked docked at Central Nexus; Handover report compiled)
 
 ## Ship (active)
-- Absence id b18ca7242812c8ebcdf8c123c42b5122, T1 Voidborn stealth shuttle. Hull 45/45, Shield 80/80 (+5/tick), Fuel 110/110, Cargo 5/75 (4 fuel_cell, 1 platinum_ore), Slots 0W/2D/3U, speed 3, power 18/32, CPU 10/18.
+- Absence id b18ca7242812c8ebcdf8c123c42b5122, T1 Voidborn stealth shuttle. Hull 45/45, Shield 80/80 (+5/tick), Fuel 110/110, Cargo 4/75 (4 fuel_cell carried for mobile refueling), Slots 0W/2D/3U, speed 3, power 18/32, CPU 10/18.
 - Fit: cargo_expander_ii (U1, +50 cargo) | survey_scanner_i (U2, survey:30, ore_quality_detection) | mining_laser_i (U3, mine power 5) | shield_recharger_i (D1, +2 regen) | thermal_hull_hardener (D2, +25% thermal). All 5 module slots fitted.
 - Inherent capabilities: integrated_cloak 30, scan_resistance 20 (cloak strength 50 when active).
 - Stored ship: Threshold starter id 1560ab3025cd17ccbce5701e2af70969 (with mining laser ii, autocannon i, shield booster i) safely preserved at Central Nexus shipyard for starter account. Never sell old equipment.
 - Preserved modules in storage: ship_scanner_i, ice_harvester_i, gas_harvester_i, cargo_expander_i, survey_scanner_i (spare).
-- LOCATION: DOCKED at Node Beta Industrial Station (node_beta, High Security). Safe dock.
+- LOCATION: DOCKED at Central Nexus (nexus_prime, Maximum Security). Safe dock.
 
 ## Skills (t2106927)
 voidborn_mastery 2 (185/340 XP)
 scanning 1 (55/165 XP)
-navigation 7 (1,295/2,265 XP) | piloting 9 (3,272/3,525 XP) | engineering 12 (3,243/5,940 XP)
-mining 9 (2,867/3,525 XP) | deep_core_mining 8 (2,657/2,860) | crafting 4 (260/900) | refining 4 (5/900) | exploration 4 (440/900) | trading 3 (525/585) | leadership 1 (56/165) | tactics 0 (58/60 XP) | stealth 0 (40/60 XP) | gunnery 0 (27/60 XP) | weapons 0 (9/60 XP) | wormhole_navigation 1 (30/165) | xenobiology 0 (3/60 XP)
+navigation 7 (1,512/2,265 XP) | piloting 9 (3,498/3,525 XP) | engineering 12 (3,243/5,940 XP)
+mining 9 (2,883/3,525 XP) | deep_core_mining 8 (2,667/2,860) | crafting 4 (260/900) | refining 4 (5/900) | exploration 4 (440/900) | trading 3 (525/585) | leadership 1 (56/165) | tactics 0 (58/60 XP) | stealth 0 (40/60 XP) | gunnery 0 (27/60 XP) | weapons 0 (9/60 XP) | wormhole_navigation 1 (30/165) | xenobiology 0 (3/60 XP)
 
 ## Credits + tax
-142,029 wallet. Tax: owed 12,909, prepaid 14,213 (next in ~27.3h). User rule: always prepaid.
+142,029 wallet. Tax: owed 12,914, prepaid 14,213 (next in ~25.9h). User rule: always prepaid.
 
 ## Stockpile (never sell) — full table: data/stock.tsv (`sm.py stock`, auto at boot; never hand-edit)
 Summary: central_nexus: 14 iridium_ore, 3 dark_matter_residue, 1947 C, 925 W, 723 Pt, 638 Pb, 289 Pd, 151 Fe, 54 Cu, 50 argon_gas, 42 hydrogen_gas, 21 nitrogen_ice, 21 Si, 20 water_ice, 17 silver_ore, 15 neon_gas, 9 ammo, 7 sol_alloy, 6 wiring, 5 repair_kit, 5 energy_crystal, 4 steel_plate, 3 trade_crystal, 2 plasma_gas, 2 fuel_cell, 2 circuit_board, 1 sensor_array, 1 survey_scanner_i, 1 gas_harvester_i, 1 ice_harvester_i, 1 ship_scanner_i | deep_range_outpost: Ni 135, Ti 134, wiring 65, steel 67, spare ML II | ramens_rest: Si 159, wiring 16, steel 10, modules | frontier_station: 15 nickel_ore, 8 titanium_ore, 99 iron_ore, 69 copper_ore.
